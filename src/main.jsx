@@ -5,6 +5,7 @@ import {createBrowserRouter, RouterProvider} from "react-router-dom";
 
 import RootLayout from "./layouts/RootLayout.jsx";
 import AdminLayout from "./layouts/AdminLayout.jsx";
+import {NextUIProvider} from "@nextui-org/react";
 
 const router = createBrowserRouter([
     {
@@ -19,6 +20,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")).render(
     <React.StrictMode>
-        <RouterProvider router={router}/>
+        <NextUIProvider>
+            <RouterProvider router={router}/>
+        </NextUIProvider>
     </React.StrictMode>
 );
