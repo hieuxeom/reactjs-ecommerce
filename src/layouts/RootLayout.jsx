@@ -1,8 +1,10 @@
 import Header from "../components/partials/Header/index.jsx";
+import {Outlet} from "react-router-dom";
 
 function RootLayout() {
-    return <section className={"w-screen flex justify-center"}>
+    return <section className={"w-screen flex flex-col items-center justify-center"}>
         <Header/>
+        <Outlet/>
     </section>;
 }
 
