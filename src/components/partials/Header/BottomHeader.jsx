@@ -1,15 +1,21 @@
 import React from 'react';
-import {NavLink} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
 import classConfig from "../../../utils/config/class.config.js";
 import {Input} from "@nextui-org/react";
 import {RiSearchLine} from "react-icons/ri";
 
 function BottomHeader(props) {
+    const navigate = useNavigate();
+
+    const handleNavigateToHome = () => {
+        return navigate('/');
+    }
+
     return (
 
         <div className={"w-full max-w-7xl flex items-center justify-between py-2 gap-8"}>
             <div className={"flex items-center gap-12"}>
-                <div>
+                <div className={"cursor-pointer "} onClick={handleNavigateToHome}>
                     <h1 className={"text-4xl font-bold text-off-blue"}>hieutn.dev</h1>
                 </div>
                 <div className={"flex items-center gap-4"}>
