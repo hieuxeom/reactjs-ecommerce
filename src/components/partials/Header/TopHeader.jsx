@@ -1,11 +1,26 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {MdEmail, MdPhone} from "react-icons/md";
-import {Button, Select, SelectItem} from "@nextui-org/react";
-import {PiSignInBold} from "react-icons/pi";
+import {Avatar, Button, Select, SelectItem} from "@nextui-org/react";
 import {US, VN} from "country-flag-icons/react/3x2";
+import {PiSignInBold} from "react-icons/pi";
 import classConfig from "../../../utils/config/class.config.js";
+import {useNavigate} from "react-router-dom";
+import {useCookies} from "react-cookie";
+import {FaUserAlt} from "react-icons/fa";
 
 function TopHeader(props) {
+
+    const [cookies] = useCookies(['refreshToken']);
+
+    const [isLogin, setIsLogin] = useState(false);
+
+    useEffect(() => {
+        const {refreshToken} = cookies;
+        console.log(!!refreshToken)
+        setIsLogin(!!refreshToken);
+    }, [cookies]);
+
+    const navigate = useNavigate();
     const languageSelectData = [
         {
             label: "Vietnam",
@@ -18,6 +33,14 @@ function TopHeader(props) {
             icon: <US className={"w-6"}/>
         }
     ]
+
+    const handleNavigateToSignIn = () => {
+        return navigate("/sign-in");
+    }
+
+    const handleNavigateToProfile = () => {
+        return navigate("/profile/me");
+    }
 
     return (
         <div className={"w-full flex justify-center bg-purple py-2"}> {/* Top Header */}
@@ -59,8 +82,15 @@ function TopHeader(props) {
                             </SelectItem>
                         )}
                     </Select>
-                    <Button startContent={<PiSignInBold size={classConfig.icon.large}/>} variant={"solid"}
-                            color={"primary"}>Login</Button>
+                    {!isLogin && <Button startContent={<PiSignInBold size={classConfig.icon.large}/>}
+                                         variant={"solid"}
+                                         color={"primary"}
+                                         onClick={handleNavigateToSignIn}
+                    >Login</Button>}
+                    <Avatar icon={<FaUserAlt size={classConfig.icon.base}/>}
+                            className={"bg-white cursor-pointer hover:bg-sky-blue transition-all duration-300"}
+                            onClick={handleNavigateToProfile}
+                    />
                 </div>
             </div>
         </div>
