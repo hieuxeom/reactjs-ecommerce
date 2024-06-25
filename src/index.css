@@ -4,6 +4,13 @@
 @tailwind components;
 @tailwind utilities;
 
-/*:root {*/
-/*    --primary: #FB2E86;*/
-/*}*/
+:root {
+    font-family: "Josefin Sans", sans-serif;
+    font-optical-sizing: auto;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    line-height: auto;
+}
