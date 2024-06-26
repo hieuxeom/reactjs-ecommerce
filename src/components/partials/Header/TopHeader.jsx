@@ -82,15 +82,15 @@ function TopHeader(props) {
                             </SelectItem>
                         )}
                     </Select>
-                    {!isLogin && <Button startContent={<PiSignInBold size={classConfig.icon.large}/>}
-                                         variant={"solid"}
-                                         color={"primary"}
-                                         onClick={handleNavigateToSignIn}
-                    >Login</Button>}
-                    <Avatar icon={<FaUserAlt size={classConfig.icon.base}/>}
-                            className={"bg-white cursor-pointer hover:bg-sky-blue transition-all duration-300"}
-                            onClick={handleNavigateToProfile}
-                    />
+                    {!isLogin ? <Button startContent={<PiSignInBold size={classConfig.icon.large}/>}
+                                        variant={"solid"}
+                                        color={"primary"}
+                                        onClick={handleNavigateToSignIn}
+                    >Login</Button> : <Avatar icon={<FaUserAlt size={classConfig.icon.base}/>}
+                                              className={"bg-white cursor-pointer hover:bg-sky-blue transition-all duration-300"}
+                                              onClick={handleNavigateToProfile}
+                    />}
+
                 </div>
             </div>
         </div>

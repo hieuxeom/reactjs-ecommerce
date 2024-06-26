@@ -12,7 +12,6 @@ function BottomHeader(props) {
     }
 
     return (
-
         <div className={"w-full max-w-7xl flex items-center justify-between py-2 gap-8"}>
             <div className={"flex items-center gap-12"}>
                 <div className={"cursor-pointer "} onClick={handleNavigateToHome}>
