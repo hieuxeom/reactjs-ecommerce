@@ -1,5 +1,5 @@
 import axios from "axios";
-import {apiConfig} from "../utils/config/api.config.js";
+import {apiBaseUrl} from "../utils/config/api.config.js";
 import {useCookies} from "react-cookie";
 import {useEffect} from "react";
 
@@ -10,7 +10,7 @@ const useAxios = () => {
     const {refreshToken} = cookies;
 
     const axiosClient = axios.create({
-        baseURL: apiConfig.baseUrl,
+        baseURL: apiBaseUrl,
         headers: {
             "Content-Type": "application/json",
             'x-rftk': refreshToken

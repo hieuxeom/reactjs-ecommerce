@@ -1,15 +1,16 @@
-const apiConfig = {
-    baseUrl: "http://localhost:5000/api",
-}
+const apiBaseUrl = "http://localhost:5000/api"
 
 const apiUrl = {
     auth: {
-        signIn: [apiConfig.baseUrl, '/auth/signin'].join(''),
-        refreshToken: [apiConfig.baseUrl, 'users/rftk'].join(''),
+        signIn: [apiBaseUrl, '/auth/signin'].join(''),
+        refreshToken: [apiBaseUrl, 'users/rftk'].join(''),
     },
     profile: {
-        me: [apiConfig.baseUrl, '/users/me'].join('')
+        me: [apiBaseUrl, '/users/me'].join('')
+    },
+    category: {
+        base: [apiBaseUrl, '/categories'].join(''),
     }
 }
 
-export {apiConfig, apiUrl}
+export {apiBaseUrl, apiUrl}

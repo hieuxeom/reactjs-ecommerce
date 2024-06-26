@@ -2,7 +2,7 @@ import axios from "axios";
 import {useEffect} from "react";
 import useRefreshToken from "./useRefreshToken";
 import {useCookies} from "react-cookie";
-import {apiConfig} from "../utils/config/api.config.js";
+import {apiBaseUrl} from "../utils/config/api.config.js";
 
 const useAxiosServer = () => {
     const [cookies] = useCookies(['refreshToken', 'accessToken']);
@@ -12,7 +12,7 @@ const useAxiosServer = () => {
     const getRefreshToken = useRefreshToken();
 
     const axiosServer = axios.create({
-        baseURL: apiConfig.baseUrl,
+        baseURL: apiBaseUrl,
         headers: {
             "Content-Type": "application/json",
         },
