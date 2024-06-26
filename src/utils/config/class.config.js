@@ -14,6 +14,7 @@ const classConfig = {
         h4: "text-3xl",
         h5: "text-2xl",
         h6: "text-xl",
+        base: "text-base",
         sub: "text-md"
     },
     textColor: {
