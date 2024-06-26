@@ -12,7 +12,7 @@ const useRefreshToken = () => {
     return async () => {
         if (refreshToken) {
             const token = await axiosClient.get("/users/rftk");
-            setCookie("accessToken", token.data.data, {maxAge: 5});
+            setCookie("accessToken", token.data, {maxAge: 5});
             return token.data.data;
         } else {
             return null;
