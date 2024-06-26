@@ -30,6 +30,7 @@ const classConfig = {
     },
     textVariant: {
         title: "font-extrabold uppercase",
+        formTitle: "font-bold capitalize"
     }
 }
 
