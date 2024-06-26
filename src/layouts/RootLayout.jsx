@@ -1,4 +1,4 @@
-import Header from "../components/partials/Header/index.jsx";
+import Header from "../components/Partials/Header/index.jsx";
 import {Outlet} from "react-router-dom";
 
 function RootLayout() {
