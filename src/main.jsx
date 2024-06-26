@@ -13,11 +13,62 @@ import {CookiesProvider} from 'react-cookie';
 import MyProfile from "./components/Profile/MyProfile.jsx";
 import ProtectRoute from "./utils/route/ProtectRoute.jsx";
 import Profile from "./components/Profile/Profile.jsx";
+import Dashboard from "./components/Admin/Dashboard/Dashboard.jsx";
+import CategoryManagement from "./components/Admin/CategoryManagement/CategoryManagement.jsx";
+import ProductManagement from "./components/Admin/ProductManagement/ProductManagement.jsx";
+import OrderManagement from "./components/Admin/OrderManagement/OrderManagement.jsx";
+import UserManagement from "./components/Admin/UserManagement/UserManagement.jsx";
+import NewCategory from "./components/Admin/CategoryManagement/NewCategory.jsx";
+import CategoryIndex from "./components/Admin/CategoryManagement/CategoryIndex.jsx";
+import RedirectRoute from "./utils/route/RedirectRoute.jsx";
+import {adminUrl} from "./utils/config/route.config.js";
 
 const router = createBrowserRouter([
     {
         path: "/admin",
-        element: <AdminLayout/>
+        element: <AdminLayout/>,
+        children: [
+            {
+                path: '',
+                element: <RedirectRoute redirectTo={adminUrl.dashboard.index}/>,
+            },
+            {
+                path: 'dashboard',
+                element: <Dashboard/>
+            },
+            {
+                path: 'categories',
+                element: <CategoryManagement/>,
+                children: [
+                    {
+                        path: '',
+                        element: <CategoryIndex/>
+                    },
+                    {
+                        path: 'new',
+                        element: <NewCategory/>
+                    }
+
+                ]
+
+            },
+            {
+                path: 'products',
+                element: <ProductManagement/>
+            },
+            {
+                path: 'orders',
+                element: <OrderManagement/>
+            },
+            {
+                path: 'users',
+                element: <UserManagement/>
+            },
+            {
+                path: '',
+                element: <Dashboard/>
+            },
+        ]
     },
     {
         path: "/",
