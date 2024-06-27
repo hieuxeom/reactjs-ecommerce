@@ -1,14 +1,15 @@
 import React, {useEffect, useState} from "react";
 import {Button, Checkbox, Input} from "@nextui-org/react";
 import {apiUrl} from "../../../utils/config/api.config.js";
-import Form from "../../Partials/Form/Form.jsx";
-import FormHeader from "../../Partials/Form/FormHeader.jsx";
+import Form from "../../../components/Form/Form.jsx";
+import FormHeader from "../../../components/Form/FormHeader.jsx";
 import {adminUrl} from "../../../utils/config/route.config.js";
-import FormBody from "../../Partials/Form/FormBody.jsx";
+import FormBody from "../../../components/Form/FormBody.jsx";
 import useAxios from "../../../hooks/useAxios.js";
 import {useParams} from "react-router-dom";
 import useAxiosServer from "../../../hooks/useAxiosServer.js";
-import FormItem from "../../Partials/Form/FormItem.jsx";
+import FormItem from "../../../components/Form/FormItem.jsx";
+import classConfig from "../../../utils/config/class.config.js";
 
 function EditCategory(props) {
 
@@ -51,7 +52,7 @@ function EditCategory(props) {
                 <FormHeader formTitle={"Sửa danh mục"} urlBack={adminUrl.category.index}/>
                 <FormBody>
                     <FormItem>
-                        <p>Tên danh mục</p>
+                        <p className={classConfig.text.inputLabel}>Tên danh mục</p>
                         <Input
                             size={"lg"}
                             type="text"
@@ -62,7 +63,7 @@ function EditCategory(props) {
                         />
                     </FormItem>
                     <FormItem>
-                        <p>Query params</p>
+                        <p className={classConfig.text.inputLabel}>Query params</p>
                         <Input
                             size={"lg"}
                             type="text"
@@ -75,7 +76,9 @@ function EditCategory(props) {
                     </FormItem>
                     <div className={"flex justify-between items-center"}>
                         <div className={"flex flex-col gap-2"}>
-                            <Checkbox isSelected={isActive} onValueChange={setIsActive}>Hoạt động?</Checkbox>
+                            <Checkbox isSelected={isActive} onValueChange={setIsActive}
+                                      size={"lg"}
+                            >Hoạt động?</Checkbox>
                         </div>
                         <Button onClick={handleSubmit} color={"primary"} size={"lg"}
                         >

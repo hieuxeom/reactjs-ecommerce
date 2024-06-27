@@ -1,9 +1,15 @@
-import React from 'react';
-import classConfig from "../../../utils/config/class.config.js";
+import React from "react";
+import classConfig from "../../utils/config/class.config.js";
 import classNames from "classnames";
 import {Button} from "@nextui-org/react";
 import {IoArrowBack} from "react-icons/io5";
 import {useNavigate} from "react-router-dom";
+import PropTypes from "prop-types";
+
+FormHeader.propTypes = {
+    formTitle: PropTypes.string,
+    urlBack: PropTypes.string
+};
 
 function FormHeader({formTitle, urlBack}) {
 
@@ -20,8 +26,7 @@ function FormHeader({formTitle, urlBack}) {
                     color={"secondary"}
                     onClick={handleNavigateToIndex}
                     startContent={<IoArrowBack size={classConfig.icon.base}/>}>
-                Back
-            </Button>
+                Quay lại </Button>
         </header>
     );
 }

@@ -1,16 +1,16 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState} from "react";
 import {MdEmail, MdPhone} from "react-icons/md";
 import {Avatar, Button, Select, SelectItem} from "@nextui-org/react";
 import {US, VN} from "country-flag-icons/react/3x2";
 import {PiSignInBold} from "react-icons/pi";
-import classConfig from "../../../utils/config/class.config.js";
+import classConfig from "../../utils/config/class.config.js";
 import {useNavigate} from "react-router-dom";
 import {useCookies} from "react-cookie";
 import {FaUserAlt} from "react-icons/fa";
 
 function TopHeader(props) {
 
-    const [cookies] = useCookies(['refreshToken']);
+    const [cookies] = useCookies(["refreshToken"]);
 
     const [isLogin, setIsLogin] = useState(false);
 

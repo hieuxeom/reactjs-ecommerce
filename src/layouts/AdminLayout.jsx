@@ -1,5 +1,5 @@
 import {Outlet} from "react-router-dom";
-import AdminHeader from "../components/Partials/Header/AdminHeader.jsx";
+import AdminHeader from "../components/Header/AdminHeader.jsx";
 
 const AdminLayout = () => {
     return <section className={"w-screen flex flex-col items-center justify-center gap-8"}>

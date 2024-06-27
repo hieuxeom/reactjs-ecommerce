@@ -6,23 +6,26 @@ import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import RootLayout from "./layouts/RootLayout.jsx";
 import AdminLayout from "./layouts/AdminLayout.jsx";
 import {NextUIProvider} from "@nextui-org/react";
-import HomePage from "./components/Home/HomePage.jsx";
-import SignIn from "./components/Auth/SignIn/SignIn.jsx";
-import SignUp from "./components/Auth/SignUp/SignUp.jsx";
+import HomePage from "./pages/Home/HomePage.jsx";
+import SignIn from "./pages/Auth/SignIn/SignIn.jsx";
+import SignUp from "./pages/Auth/SignUp/SignUp.jsx";
 import {CookiesProvider} from "react-cookie";
-import MyProfile from "./components/Profile/MyProfile.jsx";
+import MyProfile from "./pages/Profile/MyProfile.jsx";
 import ProtectRoute from "./utils/route/ProtectRoute.jsx";
-import Profile from "./components/Profile/Profile.jsx";
-import Dashboard from "./components/Admin/Dashboard/Dashboard.jsx";
-import CategoryManagement from "./components/Admin/CategoryManagement/CategoryManagement.jsx";
-import ProductManagement from "./components/Admin/ProductManagement/ProductManagement.jsx";
-import OrderManagement from "./components/Admin/OrderManagement/OrderManagement.jsx";
-import UserManagement from "./components/Admin/UserManagement/UserManagement.jsx";
-import NewCategory from "./components/Admin/CategoryManagement/NewCategory.jsx";
-import CategoryIndex from "./components/Admin/CategoryManagement/CategoryIndex.jsx";
+import Profile from "./pages/Profile/Profile.jsx";
+import Dashboard from "./pages/Admin/Dashboard/Dashboard.jsx";
+import CategoryManagement from "./pages/Admin/CategoryManagement/CategoryManagement.jsx";
+import ProductManagement from "./pages/Admin/ProductManagement/ProductManagement.jsx";
+import OrderManagement from "./pages/Admin/OrderManagement/OrderManagement.jsx";
+import UserManagement from "./pages/Admin/UserManagement/UserManagement.jsx";
+import NewCategory from "./pages/Admin/CategoryManagement/NewCategory.jsx";
+import CategoryIndex from "./pages/Admin/CategoryManagement/CategoryIndex.jsx";
 import RedirectRoute from "./utils/route/RedirectRoute.jsx";
 import {adminUrl} from "./utils/config/route.config.js";
-import EditCategory from "./components/Admin/CategoryManagement/EditCategory.jsx";
+import EditCategory from "./pages/Admin/CategoryManagement/EditCategory.jsx";
+import NewProduct from "./pages/Admin/ProductManagement/NewProduct.jsx";
+import ProductIndex from "./pages/Admin/ProductManagement/ProductIndex.jsx";
+import EditProduct from "./pages/Admin/ProductManagement/EditProduct.jsx";
 
 const router = createBrowserRouter([
     {
@@ -59,7 +62,22 @@ const router = createBrowserRouter([
             },
             {
                 path: "products",
-                element: <ProductManagement/>
+                element: <ProductManagement/>,
+                children: [
+                    {
+                        path: "",
+                        element: <ProductIndex/>
+                    },
+                    {
+                        path: "new",
+                        element: <NewProduct/>
+                    },
+                    {
+                        path: ":productId/edit",
+                        element: <EditProduct/>
+                    }
+
+                ]
             },
             {
                 path: "orders",

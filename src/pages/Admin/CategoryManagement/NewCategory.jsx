@@ -2,11 +2,12 @@ import React, {useState} from "react";
 import {Button, Checkbox, Input} from "@nextui-org/react";
 import useAxiosServer from "../../../hooks/useAxiosServer.js";
 import {apiUrl} from "../../../utils/config/api.config.js";
-import Form from "../../Partials/Form/Form.jsx";
-import FormHeader from "../../Partials/Form/FormHeader.jsx";
+import Form from "../../../components/Form/Form.jsx";
+import FormHeader from "../../../components/Form/FormHeader.jsx";
 import {adminUrl} from "../../../utils/config/route.config.js";
-import FormBody from "../../Partials/Form/FormBody.jsx";
-import FormItem from "../../Partials/Form/FormItem.jsx";
+import FormBody from "../../../components/Form/FormBody.jsx";
+import FormItem from "../../../components/Form/FormItem.jsx";
+import classConfig from "../../../utils/config/class.config.js";
 
 function NewCategory(props) {
 
@@ -32,7 +33,7 @@ function NewCategory(props) {
                 <FormHeader formTitle={"Tạo danh mục mới"} urlBack={adminUrl.category.index}/>
                 <FormBody>
                     <FormItem>
-                        <p>Tên danh mục</p>
+                        <p className={classConfig.text.inputLabel}>Tên danh mục</p>
                         <Input
                             size={"lg"}
                             type="text"
@@ -43,7 +44,7 @@ function NewCategory(props) {
                         />
                     </FormItem>
                     <FormItem>
-                        <p>Query params</p>
+                        <p className={classConfig.text.inputLabel}>Query params</p>
                         <Input
                             size={"lg"}
                             type="text"
@@ -56,7 +57,8 @@ function NewCategory(props) {
                     </FormItem>
                     <div className={"flex justify-between items-center"}>
                         <FormItem>
-                            <Checkbox isSelected={isActive} onValueChange={setIsActive}>Hoạt động?</Checkbox>
+                            <Checkbox isSelected={isActive} onValueChange={setIsActive} size={"lg"}>Hoạt
+                                động?</Checkbox>
                         </FormItem>
                         <Button onClick={handleSubmit} color={"primary"} size={"lg"}>
                             Tạo

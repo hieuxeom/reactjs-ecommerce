@@ -1,10 +1,10 @@
-import React from 'react';
-import classConfig from "../../../utils/config/class.config.js";
+import React from "react";
+import classConfig from "../../utils/config/class.config.js";
 import {Button, ButtonGroup, Input} from "@nextui-org/react";
 import {RiSearchLine} from "react-icons/ri";
 import classNames from "classnames";
 import {useLocation, useNavigate} from "react-router-dom";
-import {adminUrl} from "../../../utils/config/route.config.js";
+import {adminUrl} from "../../utils/config/route.config.js";
 
 function AdminHeader(props) {
     const {pathname} = useLocation();
@@ -13,30 +13,30 @@ function AdminHeader(props) {
 
     const listNavigateButtons = [
         {
-            label: 'Tổng quan',
-            value: 'dashboard',
-            href: adminUrl.dashboard.index,
+            label: "Tổng quan",
+            value: "dashboard",
+            href: adminUrl.dashboard.index
         },
         {
-            label: 'Danh mục',
-            value: 'categories',
-            href: adminUrl.category.index,
+            label: "Danh mục",
+            value: "categories",
+            href: adminUrl.category.index
         },
         {
-            label: 'Sản phẩm',
-            value: 'products',
-            href: adminUrl.product.index,
+            label: "Sản phẩm",
+            value: "products",
+            href: adminUrl.product.index
         },
         {
-            label: 'Đơn hàng',
-            value: 'orders',
-            href: adminUrl.order.index,
+            label: "Đơn hàng",
+            value: "orders",
+            href: adminUrl.order.index
         },
         {
-            label: 'Người dùng',
-            value: 'users',
-            href: adminUrl.user.index,
-        },
+            label: "Người dùng",
+            value: "users",
+            href: adminUrl.user.index
+        }
     ]
 
     const handleNavigateTo = (href) => {
@@ -49,12 +49,12 @@ function AdminHeader(props) {
                 <div className={"w-full max-w-7xl flex items-center justify-between py-2 gap-8"}>
                     <div className={"flex items-center gap-12"}>
                         <div className={"cursor-pointer "}>
-                            <h1 className={classNames(classConfig.text.h3, classConfig.textColor.offBlue, 'font-extrabold')}>hieutn.dev</h1>
+                            <h1 className={classNames(classConfig.text.h3, classConfig.textColor.offBlue, "font-extrabold")}>hieutn.dev</h1>
                         </div>
                     </div>
                     <div className={"flex items-center gap-12"}>
                         <div className={"cursor-pointer "}>
-                            <h1 className={classNames(classConfig.text.h3, classConfig.textColor.primary, 'font-extrabold')}>Admin
+                            <h1 className={classNames(classConfig.text.h3, classConfig.textColor.primary, "font-extrabold")}>Admin
                                 Navigation</h1>
                         </div>
                     </div>
@@ -71,7 +71,7 @@ function AdminHeader(props) {
                 <ButtonGroup>
                     {listNavigateButtons.map((button) =>
                         <Button key={button.value}
-                                color={pathname.includes(button.href) ? 'primary' : 'default'}
+                                color={pathname.includes(button.href) ? "primary" : "default"}
                                 onClick={() => handleNavigateTo(button.href)}>
                             {button.label}
                         </Button>)}

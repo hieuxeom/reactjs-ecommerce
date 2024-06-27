@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from "react";
-import useAxios from "../../../hooks/useAxios.js";
 import {apiUrl} from "../../../utils/config/api.config.js";
 import {
     Button,
@@ -13,7 +12,7 @@ import {
     TableHeader,
     TableRow
 } from "@nextui-org/react";
-import TabHeader from "../../Partials/Tab/TabHeader.jsx";
+import TabHeader from "../../../components/Tab/TabHeader.jsx";
 import {IoMdAdd} from "react-icons/io";
 import classConfig from "../../../utils/config/class.config.js";
 import {RiEditFill} from "react-icons/ri";
@@ -21,11 +20,12 @@ import {AiFillDelete} from "react-icons/ai";
 import useAxiosServer from "../../../hooks/useAxiosServer.js";
 import {useNavigate} from "react-router-dom";
 import {adminUrl} from "../../../utils/config/route.config.js";
+import useAxios from "../../../hooks/useAxios.js";
 
 function CategoryIndex(props) {
     const [listCategories, setListCategories] = useState([]);
 
-    const axiosClient = useAxios();
+    const axiosClient = useAxios()
     const axiosServer = useAxiosServer();
     const navigate = useNavigate();
 
@@ -55,7 +55,7 @@ function CategoryIndex(props) {
             color: "success"
         },
         {
-            label: "Vô hiệu hóa",
+            label: "Ẩn",
             value: "false",
             color: "danger"
         }
@@ -65,7 +65,7 @@ function CategoryIndex(props) {
         return axiosServer.put(apiUrl.category.activation(categoryId), {
             isActive: target.value
         }).then((response) => {
-            console.log(response)
+
             if (response.status === "success") {
                 getListCategories();
             }
