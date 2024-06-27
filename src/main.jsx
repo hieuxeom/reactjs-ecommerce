@@ -26,6 +26,7 @@ import EditCategory from "./pages/Admin/CategoryManagement/EditCategory.jsx";
 import NewProduct from "./pages/Admin/ProductManagement/NewProduct.jsx";
 import ProductIndex from "./pages/Admin/ProductManagement/ProductIndex.jsx";
 import EditProduct from "./pages/Admin/ProductManagement/EditProduct.jsx";
+import ProductDetails from "./pages/Admin/ProductManagement/ProductDetails.jsx";
 
 const router = createBrowserRouter([
     {
@@ -71,6 +72,10 @@ const router = createBrowserRouter([
                     {
                         path: "new",
                         element: <NewProduct/>
+                    },
+                    {
+                        path: ":productId",
+                        element: <ProductDetails/>
                     },
                     {
                         path: ":productId/edit",
