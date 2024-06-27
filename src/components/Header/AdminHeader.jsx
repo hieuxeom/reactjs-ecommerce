@@ -43,12 +43,16 @@ function AdminHeader(props) {
         return navigate(href)
     }
 
+    const handleNavigateToHome = () => {
+        return navigate("/");
+    }
+
     return (
         <div className={"w-full flex flex-col items-center gap-8"}>
             <div className={"w-full bg-slate-100 flex justify-center"}>
                 <div className={"w-full max-w-7xl flex items-center justify-between py-2 gap-8"}>
-                    <div className={"flex items-center gap-12"}>
-                        <div className={"cursor-pointer "}>
+                    <div className={"flex items-center gap-12"} onClick={handleNavigateToHome}>
+                        <div className={"cursor-pointer"}>
                             <h1 className={classNames(classConfig.text.h3, classConfig.textColor.offBlue, "font-extrabold")}>hieutn.dev</h1>
                         </div>
                     </div>
