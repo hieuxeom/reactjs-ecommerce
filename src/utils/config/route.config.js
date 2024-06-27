@@ -7,20 +7,17 @@ const adminUrl = {
     category: {
         index: `${baseAdminUrl}/categories`,
         new: `${baseAdminUrl}/categories/new`,
-        edit: (categoryId) => `${baseAdminUrl}/categories/${categoryId}/edit`,
-        delete: (categoryId) => `${baseAdminUrl}/categories/delete/${categoryId}`
+        edit: (categoryId) => `${baseAdminUrl}/categories/${categoryId}/edit`
     },
     product: {
         index: `${baseAdminUrl}/products`,
         new: `${baseAdminUrl}/products/new`,
-        edit: (productId) => `${baseAdminUrl}/products/edit/${productId}`,
-        delete: (productId) => `${baseAdminUrl}/products/delete/${productId}`
+        edit: (productId) => `${baseAdminUrl}/products/${productId}/edit`
     },
     order: {
         index: `${baseAdminUrl}/orders`,
         new: `${baseAdminUrl}/orders/new`,
-        edit: (orderId) => `${baseAdminUrl}/orders/edit/${orderId}`,
-        delete: (orderId) => `${baseAdminUrl}/orders/delete/${orderId}`
+        details: (orderId) => `${baseAdminUrl}/orders/${orderId}/details/`
     },
     user: {
         index: `${baseAdminUrl}/users`,

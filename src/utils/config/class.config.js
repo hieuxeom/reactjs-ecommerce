@@ -15,6 +15,8 @@ const classConfig = {
         h5: "text-2xl",
         h6: "text-xl",
         base: "text-base",
+        inputLabel: "text-xl",
+        subLabel: "text-base",
         sub: "text-md"
     },
     textColor: {
