@@ -1,34 +1,33 @@
-const baseAdminUrl = "/admin"
+const baseAdminUrl = "/admin";
 
 const adminUrl = {
     dashboard: {
-        index: [baseAdminUrl, '/dashboard'].join(''),
+        index: `${baseAdminUrl}/dashboard`
     },
     category: {
-        index: [baseAdminUrl, '/categories'].join(''),
-        new: [baseAdminUrl, '/categories', '/new'].join(''),
-        edit: [baseAdminUrl, '/categories', '/edit'].join(''),
-        delete: [baseAdminUrl, '/categories', '/delete'].join(''),
+        index: `${baseAdminUrl}/categories`,
+        new: `${baseAdminUrl}/categories/new`,
+        edit: (categoryId) => `${baseAdminUrl}/categories/${categoryId}/edit`,
+        delete: (categoryId) => `${baseAdminUrl}/categories/delete/${categoryId}`
     },
     product: {
-        index: [baseAdminUrl, '/products'].join(''),
-        new: [baseAdminUrl, '/products', '/new'].join(''),
-        edit: [baseAdminUrl, '/products', '/edit'].join(''),
-        delete: [baseAdminUrl, '/products', '/delete'].join(''),
+        index: `${baseAdminUrl}/products`,
+        new: `${baseAdminUrl}/products/new`,
+        edit: (productId) => `${baseAdminUrl}/products/edit/${productId}`,
+        delete: (productId) => `${baseAdminUrl}/products/delete/${productId}`
     },
     order: {
-        index: [baseAdminUrl, '/orders'].join(''),
-        new: [baseAdminUrl, '/orders', '/new'].join(''),
-        edit: [baseAdminUrl, '/orders', '/edit'].join(''),
-        delete: [baseAdminUrl, '/orders', '/delete'].join(''),
+        index: `${baseAdminUrl}/orders`,
+        new: `${baseAdminUrl}/orders/new`,
+        edit: (orderId) => `${baseAdminUrl}/orders/edit/${orderId}`,
+        delete: (orderId) => `${baseAdminUrl}/orders/delete/${orderId}`
     },
     user: {
-        index: [baseAdminUrl, '/users'].join(''),
-        new: [baseAdminUrl, '/users', '/new'].join(''),
-        edit: [baseAdminUrl, '/users', '/edit'].join(''),
-        delete: [baseAdminUrl, '/users', '/delete'].join(''),
-    },
+        index: `${baseAdminUrl}/users`,
+        new: `${baseAdminUrl}/users/new`,
+        edit: (userId) => `${baseAdminUrl}/users/edit/${userId}`,
+        delete: (userId) => `${baseAdminUrl}/users/delete/${userId}`
+    }
+};
 
-}
-
-export {baseAdminUrl, adminUrl}
+export {baseAdminUrl, adminUrl};
