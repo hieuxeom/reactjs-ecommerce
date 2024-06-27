@@ -9,7 +9,7 @@ import {NextUIProvider} from "@nextui-org/react";
 import HomePage from "./components/Home/HomePage.jsx";
 import SignIn from "./components/Auth/SignIn/SignIn.jsx";
 import SignUp from "./components/Auth/SignUp/SignUp.jsx";
-import {CookiesProvider} from 'react-cookie';
+import {CookiesProvider} from "react-cookie";
 import MyProfile from "./components/Profile/MyProfile.jsx";
 import ProtectRoute from "./utils/route/ProtectRoute.jsx";
 import Profile from "./components/Profile/Profile.jsx";
@@ -22,6 +22,7 @@ import NewCategory from "./components/Admin/CategoryManagement/NewCategory.jsx";
 import CategoryIndex from "./components/Admin/CategoryManagement/CategoryIndex.jsx";
 import RedirectRoute from "./utils/route/RedirectRoute.jsx";
 import {adminUrl} from "./utils/config/route.config.js";
+import EditCategory from "./components/Admin/CategoryManagement/EditCategory.jsx";
 
 const router = createBrowserRouter([
     {
@@ -29,45 +30,49 @@ const router = createBrowserRouter([
         element: <AdminLayout/>,
         children: [
             {
-                path: '',
-                element: <RedirectRoute redirectTo={adminUrl.dashboard.index}/>,
+                path: "",
+                element: <RedirectRoute redirectTo={adminUrl.dashboard.index}/>
             },
             {
-                path: 'dashboard',
+                path: "dashboard",
                 element: <Dashboard/>
             },
             {
-                path: 'categories',
+                path: "categories",
                 element: <CategoryManagement/>,
                 children: [
                     {
-                        path: '',
+                        path: "",
                         element: <CategoryIndex/>
                     },
                     {
-                        path: 'new',
+                        path: "new",
                         element: <NewCategory/>
+                    },
+                    {
+                        path: ":categoryId/edit",
+                        element: <EditCategory/>
                     }
 
                 ]
 
             },
             {
-                path: 'products',
+                path: "products",
                 element: <ProductManagement/>
             },
             {
-                path: 'orders',
+                path: "orders",
                 element: <OrderManagement/>
             },
             {
-                path: 'users',
+                path: "users",
                 element: <UserManagement/>
             },
             {
-                path: '',
+                path: "",
                 element: <Dashboard/>
-            },
+            }
         ]
     },
     {
@@ -75,15 +80,15 @@ const router = createBrowserRouter([
         element: <RootLayout/>,
         children: [
             {
-                path: '',
+                path: "",
                 element: <HomePage/>
             },
             {
-                path: 'profile',
+                path: "profile",
                 element: <Profile/>,
                 children: [
                     {
-                        path: 'me',
+                        path: "me",
                         element: <MyProfile/>
                     }
 
@@ -101,17 +106,17 @@ const router = createBrowserRouter([
                         element: <SignUp/>
                     }
                 ]
-            },
+            }
 
         ]
-    },
+    }
 
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
     <React.StrictMode>
         <NextUIProvider>
-            <CookiesProvider defaultSetOptions={{path: '/'}}>
+            <CookiesProvider defaultSetOptions={{path: "/"}}>
                 <RouterProvider router={router}/>
             </CookiesProvider>
         </NextUIProvider>
