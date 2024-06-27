@@ -21,6 +21,7 @@ import useAxiosServer from "../../../hooks/useAxiosServer.js";
 import {useNavigate} from "react-router-dom";
 import {adminUrl} from "../../../utils/config/route.config.js";
 import useAxios from "../../../hooks/useAxios.js";
+import classNames from "classnames";
 
 function CategoryIndex(props) {
     const [listCategories, setListCategories] = useState([]);
@@ -102,7 +103,7 @@ function CategoryIndex(props) {
                 {
                     color: "primary",
                     label: "Tạo danh mục",
-                    icon: <IoMdAdd size={classConfig.icon.base}/>
+                    icon: <IoMdAdd size={classConfig.icon.large}/>
                 }
             }/>
             <main>
@@ -110,7 +111,8 @@ function CategoryIndex(props) {
                     <TableHeader columns={tableColumns}>
                         {(col) => {
 
-                            return <TableColumn key={col.value}>{col.label}</TableColumn>
+                            return <TableColumn key={col.value}
+                                                className={classNames(classConfig.text.base)}>{col.label}</TableColumn>
                         }
                         }
                     </TableHeader>

@@ -25,7 +25,7 @@ function FormHeader({formTitle, urlBack}) {
             <Button className={classNames(classConfig.text.base, "flex items-center")}
                     color={"secondary"}
                     onClick={handleNavigateToIndex}
-                    startContent={<IoArrowBack size={classConfig.icon.base}/>}>
+                    startContent={<IoArrowBack size={classConfig.icon.large}/>}>
                 Quay lại </Button>
         </header>
     );

@@ -60,7 +60,7 @@ function NewCategory(props) {
                             <Checkbox isSelected={isActive} onValueChange={setIsActive} size={"lg"}>Hoạt
                                 động?</Checkbox>
                         </FormItem>
-                        <Button onClick={handleSubmit} color={"primary"} size={"lg"}>
+                        <Button onClick={handleSubmit} color={"primary"} className={classConfig.text.base}>
                             Tạo
                         </Button>
                     </div>
