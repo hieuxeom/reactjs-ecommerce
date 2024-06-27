@@ -22,7 +22,6 @@ function SignIn(props) {
             password
         }
         axiosClient.post(apiUrl.auth.signIn, credentialData).then((response) => {
-            console.log(response.data)
             const {
                 refreshToken,
                 accessToken,
