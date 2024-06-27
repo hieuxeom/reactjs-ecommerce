@@ -8,6 +8,7 @@ import FormBody from "../../Partials/Form/FormBody.jsx";
 import useAxios from "../../../hooks/useAxios.js";
 import {useParams} from "react-router-dom";
 import useAxiosServer from "../../../hooks/useAxiosServer.js";
+import FormItem from "../../Partials/Form/FormItem.jsx";
 
 function EditCategory(props) {
 
@@ -49,7 +50,7 @@ function EditCategory(props) {
             <Form>
                 <FormHeader formTitle={"Sửa danh mục"} urlBack={adminUrl.category.index}/>
                 <FormBody>
-                    <div className={"flex flex-col gap-2"}>
+                    <FormItem>
                         <p>Tên danh mục</p>
                         <Input
                             size={"lg"}
@@ -59,8 +60,8 @@ function EditCategory(props) {
                             variant={"bordered"}
                             radius={"sm"}
                         />
-                    </div>
-                    <div className={"flex flex-col gap-2"}>
+                    </FormItem>
+                    <FormItem>
                         <p>Query params</p>
                         <Input
                             size={"lg"}
@@ -71,7 +72,7 @@ function EditCategory(props) {
                             radius={"sm"}
 
                         />
-                    </div>
+                    </FormItem>
                     <div className={"flex justify-between items-center"}>
                         <div className={"flex flex-col gap-2"}>
                             <Checkbox isSelected={isActive} onValueChange={setIsActive}>Hoạt động?</Checkbox>

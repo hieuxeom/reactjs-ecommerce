@@ -6,6 +6,7 @@ import Form from "../../Partials/Form/Form.jsx";
 import FormHeader from "../../Partials/Form/FormHeader.jsx";
 import {adminUrl} from "../../../utils/config/route.config.js";
 import FormBody from "../../Partials/Form/FormBody.jsx";
+import FormItem from "../../Partials/Form/FormItem.jsx";
 
 function NewCategory(props) {
 
@@ -30,7 +31,7 @@ function NewCategory(props) {
             <Form>
                 <FormHeader formTitle={"Tạo danh mục mới"} urlBack={adminUrl.category.index}/>
                 <FormBody>
-                    <div className={"flex flex-col gap-2"}>
+                    <FormItem>
                         <p>Tên danh mục</p>
                         <Input
                             size={"lg"}
@@ -40,8 +41,8 @@ function NewCategory(props) {
                             variant={"bordered"}
                             radius={"sm"}
                         />
-                    </div>
-                    <div className={"flex flex-col gap-2"}>
+                    </FormItem>
+                    <FormItem>
                         <p>Query params</p>
                         <Input
                             size={"lg"}
@@ -52,11 +53,11 @@ function NewCategory(props) {
                             radius={"sm"}
 
                         />
-                    </div>
+                    </FormItem>
                     <div className={"flex justify-between items-center"}>
-                        <div className={"flex flex-col gap-2"}>
+                        <FormItem>
                             <Checkbox isSelected={isActive} onValueChange={setIsActive}>Hoạt động?</Checkbox>
-                        </div>
+                        </FormItem>
                         <Button onClick={handleSubmit} color={"primary"} size={"lg"}>
                             Tạo
                         </Button>
