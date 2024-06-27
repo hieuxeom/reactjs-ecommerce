@@ -123,10 +123,14 @@ function CategoryIndex(props) {
                                 <TableCell>{item.queryParams}</TableCell>
                                 <TableCell>
                                     <Select items={activeStatus} selectedKeys={[`${item.isActive}`]}
-                                            renderValue={([item]) => {
-                                                return <Chip color={item.data.color}
-                                                             variant={"flat"}>{item.data.label}</Chip>
-                                            }}
+                                            renderValue={([item]) => (
+                                                <Chip color={item.data.color}
+                                                      variant={"flat"}
+                                                      radius={"sm"}
+                                                >
+                                                    {item.data.label}
+                                                </Chip>
+                                            )}
                                             onChange={(event) => {
                                                 onChangeStatus(item._id, event)
                                             }}
