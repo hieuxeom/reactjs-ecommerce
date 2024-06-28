@@ -23,6 +23,10 @@ module.exports = {
                 "red": "#fb2448",
                 "blue": "#2f1ac4",
                 "pantone-purple": "#e0d3f5"
+            },
+            boxShadow: {
+                custom: "0 8px 30px rgb(0,0,0,0.12)"
+
             }
         }
     },
