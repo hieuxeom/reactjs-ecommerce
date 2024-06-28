@@ -8,12 +8,12 @@ const classConfig = {
         inactive: "text-navy-blue"
     },
     text: {
-        h1: "text-7xl",
-        h2: "text-5xl",
-        h3: "text-4xl",
-        h4: "text-3xl",
-        h5: "text-2xl",
-        h6: "text-xl",
+        h1: "font-semibold text-7xl",
+        h2: "font-semibold text-5xl",
+        h3: "font-semibold text-4xl",
+        h4: "font-semibold text-3xl",
+        h5: "font-semibold text-2xl",
+        h6: "font-semibold text-xl",
         base: "text-base",
         inputLabel: "text-xl",
         subLabel: "text-base",
@@ -35,6 +35,6 @@ const classConfig = {
         title: "font-extrabold uppercase",
         formTitle: "font-bold capitalize"
     }
-}
+};
 
 export default classConfig;
