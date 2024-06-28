@@ -1,12 +1,15 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {Button, ButtonGroup, Image} from "@nextui-org/react";
-import {imageUrl} from "../../../utils/config/api.config.js";
+import {apiUrl, imageUrl} from "../../../utils/config/api.config.js";
 import classNames from "classnames";
 import classConfig from "../../../utils/config/class.config.js";
 import {IoAdd, IoRemove} from "react-icons/io5";
 import {FaCartPlus} from "react-icons/fa6";
 import StarRating from "../../../components/StarRating/StarRating.jsx";
 import {productDetailsType} from "../../../utils/propTypes/productType.js";
+import toastConfig from "../../../utils/config/toast.config.js";
+import {toast} from "react-toastify";
+import useAxiosServer from "../../../hooks/useAxiosServer.js";
 
 DetailsSection.propTypes = {
     productDetails: productDetailsType
@@ -14,10 +17,15 @@ DetailsSection.propTypes = {
 
 function DetailsSection({productDetails}) {
 
+    const axiosServer = useAxiosServer();
+
+    const toastAdd = useRef(null);
+
     const [currentImage, setCurrentImage] = useState("");
     const [discountPrice, setDiscountPrice] = useState(0);
     const [currentVariantPrice, setCurrentVariantPrice] = useState(0);
     const [currentVariantStock, setCurrentVariantStock] = useState(0);
+    const [currentVariantKey, setCurrentVariantKey] = useState("");
     const [countQuantity, setCountQuantity] = useState(1);
     const [selectedVariant, setSelectedVariant] = useState(0);
 
@@ -33,8 +41,27 @@ function DetailsSection({productDetails}) {
         }
     };
 
+    const handleAddProductToCart = () => {
+        toastAdd.current = toast.info("Adding...", toastConfig.loading);
+        const postData = {
+            productId: productDetails._id,
+            variantKey: currentVariantKey,
+            quantity: countQuantity
+        };
+        axiosServer.post(apiUrl.cart.add, postData).then(response => {
+            console.log(response);
+            if (response.status === "success") {
+                toast.update(toastAdd.current, toastConfig.success(response.message));
+            }
+        }).catch((error) => {
+            const {response} = error;
+            console.log("er", response);
+            toast.update(toastAdd.current, toastConfig.error(response.data.message));
+        });
+    };
+
     useEffect(() => {
-        console.log(`${imageUrl}${currentImage}`);
+        setCurrentVariantKey(productDetails.productVariants[selectedVariant].variantKey);
         setCurrentImage(productDetails.productVariants[selectedVariant].variantImage);
         setCurrentVariantPrice(productDetails.productVariants[selectedVariant].variantPrice);
         setCurrentVariantStock(productDetails.productVariants[selectedVariant].variantStock);
@@ -48,6 +75,7 @@ function DetailsSection({productDetails}) {
             setSelectedVariant(0);
         }
     }, [productDetails]);
+
     return (productDetails && <div className={"w-full flex gap-4 shadow-custom"}>
             <div className={"w-1/2 max-h-[550px] flex items-start"}>
                 <div className={"w-1/4 flex flex-col gap-4 p-4"}>
@@ -130,6 +158,7 @@ function DetailsSection({productDetails}) {
                     <Button size={"lg"}
                             color={"secondary"}
                             startContent={<FaCartPlus size={classConfig.icon.base}/>}
+                            onClick={handleAddProductToCart}
                     >
                         Thêm vào giỏ hàng
                     </Button>
