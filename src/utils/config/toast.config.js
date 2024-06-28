@@ -9,7 +9,7 @@ const toastConfig = {
     error: (message) => ({
         render: message,
         isLoading: false,
-        autoClose: 1000,
+        autoClose: 3000,
         type: "error"
     }),
     loading: {
