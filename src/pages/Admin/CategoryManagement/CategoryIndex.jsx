@@ -120,7 +120,8 @@ function CategoryIndex(props) {
                 {
                     color: "primary",
                     label: "Tạo danh mục",
-                    icon: <IoMdAdd size={classConfig.icon.large}/>
+                    icon: <IoMdAdd size={classConfig.icon.large}/>,
+                    urlBack: adminUrl.category.new
                 }
             }/>
             <main>
