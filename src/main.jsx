@@ -27,6 +27,8 @@ import NewProduct from "./pages/Admin/ProductManagement/NewProduct.jsx";
 import ProductIndex from "./pages/Admin/ProductManagement/ProductIndex.jsx";
 import EditProduct from "./pages/Admin/ProductManagement/EditProduct.jsx";
 import ProductDetails from "./pages/Admin/ProductManagement/ProductDetails.jsx";
+import {ToastContainer} from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const router = createBrowserRouter([
     {
@@ -140,6 +142,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <React.StrictMode>
         <NextUIProvider>
             <CookiesProvider defaultSetOptions={{path: "/"}}>
+                <ToastContainer/>
                 <RouterProvider router={router}/>
             </CookiesProvider>
         </NextUIProvider>
