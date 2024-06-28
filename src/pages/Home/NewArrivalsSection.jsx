@@ -14,11 +14,11 @@ function NewArrivalsSection(props) {
     useEffect(() => {
         axiosClient.get("/products").then((res) => {
             setListProducts(res.data.data);
-        })
+        });
     }, []);
 
     useEffect(() => {
-        // console.log("List products", listProducts)
+        console.log("List products", listProducts);
     }, [listProducts]);
 
     return (
@@ -28,9 +28,9 @@ function NewArrivalsSection(props) {
                     <h2 className={classNames(classConfig.text.h2, classConfig.textVariant.title)}>New Arrivals</h2>
                 </header>
                 <main className="py-8">
-                    <div className="grid grid-cols-4 gap-12">
+                    <div className="grid grid-cols-4 gap-8">
                         {
-                            listProducts && listProducts.map((_p) => <ProductCard productData={_p}/>)
+                            listProducts && listProducts.map((_p, index) => <ProductCard key={index} productData={_p}/>)
                         }
                     </div>
                 </main>
