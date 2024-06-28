@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import useAxios from "../../../hooks/useAxios.js";
 import useAxiosServer from "../../../hooks/useAxiosServer.js";
 import {apiUrl, imageUrl} from "../../../utils/config/api.config.js";
@@ -14,10 +14,15 @@ import classNames from "classnames";
 import {IoMdAdd} from "react-icons/io";
 import {FaXmark} from "react-icons/fa6";
 import {useParams} from "react-router-dom";
+import {toast} from "react-toastify";
+import toastConfig from "../../../utils/config/toast.config.js";
+import {LiaDollarSignSolid} from "react-icons/lia";
 
 function EditProduct(props) {
     const axiosClient = useAxios();
     const axiosServer = useAxiosServer();
+
+    const toastEdit = useRef(null);
 
     const {productId} = useParams();
 
@@ -25,8 +30,8 @@ function EditProduct(props) {
 
     const [productName, setProductName] = useState("");
     const [productPrice, setProductPrice] = useState("0");
-    const [isDiscount, setIsDiscount] = useState(false)
-    const [discountPercents, setDiscountPercents] = useState("0")
+    const [isDiscount, setIsDiscount] = useState(false);
+    const [discountPercents, setDiscountPercents] = useState("0");
     const [productCategory, setProductCategory] = useState("");
     const [productVariants, setProductVariants] = useState([{
         variantKey: "",
@@ -41,23 +46,23 @@ function EditProduct(props) {
         return axiosClient.get(apiUrl.category.all).then((response) => {
             let listCategories = response.data.data;
             setListCategories(listCategories);
-            setProductCategory(listCategories[0].queryParams)
-        })
-    }
+            setProductCategory(listCategories[0].queryParams);
+        });
+    };
 
     const getProductDetails = () => {
         return axiosClient.get(apiUrl.product.details(productId)).then((response) => {
             const productDetails = response.data.data;
 
             setProductName(productDetails.productName);
-            setProductPrice(productDetails.productPrice)
-            setIsDiscount(productDetails.isDiscount)
-            setDiscountPercents(productDetails.discountPercents)
-            setProductCategory(productDetails.productCategory)
-            setProductVariants(productDetails.productVariants)
-            setIsActive(productDetails.isActive)
-        })
-    }
+            setProductPrice(productDetails.productPrice);
+            setIsDiscount(productDetails.isDiscount);
+            setDiscountPercents(productDetails.discountPercents);
+            setProductCategory(productDetails.productCategory);
+            setProductVariants(productDetails.productVariants);
+            setIsActive(productDetails.isActive);
+        });
+    };
 
     useEffect(() => {
         getListCategories();
@@ -83,10 +88,10 @@ function EditProduct(props) {
                 variantImage: "",
                 variantStock: "0",
                 variantPrice: "0"
-            }]
+            }];
             setProductVariants(newListVariants);
         }
-    }
+    };
 
     const handleRemoveVariantRow = (index) => {
         if (productVariants.length > 1) {
@@ -107,7 +112,7 @@ function EditProduct(props) {
                 handleVariantInputChange(index, "variantImage", reader.result);
             };
         }
-    }
+    };
 
     const handleUpdateRangePrice = () => {
         const tempSort = productVariants.sort((a, b) => a.variantPrice - b.variantPrice);
@@ -115,10 +120,13 @@ function EditProduct(props) {
         const minPrice = tempSort[0].variantPrice;
         const maxPrice = tempSort[tempSort.length - 1].variantPrice;
 
-        setProductPrice(minPrice !== maxPrice ? `${minPrice}$ - ${maxPrice}$` : `${minPrice}$`)
-    }
+        setProductPrice(minPrice !== maxPrice ? `${minPrice}$ - ${maxPrice}$` : `${minPrice}$`);
+    };
 
     const handleSubmit = () => {
+
+        toastEdit.current = toast.info("Updating...", toastConfig.loading);
+
         const submitData = {
             productName,
             productPrice,
@@ -127,14 +135,20 @@ function EditProduct(props) {
             productCategory,
             productVariants,
             isActive
-        }
+        };
         axiosServer.put(apiUrl.product.edit(productId), submitData).then((response) => {
-            getProductDetails()
-        })
-    }
+            if (response.status === "success") {
+                getProductDetails();
+                toast.update(toastEdit.current, toastConfig.success(response.message));
+            }
+        }).catch((error) => {
+            const {response} = error;
+            toast.update(toastEdit.current, toastConfig.error(response.data.message));
+        });
+    };
 
     useEffect(() => {
-        console.log(productVariants)
+        console.log(productVariants);
     }, [productVariants]);
 
     return (<div className={"w-full max-w-7xl"}>
@@ -175,7 +189,7 @@ function EditProduct(props) {
                             <Select items={listCategories}
                                     selectedKeys={[productCategory]}
                                     onSelectionChange={([event]) => {
-                                        setProductCategory(event)
+                                        setProductCategory(event);
                                     }}
                                     aria-label={"Select product category"}
                                     disallowEmptySelection
@@ -245,8 +259,11 @@ function EditProduct(props) {
                                         </FormItem>
                                         <FormItem>
                                             <p className={classConfig.text.subLabel}>Giá</p>
-                                            <Input size={"lg"} radius={"sm"} variant={"bordered"}
+                                            <Input size={"lg"}
+                                                   radius={"sm"}
+                                                   variant={"bordered"}
                                                    value={variant.variantPrice}
+                                                   endContent={<LiaDollarSignSolid/>}
                                                    onValueChange={
                                                        (event) => handleVariantInputChange(index, "variantPrice", event)}
                                             />
@@ -267,13 +284,13 @@ function EditProduct(props) {
                                                 onClick={() => handleRemoveVariantRow(index)}><FaXmark
                                             size={classConfig.icon.large}/></Button>
 
-                                    </FormRow>)
+                                    </FormRow>);
                                 })}
                             </div>
                         </FormItem>
 
                     </FormRow>
-                    <Button onClick={handleSubmit} color={"primary"} size={"lg"}>Thêm sản phẩm</Button>
+                    <Button onClick={handleSubmit} color={"primary"} size={"lg"}>Sửa sản phẩm</Button>
                 </FormBody>
             </Form>
         </div>
