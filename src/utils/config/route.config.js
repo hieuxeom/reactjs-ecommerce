@@ -28,4 +28,13 @@ const adminUrl = {
     }
 };
 
-export {baseAdminUrl, adminUrl};
+const userUrl = {
+    home: `/`,
+    shop: `/shop`,
+    product: {
+        base: `/products`,
+        details: (productId) => `/product/${productId}`
+    }
+};
+
+export {baseAdminUrl, adminUrl, userUrl};
