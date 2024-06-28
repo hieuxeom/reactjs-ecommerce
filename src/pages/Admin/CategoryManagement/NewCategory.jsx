@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useRef, useState} from "react";
 import {Button, Checkbox, Input} from "@nextui-org/react";
 import useAxiosServer from "../../../hooks/useAxiosServer.js";
 import {apiUrl} from "../../../utils/config/api.config.js";
@@ -8,8 +8,16 @@ import {adminUrl} from "../../../utils/config/route.config.js";
 import FormBody from "../../../components/Form/FormBody.jsx";
 import FormItem from "../../../components/Form/FormItem.jsx";
 import classConfig from "../../../utils/config/class.config.js";
+import {toast} from "react-toastify";
+import toastConfig from "../../../utils/config/toast.config.js";
+import {useNavigate} from "react-router-dom";
+import {checkValidQueryParams} from "../../../utils/checkSpaces.js";
 
 function NewCategory(props) {
+
+    const navigate = useNavigate();
+
+    const toastCreate = useRef(null);
 
     const [categoryName, setCategoryName] = useState("");
     const [queryParams, setQueryParams] = useState("");
@@ -18,14 +26,24 @@ function NewCategory(props) {
     const axiosServer = useAxiosServer();
 
     const handleSubmit = () => {
-        axiosServer.post(apiUrl.category.base, {
-            categoryName,
-            queryParams,
-            isActive
-        }).then((response) => {
-            console.log(response);
-        })
-    }
+        toastCreate.current = toast.info("Creating...", toastConfig.loading);
+        if (checkValidQueryParams(queryParams)) {
+            axiosServer.post(apiUrl.category.base, {
+                categoryName,
+                queryParams,
+                isActive
+            }).then((response) => {
+                if (response.status === "success") {
+                    toast.update(toastCreate.current, toastConfig.success(response.message, () => navigate(adminUrl.category.index)));
+                }
+            }).catch((error) => {
+                const {response} = error;
+                toast.update(toastCreate.current, toastConfig.error(response.data.message));
+            });
+        } else {
+            toast.update(toastCreate.current, toastConfig.error("Query params cannot contain spaces"));
+        }
+    };
 
     return (
         <div className={"w-full max-w-7xl"}>

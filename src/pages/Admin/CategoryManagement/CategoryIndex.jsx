@@ -1,8 +1,9 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {apiUrl} from "../../../utils/config/api.config.js";
 import {
     Button,
     Chip,
+    CircularProgress,
     Select,
     SelectItem,
     Table,
@@ -22,11 +23,18 @@ import {useNavigate} from "react-router-dom";
 import {adminUrl} from "../../../utils/config/route.config.js";
 import useAxios from "../../../hooks/useAxios.js";
 import classNames from "classnames";
+import {toast} from "react-toastify";
+import toastConfig from "../../../utils/config/toast.config.js";
 
 function CategoryIndex(props) {
     const [listCategories, setListCategories] = useState([]);
+    const [fetchState, setFetchState] = useState(false);
 
-    const axiosClient = useAxios()
+    const toastFetch = useRef(null);
+    const toastDelete = useRef(null);
+    const toastUpdateStatus = useRef(null);
+
+    const axiosClient = useAxios();
     const axiosServer = useAxiosServer();
     const navigate = useNavigate();
 
@@ -47,7 +55,7 @@ function CategoryIndex(props) {
             label: "Hành động",
             value: "action"
         }
-    ]
+    ];
 
     const activeStatus = [
         {
@@ -60,38 +68,47 @@ function CategoryIndex(props) {
             value: "false",
             color: "danger"
         }
-    ]
+    ];
 
     const onChangeStatus = (categoryId, {target}) => {
+        toastUpdateStatus.current = toast.info("Updating...", toastConfig.loading);
         return axiosServer.put(apiUrl.category.activation(categoryId), {
             isActive: target.value
         }).then((response) => {
 
             if (response.status === "success") {
                 getListCategories();
+                toast.update(toastUpdateStatus.current, toastConfig.success("Successfully updated category status"));
             }
-        })
-    }
+        }).catch(({response}) => {
+            toast.update(toastUpdateStatus.current, toastConfig.error(response.data.message));
+        });
+    };
 
     const onDelete = (categoryId) => {
+        toastDelete.current = toast.info("Deleting...", toastConfig.loading);
         return axiosServer.delete(apiUrl.category.delete(categoryId)).then((response) => {
             console.log(response);
             if (response.status === "success") {
                 getListCategories();
+                toast.update(toastDelete.current, toastConfig.success("Successfully deleted category"));
             }
-
-        })
-    }
+        });
+    };
 
     const handleNavigateToEdit = (categoryId) => {
-        return navigate(adminUrl.category.edit(categoryId))
-    }
+        return navigate(adminUrl.category.edit(categoryId));
+    };
 
     const getListCategories = () => {
+        toastFetch.current = toast.info("Fetching...", toastConfig.loading);
+
         axiosClient.get(apiUrl.category.all).then((response) => {
             setListCategories(response.data.data);
-        })
-    }
+            setFetchState(true);
+            toast.update(toastFetch.current, toastConfig.success("Successfully fetched categories data"));
+        });
+    };
 
     useEffect(() => {
         getListCategories();
@@ -112,17 +129,23 @@ function CategoryIndex(props) {
                         {(col) => {
 
                             return <TableColumn key={col.value}
-                                                className={classNames(classConfig.text.base)}>{col.label}</TableColumn>
+                                                className={classNames(classConfig.text.base)}>{col.label}</TableColumn>;
                         }
                         }
                     </TableHeader>
-                    <TableBody items={listCategories} aria-label="vccc">
+                    <TableBody items={listCategories}
+                               aria-label="List categories table"
+                               emptyContent={!fetchState ?
+                                   <div className={"w-full flex justify-center items-center"}>
+                                       <CircularProgress></CircularProgress>
+                                   </div> : "No rows to display"}>
                         {(item) => {
                             return <TableRow key={item._id}>
                                 <TableCell>{item.categoryName}</TableCell>
                                 <TableCell>{item.queryParams}</TableCell>
                                 <TableCell>
-                                    <Select items={activeStatus} selectedKeys={[`${item.isActive}`]}
+                                    <Select items={activeStatus}
+                                            selectedKeys={[`${item.isActive}`]}
                                             renderValue={([item]) => (
                                                 <Chip color={item.data.color}
                                                       variant={"flat"}
@@ -132,7 +155,7 @@ function CategoryIndex(props) {
                                                 </Chip>
                                             )}
                                             onChange={(event) => {
-                                                onChangeStatus(item._id, event)
+                                                onChangeStatus(item._id, event);
                                             }}
                                             disallowEmptySelection
                                             aria-label="Select activation status"
@@ -140,25 +163,29 @@ function CategoryIndex(props) {
                                         {(status) => {
                                             return <SelectItem key={status.value}>
                                                 <Chip color={status.color} variant={"flat"}>{status.label}</Chip>
-                                            </SelectItem>
+                                            </SelectItem>;
                                         }}
                                     </Select>
                                 </TableCell>
                                 <TableCell>
                                     <div className={"flex items-center gap-2"}>
-                                        <Button isIconOnly={true} color={"warning"} className={"text-white"}
+                                        <Button isIconOnly={true}
+                                                color={"warning"}
+                                                variant={"ghost"}
                                                 onClick={() => handleNavigateToEdit(item._id)}
                                         >
                                             <RiEditFill size={classConfig.icon.large}/>
                                         </Button>
-                                        <Button isIconOnly={true} color={"danger"} className={"text-white"}
+                                        <Button isIconOnly={true}
+                                                color={"danger"}
+                                                variant={"ghost"}
                                                 onClick={() => onDelete(item._id)}
                                         >
                                             <AiFillDelete size={classConfig.icon.large}/>
                                         </Button>
                                     </div>
                                 </TableCell>
-                            </TableRow>
+                            </TableRow>;
                         }}
                     </TableBody>
                 </Table>

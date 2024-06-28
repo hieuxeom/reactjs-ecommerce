@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {Button, Checkbox, Input} from "@nextui-org/react";
 import {apiUrl} from "../../../utils/config/api.config.js";
 import Form from "../../../components/Form/Form.jsx";
@@ -6,12 +6,18 @@ import FormHeader from "../../../components/Form/FormHeader.jsx";
 import {adminUrl} from "../../../utils/config/route.config.js";
 import FormBody from "../../../components/Form/FormBody.jsx";
 import useAxios from "../../../hooks/useAxios.js";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import useAxiosServer from "../../../hooks/useAxiosServer.js";
 import FormItem from "../../../components/Form/FormItem.jsx";
 import classConfig from "../../../utils/config/class.config.js";
+import toastConfig from "../../../utils/config/toast.config.js";
+import {toast} from "react-toastify";
 
 function EditCategory(props) {
+
+    const navigate = useNavigate();
+
+    const toastEdit = useRef(null);
 
     const [categoryName, setCategoryName] = useState("");
     const [queryParams, setQueryParams] = useState("");
@@ -26,25 +32,32 @@ function EditCategory(props) {
 
             const {categoryName, queryParams, isActive} = response.data.data;
 
-            setCategoryName(categoryName)
-            setQueryParams(queryParams)
-            setIsActive(isActive)
-        })
-    }
+            setCategoryName(categoryName);
+            setQueryParams(queryParams);
+            setIsActive(isActive);
+        });
+    };
 
     useEffect(() => {
-        getCategoryDetails()
+        getCategoryDetails();
     }, []);
 
     const handleSubmit = () => {
+        toastEdit.current = toast.info("Editing...", toastConfig.loading);
+
         axiosServer.put(apiUrl.category.edit(categoryId), {
             categoryName,
             queryParams,
             isActive
         }).then((response) => {
-            console.log(response);
-        })
-    }
+            if (response.status === "success") {
+                toast.update(toastEdit.current, toastConfig.success(response.message, () => navigate(adminUrl.category.index)));
+            }
+        }).catch((error) => {
+            const {response} = error;
+            toast.update(toastEdit.current, toastConfig.error(response.data.message));
+        });
+    };
 
     return (
         <div className={"w-full max-w-7xl"}>
@@ -76,11 +89,16 @@ function EditCategory(props) {
                     </FormItem>
                     <div className={"flex justify-between items-center"}>
                         <div className={"flex flex-col gap-2"}>
-                            <Checkbox isSelected={isActive} onValueChange={setIsActive}
+                            <Checkbox isSelected={isActive}
+                                      onValueChange={setIsActive}
                                       size={"lg"}
-                            >Hoạt động?</Checkbox>
+                            >
+                                Hoạt động?
+                            </Checkbox>
                         </div>
-                        <Button onClick={handleSubmit} color={"primary"} size={"lg"}
+                        <Button onClick={handleSubmit}
+                                color={"primary"}
+                                size={"lg"}
                         >
                             Sửa
                         </Button>

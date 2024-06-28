@@ -1,8 +1,8 @@
-/** @type {import('tailwindcss').Config} */
+/** @type {import("tailwindcss").Config} */
 const {nextui} = require("@nextui-org/theme");
 
 module.exports = {
-    content: ["./src/**/*.{js,jsx,ts,tsx}", "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",],
+    content: ["./src/**/*.{js,jsx,ts,tsx}", "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}"],
     theme: {
 
         extend: {
@@ -10,6 +10,7 @@ module.exports = {
                 primary: "#fb2e86",
                 secondary: "#7e33e0",
                 warning: "#facc15",
+                "warning-foreground": "#ffffff",
                 danger: "#ef4444",
                 success: "#4ade80",
                 purple: "#7e33e0",
@@ -22,10 +23,10 @@ module.exports = {
                 "red": "#fb2448",
                 "blue": "#2f1ac4",
                 "pantone-purple": "#e0d3f5"
-            },
-        },
+            }
+        }
     },
     darkMode: "class",
-    plugins: [nextui()],
+    plugins: [nextui()]
 
 };
