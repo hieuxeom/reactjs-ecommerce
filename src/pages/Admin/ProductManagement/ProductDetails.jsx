@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import useAxios from "../../../hooks/useAxios.js";
 import useAxiosServer from "../../../hooks/useAxiosServer.js";
 import {apiUrl, imageUrl} from "../../../utils/config/api.config.js";
@@ -12,19 +12,32 @@ import {Avatar, Checkbox, Chip, Input} from "@nextui-org/react";
 import FormRow from "../../../components/Form/FormRow.jsx";
 import classNames from "classnames";
 import {useParams} from "react-router-dom";
+import {toast} from "react-toastify";
+import toastConfig from "../../../utils/config/toast.config.js";
 
 function ProductDetails(props) {
+    const toastFetch = useRef(null);
+
     const axiosClient = useAxios();
     const axiosServer = useAxiosServer();
 
     const {productId} = useParams();
 
     const [productDetails, setProductDetails] = useState();
+
     const getProductDetails = () => {
+        toastFetch.current = toast.info("Fetching...", toastConfig.loading);
         return axiosClient.get(apiUrl.product.details(productId)).then((response) => {
-            setProductDetails(response.data.data);
-        })
-    }
+            
+            if (response.data.status === "success") {
+                setProductDetails(response.data.data);
+                toast.update(toastFetch.current, toastConfig.success(response.data.message));
+            }
+        }).catch((error) => {
+            const {response} = error;
+            toast.update(toastFetch.current, toastConfig.error(response.data.message));
+        });
+    };
 
     useEffect(() => {
         getProductDetails();
@@ -139,7 +152,7 @@ function ProductDetails(props) {
                                                    isReadOnly
                                             />
                                         </FormItem>
-                                    </FormRow>)
+                                    </FormRow>);
                                 })}
                             </div>
                         </FormItem>

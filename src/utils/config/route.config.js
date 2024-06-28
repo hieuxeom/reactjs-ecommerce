@@ -12,6 +12,7 @@ const adminUrl = {
     product: {
         index: `${baseAdminUrl}/products`,
         new: `${baseAdminUrl}/products/new`,
+        details: (productId) => `${baseAdminUrl}/products/${productId}`,
         edit: (productId) => `${baseAdminUrl}/products/${productId}/edit`
     },
     order: {

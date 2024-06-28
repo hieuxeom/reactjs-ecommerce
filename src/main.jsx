@@ -142,7 +142,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <React.StrictMode>
         <NextUIProvider>
             <CookiesProvider defaultSetOptions={{path: "/"}}>
-                <ToastContainer stacked closeOnClick/>
+                <ToastContainer closeOnClick/>
                 <RouterProvider router={router}/>
             </CookiesProvider>
         </NextUIProvider>
