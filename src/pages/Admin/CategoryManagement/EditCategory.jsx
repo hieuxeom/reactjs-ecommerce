@@ -12,6 +12,7 @@ import FormItem from "../../../components/Form/FormItem.jsx";
 import classConfig from "../../../utils/config/class.config.js";
 import toastConfig from "../../../utils/config/toast.config.js";
 import {toast} from "react-toastify";
+import {isIncludeSpace} from "../../../utils/checkSpaces.js";
 
 function EditCategory(props) {
 
@@ -44,6 +45,10 @@ function EditCategory(props) {
 
     const handleSubmit = () => {
         toastEdit.current = toast.info("Editing...", toastConfig.loading);
+
+        if (isIncludeSpace(queryParams)) {
+            return toast.update(toastEdit.current, toastConfig.error("Query params cannot contain spaces"));
+        }
 
         axiosServer.put(apiUrl.category.edit(categoryId), {
             categoryName,

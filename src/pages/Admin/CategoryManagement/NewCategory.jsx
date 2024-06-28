@@ -11,7 +11,7 @@ import classConfig from "../../../utils/config/class.config.js";
 import {toast} from "react-toastify";
 import toastConfig from "../../../utils/config/toast.config.js";
 import {useNavigate} from "react-router-dom";
-import {checkValidQueryParams} from "../../../utils/checkSpaces.js";
+import {isIncludeSpace} from "../../../utils/checkSpaces.js";
 
 function NewCategory(props) {
 
@@ -27,22 +27,21 @@ function NewCategory(props) {
 
     const handleSubmit = () => {
         toastCreate.current = toast.info("Creating...", toastConfig.loading);
-        if (checkValidQueryParams(queryParams)) {
-            axiosServer.post(apiUrl.category.base, {
-                categoryName,
-                queryParams,
-                isActive
-            }).then((response) => {
-                if (response.status === "success") {
-                    toast.update(toastCreate.current, toastConfig.success(response.message, () => navigate(adminUrl.category.index)));
-                }
-            }).catch((error) => {
-                const {response} = error;
-                toast.update(toastCreate.current, toastConfig.error(response.data.message));
-            });
-        } else {
-            toast.update(toastCreate.current, toastConfig.error("Query params cannot contain spaces"));
+        if (isIncludeSpace(queryParams)) {
+            return toast.update(toastCreate.current, toastConfig.error("Query params cannot contain spaces"));
         }
+        axiosServer.post(apiUrl.category.base, {
+            categoryName,
+            queryParams,
+            isActive
+        }).then((response) => {
+            if (response.status === "success") {
+                toast.update(toastCreate.current, toastConfig.success(response.message, () => navigate(adminUrl.category.index)));
+            }
+        }).catch((error) => {
+            const {response} = error;
+            toast.update(toastCreate.current, toastConfig.error(response.data.message));
+        });
     };
 
     return (

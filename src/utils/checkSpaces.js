@@ -1,4 +1,7 @@
-export const checkValidQueryParams = (queryParams) => {
-    return !queryParams.includes(" ");
+export const isIncludeSpace = (string) => {
+    return string.includes(" ") && string !== "";
+};
 
+export const isEmpty = (string) => {
+    return string === "";
 };
