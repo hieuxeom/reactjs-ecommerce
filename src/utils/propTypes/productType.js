@@ -20,6 +20,7 @@ export const productVariantType = PropTypes.shape({
 });
 
 export const productDetailsType = PropTypes.shape({
+    _id: PropTypes.string.isRequired,
     productName: PropTypes.string.isRequired,
     productPrice: PropTypes.string.isRequired,
     isDiscount: PropTypes.bool,
