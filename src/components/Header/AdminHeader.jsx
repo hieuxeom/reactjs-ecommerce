@@ -53,7 +53,7 @@ function AdminHeader(props) {
                 <div className={"w-full max-w-7xl flex items-center justify-between py-2 gap-8"}>
                     <div className={"flex items-center gap-12"} onClick={handleNavigateToHome}>
                         <div className={"cursor-pointer"}>
-                            <h1 className={classNames(classConfig.fontSize.h3, classConfig.textColor.offBlue, "font-extrabold")}>hieutn.dev</h1>
+                            <h1 className={classNames(classConfig.fontSize.h1, classConfig.textColor.primary, "!text-4xl")}>hieutn.dev</h1>
                         </div>
                     </div>
                     <div className={"flex items-center gap-12"}>

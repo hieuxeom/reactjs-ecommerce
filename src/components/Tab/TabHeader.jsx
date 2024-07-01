@@ -24,7 +24,7 @@ function TabHeader({tabTitle, buttonData}) {
     };
     return (
         <header className={"flex justify-between items-center"}>
-            <h3 className={classNames(classConfig.fontSize.h3, classConfig.textVariant.formTitle, classConfig.textColor.navyBlue)}>{tabTitle}</h3>
+            <h3 className={classNames(classConfig.fontSize.h3, classConfig.textVariant.formTitle, classConfig.textColor.secondary)}>{tabTitle}</h3>
             {buttonData &&
                 <Button onClick={handleNavigateTo}
                         color={buttonData.color}

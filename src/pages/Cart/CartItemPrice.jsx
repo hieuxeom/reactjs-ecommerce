@@ -11,7 +11,7 @@ function CartItemPrice({isDiscount, discountPrice, originalPrice}) {
     return (
         isDiscount ?
             <div className={"col-span-2 flex flex-col items-center justify-center"}>
-                <span className={"text-xl font-semibold text-danger"}>
+                <span className={"text-xl font-semibold text-primary"}>
                     {discountPrice.toFixed(2)}$
                 </span>
                 <span className={"text-md font-semibold text-gray-400 line-through"}>
@@ -19,7 +19,7 @@ function CartItemPrice({isDiscount, discountPrice, originalPrice}) {
                 </span>
             </div> :
             <div className={"col-span-2 flex flex-col items-center justify-center"}>
-                <span className={"text-xl font-semibold text-danger"}>
+                <span className={"text-xl font-semibold text-primary"}>
                     {discountPrice.toFixed(2)}$
                 </span>
             </div>

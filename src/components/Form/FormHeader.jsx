@@ -21,7 +21,7 @@ function FormHeader({formTitle, urlBack}) {
 
     return (
         <header className={"flex justify-between items-center"}>
-            <h3 className={classNames(classConfig.fontSize.h3, classConfig.textVariant.formTitle, classConfig.textColor.navyBlue)}>{formTitle}</h3>
+            <h3 className={classNames(classConfig.fontSize.h3, classConfig.textVariant.formTitle, classConfig.textColor.secondary)}>{formTitle}</h3>
             <Button className={classNames(classConfig.fontSize.base, "flex items-center")}
                     color={"secondary"}
                     onClick={handleNavigateToIndex}

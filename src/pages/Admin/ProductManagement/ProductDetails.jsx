@@ -1,6 +1,5 @@
 import React, {useEffect, useRef, useState} from "react";
 import useAxios from "../../../hooks/useAxios.js";
-import useAxiosServer from "../../../hooks/useAxiosServer.js";
 import {apiUrl, imageUrl} from "../../../utils/config/api.config.js";
 import Form from "../../../components/Form/Form.jsx";
 import FormHeader from "../../../components/Form/FormHeader.jsx";
@@ -14,12 +13,12 @@ import classNames from "classnames";
 import {useParams} from "react-router-dom";
 import {toast} from "react-toastify";
 import toastConfig from "../../../utils/config/toast.config.js";
+import {LiaDollarSignSolid} from "react-icons/lia";
 
 function ProductDetails(props) {
     const toastFetch = useRef(null);
 
     const axiosClient = useAxios();
-    const axiosServer = useAxiosServer();
 
     const {productId} = useParams();
 
@@ -69,7 +68,7 @@ function ProductDetails(props) {
                         <FormItem>
                             <Checkbox isSelected={productDetails?.isDiscount}
                                       size={"lg"}
-                                      color={"secondary"}
+                                      color={"primary"}
                                       isReadOnly
                             >
                                 Giảm giá
@@ -83,12 +82,12 @@ function ProductDetails(props) {
                         </FormItem>
                         <FormItem>
                             <p className={classConfig.fontSize.inputLabel}>Danh mục sản phẩm</p>
-                            <Chip color={"secondary"} variant={"flat"}>{productDetails?.productCategory}</Chip>
+                            <Chip color={"primary"} variant={"flat"}>{productDetails?.productCategory}</Chip>
                         </FormItem>
                         <Checkbox isSelected={productDetails?.isActive}
                                   size={"lg"}
                                   className={"w-full"}
-                                  color={"secondary"}
+                                  color={"primary"}
                         >
                             Hoạt động?
                         </Checkbox>
@@ -111,7 +110,7 @@ function ProductDetails(props) {
                                             <p className={classConfig.fontSize.subLabel}>Hình ảnh</p>
                                             <Avatar isBordered radius={"sm"}
                                                     size={"lg"}
-                                                    color={"secondary"}
+                                                    color={"default"}
                                                     src={`${imageUrl}${variant.variantImage}`}/>
                                         </FormItem>
                                         <FormItem>
@@ -145,12 +144,24 @@ function ProductDetails(props) {
                                             />
                                         </FormItem>
                                         <FormItem>
-                                            <p className={classConfig.fontSize.subLabel}>Giá</p>
-                                            <Input size={"lg"}
-                                                   radius={"sm"}
-                                                   value={variant.variantPrice}
-                                                   isReadOnly
-                                            />
+                                            <div className={"flex items-center gap-2"}>
+                                                <Input size={"lg"}
+                                                       label={"Giá gốc"}
+                                                       labelPlacement={"outside"}
+                                                       endContent={<LiaDollarSignSolid/>}
+                                                       radius={"sm"}
+                                                       value={variant.variantPrice.originalPrice}
+                                                       isReadOnly
+                                                />
+                                                <Input size={"lg"}
+                                                       label={"Giá khuyến mãi"}
+                                                       labelPlacement={"outside"}
+                                                       endContent={<LiaDollarSignSolid/>}
+                                                       radius={"sm"}
+                                                       value={variant.variantPrice.discountPrice}
+                                                       isReadOnly
+                                                />
+                                            </div>
                                         </FormItem>
                                     </FormRow>);
                                 })}

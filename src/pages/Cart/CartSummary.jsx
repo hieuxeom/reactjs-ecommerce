@@ -27,7 +27,7 @@ function CartSummary({summaryData}) {
     return (
         <div className={"shadow-custom p-4 flex flex-col gap-4"}>
             <header>
-                <h5 className={classNames(classConfig.fontSize.h5, "text-secondary")}>Tổng thanh toán</h5>
+                <h5 className={classNames(classConfig.fontSize.h5, "!font-bold text-secondary")}>Tổng thanh toán</h5>
             </header>
             <main className={"flex flex-col gap-4"}>
                 <div className={"flex justify-between"}>
@@ -44,15 +44,17 @@ function CartSummary({summaryData}) {
                 </div>
                 <Form>
                     <FormRow>
-                        <Input placeholder={"Mã giảm giá"}/>
-                        <Button color={"secondary"}>Sử dụng</Button>
+                        <Input placeholder={"Mã giảm giá"}
+                               endContent={<Button size={"sm"} color={"secondary"}>Sử dụng</Button>}
+                        />
+
                     </FormRow>
                 </Form>
 
                 <Divider/>
                 <div className={"flex justify-between"}>
-                    <p className={classNames(classConfig.fontSize.h5, "text-secondary")}>Tổng thanh toán</p>
-                    <p className={classNames(classConfig.fontSize.h5, "text-secondary")}>{total.toFixed(2)}$</p>
+                    <p className={classNames(classConfig.fontSize.h5, "!font-bold  text-secondary")}>Tổng thanh toán</p>
+                    <p className={classNames(classConfig.fontSize.h5, "!font-bold text-secondary")}>{total.toFixed(2)}$</p>
                 </div>
             </main>
         </div>

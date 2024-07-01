@@ -177,7 +177,7 @@ function ProductIndex(props) {
                                 <TableCell>
                                     <div className={"flex items-center gap-2"}>
                                         <Button isIconOnly={true}
-                                                color={"secondary"}
+                                                color={"primary"}
                                                 variant={"ghost"}
                                                 onClick={() => handleNavigateToDetails(item._id)}
                                         >

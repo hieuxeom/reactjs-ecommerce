@@ -203,7 +203,7 @@ function EditProduct(props) {
                             <Checkbox isSelected={isDiscount}
                                       onValueChange={setIsDiscount}
                                       size={"lg"}
-                                      color={"secondary"}
+                                      color={"primary"}
                             >
                                 Giảm giá
                             </Checkbox>
@@ -235,7 +235,7 @@ function EditProduct(props) {
                                   onValueChange={setIsActive}
                                   size={"lg"}
                                   className={"w-full"}
-                                  color={"secondary"}
+                                  color={"primary"}
                         >
                             Hoạt động?</Checkbox>
                     </FormRow>
@@ -247,7 +247,7 @@ function EditProduct(props) {
                                     <p className={classNames({
                                         "text-danger": productVariants.length === 10
                                     })}>({productVariants.length}/10)</p>
-                                    <Button isIconOnly color={"secondary"}
+                                    <Button isIconOnly color={"primary"}
                                             onClick={handleAddNewVariantRow}
                                     ><IoMdAdd size={classConfig.icon.base}/></Button>
                                 </div>
@@ -316,8 +316,7 @@ function EditProduct(props) {
                                                        labelPlacement={"outside"}
                                                        value={variant.variantPrice.discountPrice}
                                                        endContent={<LiaDollarSignSolid/>}
-                                                    // isReadOnly/
-                                                       isDisabled
+                                                       isReadOnly
                                                 />
                                             </div>
                                         </FormItem>
@@ -335,6 +334,7 @@ function EditProduct(props) {
 
 
                                         <Button isIconOnly color={"danger"}
+                                                variant={"flat"}
                                                 onClick={() => handleRemoveVariantRow(index)}><FaXmark
                                             size={classConfig.icon.large}/></Button>
 

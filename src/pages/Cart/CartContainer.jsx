@@ -49,22 +49,22 @@ function CartContainer({cartItems, onChangeEvent}) {
                 <div className={"col-span-1"}>
                 </div>
                 <div
-                    className={classNames(classConfig.fontSize.h6, classConfig.textColor.primary, "col-span-4 flex justify-center")}
+                    className={classNames(classConfig.fontSize.h5, classConfig.textColor.secondary, "col-span-4 flex justify-center")}
                 >
                     Tên sản phẩm
                 </div>
                 <div
-                    className={classNames(classConfig.fontSize.h6, classConfig.textColor.primary, "col-span-2 flex justify-center")}
+                    className={classNames(classConfig.fontSize.h5, classConfig.textColor.secondary, "col-span-2 flex justify-center")}
                 >
                     Giá
                 </div>
                 <div
-                    className={classNames(classConfig.fontSize.h6, classConfig.textColor.primary, "col-span-3 flex justify-center")}
+                    className={classNames(classConfig.fontSize.h5, classConfig.textColor.secondary, "col-span-3 flex justify-center")}
                 >
                     Số lượng
                 </div>
                 <div
-                    className={classNames(classConfig.fontSize.h6, classConfig.textColor.primary, "col-span-2 flex justify-center")}
+                    className={classNames(classConfig.fontSize.h5, classConfig.textColor.secondary, "col-span-2 flex justify-center")}
                 >
                     Tạm tính
                 </div>

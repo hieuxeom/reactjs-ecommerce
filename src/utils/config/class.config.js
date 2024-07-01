@@ -8,11 +8,11 @@ const classConfig = {
         inactive: "text-navy-blue"
     },
     fontSize: {
-        h1: "font-semibold text-7xl",
-        h2: "font-semibold text-5xl",
-        h3: "font-semibold text-4xl",
-        h4: "font-semibold text-3xl",
-        h5: "font-semibold text-2xl",
+        h1: "font-bold text-7xl",
+        h2: "font-bold text-5xl",
+        h3: "font-bold text-4xl",
+        h4: "font-medium text-3xl",
+        h5: "font-medium text-2xl",
         h6: "font-semibold text-xl",
         base: "text-base",
         inputLabel: "text-xl",
@@ -20,7 +20,9 @@ const classConfig = {
         sub: "text-md"
     },
     textColor: {
+        default: "text-navy-blue",
         primary: "text-primary",
+        secondary: "text-secondary",
         purple: "text-purple",
         offPurple: "text-off-purple",
         navyBlue: "text-navy-blue",
@@ -29,7 +31,8 @@ const classConfig = {
         skyBlue: "text-sky-blue",
         red: "text-red",
         blue: "text-blue",
-        pantonePurple: "text-pantone-purple"
+        pantonePurple: "text-pantone-purple",
+        gray: "text-gray-400"
     },
     textVariant: {
         title: "font-extrabold uppercase",

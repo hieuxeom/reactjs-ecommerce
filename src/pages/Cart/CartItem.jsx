@@ -68,8 +68,8 @@ function CartItem({itemData, onChangeEvent}) {
                         <Image src={`${imageUrl}${variantData.variantImage}`}/>
                     </div>
                     <div className={"col-span-4 flex flex-col justify-center items-center"}>
-                        <p className={"font-semibold"}>{productDetails.productName}</p>
-                        <p className={classNames(classConfig.fontSize.sub, classConfig.textColor.navyBlueOff)}>{variantData.variantLabel}</p>
+                        <p className={classNames(classConfig.fontSize.h6)}>{productDetails.productName}</p>
+                        <p className={classNames(classConfig.fontSize.sub, classConfig.textColor.gray, "italic")}>{variantData.variantLabel}</p>
                     </div>
                     <CartItemPrice originalPrice={variantData.variantPrice.originalPrice}
                                    discountPrice={variantData.variantPrice.discountPrice}

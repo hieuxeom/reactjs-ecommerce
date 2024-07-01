@@ -38,7 +38,7 @@ function ProductCard({productData}) {
     };
 
     return (
-        <div className={"w-full flex flex-col shadow-xl cursor-pointer"}
+        <div className={"w-full flex flex-col shadow-custom cursor-pointer"}
              onMouseEnter={() => {
                  setIsHoverState(true);
              }}
@@ -61,7 +61,7 @@ function ProductCard({productData}) {
                 "bg-blue": isHoverState
             })}>
                 <p className={classNames(classConfig.fontSize.h6, "font-semibold", {
-                    "text-primary": !isHoverState,
+                    "text-secondary": !isHoverState,
                     "text-white": isHoverState
                 })}>
                     {productData.productName}
@@ -71,7 +71,7 @@ function ProductCard({productData}) {
                     "text-white": isHoverState
                 })}>{productData.views} views - {productData.soldCount} sold</p>
                 <p className={classNames(classConfig.fontSize.h6, "font-semibold", {
-                    "text-primary": !isHoverState,
+                    "text-secondary": !isHoverState,
                     "text-white": isHoverState
                 })}>
                     {productData.productPrice}
