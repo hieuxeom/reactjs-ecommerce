@@ -1,3 +1,9 @@
 export const isNumber = (number) => {
-    return !isNaN(number) && number.trim() !== "";
+    
+    if (typeof number === "string") {
+        return !isNaN(number) && number.trim() !== "";
+    } else if (typeof number === "number") {
+        return !isNaN(number);
+    }
+    return false;
 };
