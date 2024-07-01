@@ -6,7 +6,7 @@ import {PiSignInBold} from "react-icons/pi";
 import classConfig from "../../utils/config/class.config.js";
 import {useNavigate} from "react-router-dom";
 import {useCookies} from "react-cookie";
-import {FaUserAlt} from "react-icons/fa";
+import {FaShoppingCart, FaUserAlt} from "react-icons/fa";
 
 function TopHeader(props) {
 
@@ -16,11 +16,11 @@ function TopHeader(props) {
 
     useEffect(() => {
         const {refreshToken} = cookies;
-        console.log(!!refreshToken)
         setIsLogin(!!refreshToken);
     }, [cookies]);
 
     const navigate = useNavigate();
+
     const languageSelectData = [
         {
             label: "Vietnam",
@@ -32,15 +32,19 @@ function TopHeader(props) {
             value: "english",
             icon: <US className={"w-6"}/>
         }
-    ]
+    ];
 
     const handleNavigateToSignIn = () => {
         return navigate("/sign-in");
-    }
+    };
 
     const handleNavigateToProfile = () => {
         return navigate("/profile/me");
-    }
+    };
+
+    const handleNavigateToCart = () => {
+        return navigate("/cart");
+    };
 
     return (
         <div className={"w-full flex justify-center bg-purple py-2"}> {/* Top Header */}
@@ -70,7 +74,7 @@ function TopHeader(props) {
                                         {item.data?.icon}
                                         {item.data?.label}
                                     </div>
-                                ))
+                                ));
                             }}
                     >
                         {(lang) => (
@@ -86,10 +90,21 @@ function TopHeader(props) {
                                         variant={"solid"}
                                         color={"primary"}
                                         onClick={handleNavigateToSignIn}
-                    >Login</Button> : <Avatar icon={<FaUserAlt size={classConfig.icon.base}/>}
-                                              className={"bg-white cursor-pointer hover:bg-sky-blue transition-all duration-300"}
-                                              onClick={handleNavigateToProfile}
-                    />}
+                        >Login</Button> :
+                        <>
+                            <Button isIconOnly
+                                    variant={"light"}
+                                    onClick={handleNavigateToCart}
+                            >
+                                <FaShoppingCart size={classConfig.icon.base} className={"text-white"}/>
+                            </Button>
+                            <Avatar icon={<FaUserAlt size={classConfig.icon.base}/>}
+                                    className={"bg-white cursor-pointer hover:bg-sky-blue transition-all duration-300"}
+                                    onClick={handleNavigateToProfile}
+
+                            />
+                        </>
+                    }
 
                 </div>
             </div>
