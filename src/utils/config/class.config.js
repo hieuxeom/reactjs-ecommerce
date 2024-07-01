@@ -32,7 +32,8 @@ const classConfig = {
         red: "text-red",
         blue: "text-blue",
         pantonePurple: "text-pantone-purple",
-        gray: "text-gray-400"
+        gray: "text-gray-400",
+        hiddenGray: "text-gray-300"
     },
     textVariant: {
         title: "font-extrabold uppercase",

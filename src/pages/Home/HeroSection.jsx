@@ -8,10 +8,10 @@ function HeroSection(props) {
         <div className="bg-sub-background w-full flex justify-center max-h-[75vh]">
             <div className="w-full max-w-7xl flex overflow-hidden">
                 <div className="w-1/2 flex flex-col justify-center items-start gap-8">
-                    <h1 className={classNames(classConfig.fontSize.h1, classConfig.textVariant.title, classConfig.textColor.navyBlue)}>
+                    <h1 className={classNames(classConfig.fontSize.h1, classConfig.textVariant.title, classConfig.textColor.secondary)}>
                         Find clothes that matches your style
                     </h1>
-                    <p className={classNames(classConfig.fontSize.sub, classConfig.textColor.navyBlueOff)}>
+                    <p className={classNames(classConfig.fontSize.sub, classConfig.textColor.gray)}>
                         Browse through our diverse range of meticulously crafted garments,
                         designed to bring out your individuality and cater to your sense of
                         style.
