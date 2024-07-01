@@ -26,9 +26,13 @@ import EditCategory from "./pages/Admin/CategoryManagement/EditCategory.jsx";
 import NewProduct from "./pages/Admin/ProductManagement/NewProduct.jsx";
 import ProductIndex from "./pages/Admin/ProductManagement/ProductIndex.jsx";
 import EditProduct from "./pages/Admin/ProductManagement/EditProduct.jsx";
-import ProductDetails from "./pages/Admin/ProductManagement/ProductDetails.jsx";
+import AdminProductDetails from "./pages/Admin/ProductManagement/ProductDetails.jsx";
 import {ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import RootProductDetails from "./pages/Product/ProductDetails/RootProductDetails.jsx";
+import Shop from "./pages/Product/Shop/Shop.jsx";
+import Cart from "./pages/Cart/Cart.jsx";
+import CartCheckout from "./pages/Cart/CartCheckout.jsx";
 
 const router = createBrowserRouter([
     {
@@ -77,7 +81,7 @@ const router = createBrowserRouter([
                     },
                     {
                         path: ":productId",
-                        element: <ProductDetails/>
+                        element: <AdminProductDetails/>
                     },
                     {
                         path: ":productId/edit",
@@ -118,6 +122,27 @@ const router = createBrowserRouter([
                     }
 
                 ]
+            },
+            {
+                path: "shop",
+                element: <Shop/>
+            },
+            {
+                path: "cart",
+                children: [
+                    {
+                        path: "",
+                        element: <Cart/>
+                    },
+                    {
+                        path: "checkout",
+                        element: <CartCheckout/>
+                    }
+                ]
+            },
+            {
+                path: "product/:productId",
+                element: <RootProductDetails/>
             },
             {
                 element: <ProtectRoute/>,
