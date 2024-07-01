@@ -1,10 +1,8 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import PropTypes from "prop-types";
 import {CartItemPropTypes} from "../../utils/propTypes/userType.js";
 import classNames from "classnames";
 import classConfig from "../../utils/config/class.config.js";
-import useAxios from "../../hooks/useAxios.js";
-import {apiUrl} from "../../utils/config/api.config.js";
 import CartItem from "./CartItem.jsx";
 
 CartContainer.propTypes = {
@@ -14,34 +12,10 @@ CartContainer.propTypes = {
 
 function CartContainer({cartItems, onChangeEvent}) {
 
-    const axiosClient = useAxios();
-
-    const [listProductDetails, setListProductDetails] = useState([]);
-
-    const fetchAllProductDetails = () => {
-        if (cartItems) {
-            const mapFetch = cartItems.map(item => {
-                return new Promise((resolve, reject) => {
-                    resolve(axiosClient.get(apiUrl.product.details(item.productId)).then((response) => {
-                        return {
-                            ...item,
-                            productDetails: response.data.data
-                        };
-                    }));
-                });
-            });
-            Promise.all(mapFetch).then((response) => {
-                console.log(response);
-                setListProductDetails(response);
-            });
-        }
-
-    };
-
     useEffect(() => {
-        fetchAllProductDetails();
+        console.log(cartItems);
     }, [cartItems]);
-
+    
     return (
         <div className={"w-full flex flex-col gap-4 p-4"}>
 
@@ -69,7 +43,7 @@ function CartContainer({cartItems, onChangeEvent}) {
                     Tạm tính
                 </div>
             </div>
-            {listProductDetails && listProductDetails.map((item, index) => {
+            {cartItems && cartItems.map((item, index) => {
                 return <CartItem key={index} itemData={item} onChangeEvent={onChangeEvent}/>;
             })}
         </div>

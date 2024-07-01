@@ -9,6 +9,8 @@ import {FaRotateLeft} from "react-icons/fa6";
 import toastConfig from "../../utils/config/toast.config.js";
 import {toast} from "react-toastify";
 import useAxios from "../../hooks/useAxios.js";
+import {useNavigate} from "react-router-dom";
+import {userUrl} from "../../utils/config/route.config.js";
 
 Cart.propTypes = {};
 
@@ -18,10 +20,11 @@ function Cart({children}) {
 
     const axiosClient = useAxios();
     const axiosServer = useAxiosServer();
+    const navigate = useNavigate();
 
     const [userCart, setUserCart] = useState(null);
-
     const [isHaveChangeEvent, setIsHaveChangeEvent] = useState(false);
+    const [listProductDetails, setListProductDetails] = useState(null);
 
     const [summaryData, setSummaryData] = useState({
         subTotal: 0,
@@ -36,6 +39,25 @@ function Cart({children}) {
         });
     };
 
+    const fetchAllProductDetails = (cartItems) => {
+        if (cartItems) {
+            const mapFetch = cartItems.map(item => {
+                return new Promise((resolve, reject) => {
+                    resolve(axiosClient.get(apiUrl.product.details(item.productId)).then((response) => {
+                        return {
+                            ...item,
+                            productDetails: response.data.data
+                        };
+                    }));
+                });
+            });
+            Promise.all(mapFetch).then((response) => {
+                setListProductDetails(response);
+            });
+        }
+
+    };
+
     const handleResetCart = () => {
         toastReset.current = toast.info("Reset...", toastConfig.loading);
         axiosServer.delete(apiUrl.cart.reset).then((response) => {
@@ -45,10 +67,7 @@ function Cart({children}) {
         });
     };
 
-    const calculateSubTotal = () => {
-
-        const {cartItems} = userCart;
-
+    const calculateSubTotal = (cartItems) => {
         if (!cartItems) {
             return;
         }
@@ -66,32 +85,36 @@ function Cart({children}) {
         });
 
         Promise.all(mapFetch).then((response) => {
+            const subTotal = response.reduce((sum, current) => sum + current, 0);
             setSummaryData({
                 ...summaryData,
-                subTotal: response.reduce((sum, current) => sum + current, 0)
+                subTotal: subTotal,
+                total: subTotal + summaryData.shippingFee - summaryData.reducedFee
             });
         });
     };
 
-    // const handleCartVoucher = () => {
-    //     if (userCart.voucherCode) {
-    //
-    //     }
-    // };
+    const handleCheckOut = () => {
+        console.log(userCart);
+        const checkoutData = {
+            cartItems: userCart.cartItems,
+            subTotal: summaryData.subTotal,
+            total: summaryData.total,
+            voucherCode: summaryData.voucherCode
+        };
 
-    useEffect(() => {
-        getUserCart();
-    }, []);
+        localStorage.setItem("tempCart", JSON.stringify(checkoutData));
+
+        return navigate(userUrl.cart.checkout);
+    };
 
     useEffect(() => {
         if (userCart) {
-            calculateSubTotal();
+            const {cartItems} = userCart;
+            calculateSubTotal(cartItems);
+            fetchAllProductDetails(cartItems);
         }
     }, [userCart]);
-
-    useEffect(() => {
-        console.log(summaryData);
-    }, [summaryData]);
 
     useEffect(() => {
         if (isHaveChangeEvent) {
@@ -99,6 +122,10 @@ function Cart({children}) {
         }
         setIsHaveChangeEvent(false);
     }, [isHaveChangeEvent]);
+
+    useEffect(() => {
+        getUserCart();
+    }, []);
 
     return (
         <div className="w-full max-w-7xl mt-8 flex flex-col gap-6">
@@ -113,14 +140,17 @@ function Cart({children}) {
             </div>
             <section className={"grid grid-cols-12"}>
                 <div className={"col-span-8"}>
-                    <CartContainer onChangeEvent={setIsHaveChangeEvent} cartItems={userCart ? userCart.cartItems : []}/>
+                    <CartContainer onChangeEvent={setIsHaveChangeEvent}
+                                   cartItems={listProductDetails ?? []}/>
                 </div>
                 <div className={"col-span-4 flex flex-col gap-4"}>
                     <CartSummary summaryData={summaryData}/>
-                    <Button fullWidth size={"lg"} color={"primary"}>Thanh toán</Button>
+                    <Button fullWidth size={"lg"}
+                            color={"primary"}
+                            onClick={handleCheckOut}
+                    >Thanh toán</Button>
                 </div>
             </section>
-
         </div>
     );
 }

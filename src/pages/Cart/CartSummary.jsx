@@ -22,7 +22,7 @@ function CartSummary({summaryData}) {
     useEffect(() => {
         const {subTotal, voucherCode, shippingFee, reducedFee} = summaryData;
         setTotal(subTotal + shippingFee - reducedFee);
-    }, []);
+    }, [summaryData]);
 
     return (
         <div className={"shadow-custom p-4 flex flex-col gap-4"}>

@@ -38,6 +38,11 @@ const apiUrl = {
         base: `${apiBaseUrl}/carts`,
         add: `${apiBaseUrl}/carts`,
         reset: `${apiBaseUrl}/carts`
+    },
+    address: {
+        provinces: "https://vapi.vnappmob.com/api/province",
+        districts: (provinceId) => `https://vapi.vnappmob.com/api/province/district/${provinceId}`,
+        wards: (districtId) => `https://vapi.vnappmob.com/api/province/ward/${districtId}`
     }
 };
 

@@ -34,6 +34,10 @@ const userUrl = {
     product: {
         base: `/products`,
         details: (productId) => `/product/${productId}`
+    },
+    cart: {
+        base: "/cart",
+        checkout: "/cart/checkout"
     }
 };
 
