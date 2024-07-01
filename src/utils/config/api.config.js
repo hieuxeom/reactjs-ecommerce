@@ -1,5 +1,5 @@
-const apiBaseUrl = "http://localhost:5000/api"
-const imageUrl = "http://localhost:5000/images/"
+const apiBaseUrl = "http://localhost:5000/api";
+const imageUrl = "http://localhost:5000/images/";
 
 const apiUrl = {
     auth: {
@@ -7,8 +7,10 @@ const apiUrl = {
         signUp: `${apiBaseUrl}/auth/sign-up`,
         refreshToken: `${apiBaseUrl}/users/rftk`
     },
-    profile: {
-        me: `${apiBaseUrl}/users/me`
+    user: {
+        me: `${apiBaseUrl}/users/me`,
+        cart: `${apiBaseUrl}/carts`
+
     },
     category: {
         base: `${apiBaseUrl}/categories`,
@@ -27,10 +29,16 @@ const apiUrl = {
         topSells: `${apiBaseUrl}/products/top-sell`,
         edit: (productId) => `${apiBaseUrl}/products/${productId}`,
         details: (productId) => `${apiBaseUrl}/products/${productId}`,
+        variant: (productId, variantKey) => `${apiBaseUrl}/products/${productId}/${variantKey}`,
         delete: (categoryId) => `${apiBaseUrl}/products/${categoryId}`,
         views: (productId) => `${apiBaseUrl}/products/${productId}/views`,
         activation: (productId) => `${apiBaseUrl}/products/${productId}/activation`
+    },
+    cart: {
+        base: `${apiBaseUrl}/carts`,
+        add: `${apiBaseUrl}/carts`,
+        reset: `${apiBaseUrl}/carts`
     }
 };
 
-export {apiBaseUrl, apiUrl, imageUrl}
+export {apiBaseUrl, apiUrl, imageUrl};
