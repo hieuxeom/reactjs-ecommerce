@@ -6,7 +6,7 @@ import {useNavigate} from "react-router-dom";
 import PropTypes from "prop-types";
 
 TabHeader.propTypes = {
-    tabTitle: PropTypes.string,
+    tabTitle: PropTypes.string.isRequired,
     buttonData: PropTypes.shape({
         icon: PropTypes.node,
         label: PropTypes.string,
@@ -24,11 +24,14 @@ function TabHeader({tabTitle, buttonData}) {
     };
     return (
         <header className={"flex justify-between items-center"}>
-            <h3 className={classNames(classConfig.text.h3, classConfig.textVariant.formTitle, classConfig.textColor.navyBlue)}>{tabTitle}</h3>
-            <Button onClick={handleNavigateTo}
-                    color={buttonData.color}
-                    startContent={buttonData.icon}
-                    className={classNames(classConfig.text.base)}>{buttonData.label}</Button>
+            <h3 className={classNames(classConfig.fontSize.h3, classConfig.textVariant.formTitle, classConfig.textColor.navyBlue)}>{tabTitle}</h3>
+            {buttonData &&
+                <Button onClick={handleNavigateTo}
+                        color={buttonData.color}
+                        startContent={buttonData.icon}
+                        className={classNames(classConfig.fontSize.base)}>
+                    {buttonData.label}
+                </Button>}
         </header>
     );
 }
