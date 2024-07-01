@@ -17,6 +17,7 @@ import {useParams} from "react-router-dom";
 import {toast} from "react-toastify";
 import toastConfig from "../../../utils/config/toast.config.js";
 import {LiaDollarSignSolid} from "react-icons/lia";
+import {isNumber} from "../../../utils/checkNumber.js";
 
 function EditProduct(props) {
     const axiosClient = useAxios();
@@ -27,19 +28,14 @@ function EditProduct(props) {
     const {productId} = useParams();
 
     const [listCategories, setListCategories] = useState([]);
+    const [fetchState, setFetchState] = useState(false);
 
     const [productName, setProductName] = useState("");
     const [productPrice, setProductPrice] = useState("0");
     const [isDiscount, setIsDiscount] = useState(false);
     const [discountPercents, setDiscountPercents] = useState("0");
     const [productCategory, setProductCategory] = useState("");
-    const [productVariants, setProductVariants] = useState([{
-        variantKey: "",
-        variantLabel: "",
-        variantImage: "",
-        variantStock: "0",
-        variantPrice: "0"
-    }]);
+    const [productVariants, setProductVariants] = useState([]);
     const [isActive, setIsActive] = useState(true);
 
     const getListCategories = () => {
@@ -61,6 +57,8 @@ function EditProduct(props) {
             setProductCategory(productDetails.productCategory);
             setProductVariants(productDetails.productVariants);
             setIsActive(productDetails.isActive);
+
+            setFetchState(true);
         });
     };
 
@@ -70,14 +68,35 @@ function EditProduct(props) {
 
     }, []);
 
+    useEffect(() => {
+        console.log(productVariants);
+    }, [productVariants]);
+
     const handleVariantInputChange = (index, key, value) => {
+
         const newVariants = [...productVariants];
+
         newVariants[index][key] = value;
         setProductVariants(newVariants);
 
-        if (key === "variantPrice") {
-            handleUpdateRangePrice();
+    };
+
+    const handleVariantPriceChange = (index, value) => {
+        const newVariants = [...productVariants];
+        console.log(value);
+        if (value.charAt(value.length - 1) === ".") {
+            newVariants[index]["variantPrice"] = {
+                originalPrice: value,
+                discountPrice: value
+            };
+        } else {
+            newVariants[index]["variantPrice"] = {
+                originalPrice: +value,
+                discountPrice: isDiscount && discountPercents ? +value * (100 - +discountPercents) / 100 : +value
+            };
         }
+        setProductVariants(newVariants);
+        handleUpdateRangePrice();
     };
 
     const handleAddNewVariantRow = () => {
@@ -115,10 +134,13 @@ function EditProduct(props) {
     };
 
     const handleUpdateRangePrice = () => {
-        const tempSort = productVariants.sort((a, b) => a.variantPrice - b.variantPrice);
 
-        const minPrice = tempSort[0].variantPrice;
-        const maxPrice = tempSort[tempSort.length - 1].variantPrice;
+        let [...tempProductVariants] = productVariants;
+
+        const tempSort = tempProductVariants.sort((a, b) => a.variantPrice.discountPrice - b.variantPrice.discountPrice);
+
+        const minPrice = tempSort[0].variantPrice.discountPrice;
+        const maxPrice = tempSort[tempSort.length - 1].variantPrice.discountPrice;
 
         setProductPrice(minPrice !== maxPrice ? `${minPrice}$ - ${maxPrice}$` : `${minPrice}$`);
     };
@@ -136,7 +158,9 @@ function EditProduct(props) {
             productVariants,
             isActive
         };
+
         axiosServer.put(apiUrl.product.edit(productId), submitData).then((response) => {
+
             if (response.status === "success") {
                 getProductDetails();
                 toast.update(toastEdit.current, toastConfig.success(response.message));
@@ -147,45 +171,54 @@ function EditProduct(props) {
         });
     };
 
-    useEffect(() => {
-        console.log(productVariants);
-    }, [productVariants]);
-
     return (<div className={"w-full max-w-7xl"}>
             <Form>
                 <FormHeader formTitle={"Sửa sản phẩm"} urlBack={adminUrl.product.index}/>
                 <FormBody>
                     <FormItem>
-                        <p className={classConfig.text.inputLabel}>Tên sản phẩm</p>
                         <Input type="text"
-                               size={"lg"} variant={"bordered"} radius={"sm"}
+                               size={"lg"}
+                               radius={"sm"}
+                               variant={"bordered"}
+                               label={"Tên sản phẩm"}
+                               labelPlacement={"outside"}
                                value={productName}
-                               onValueChange={setProductName}/>
+                               onValueChange={setProductName}
+                               isRequired
+                        />
+
                     </FormItem>
                     <FormRow alignItems={"items-center"}>
                         <FormItem>
-                            <p className={classConfig.text.inputLabel}>Giá sản phẩm</p>
+                            <p className={classConfig.fontSize.inputLabel}>Giá sản phẩm</p>
                             <Input type="text"
-                                   size={"lg"} variant={"bordered"} radius={"sm"}
+                                   size={"lg"}
+                                   radius={"sm"}
+                                   variant={"bordered"}
                                    value={productPrice}
                                    isReadOnly
                             />
                         </FormItem>
                         <FormItem>
-                            <Checkbox isSelected={isDiscount} onValueChange={setIsDiscount} size={"lg"}
+                            <Checkbox isSelected={isDiscount}
+                                      onValueChange={setIsDiscount}
+                                      size={"lg"}
                                       color={"secondary"}
                             >
                                 Giảm giá
                             </Checkbox>
                             <Input type="text"
-                                   size={"lg"} variant={"bordered"} radius={"sm"}
+                                   size={"lg"}
+                                   radius={"sm"}
+                                   variant={"bordered"}
                                    value={discountPercents}
                                    onValueChange={setDiscountPercents}
+                                   isInvalid={!isNumber(discountPercents)}
                                    isDisabled={!isDiscount}
                             />
                         </FormItem>
                         <FormItem>
-                            <p className={classConfig.text.inputLabel}>Danh mục sản phẩm</p>
+                            <p className={classConfig.fontSize.inputLabel}>Danh mục sản phẩm</p>
                             <Select items={listCategories}
                                     selectedKeys={[productCategory]}
                                     onSelectionChange={([event]) => {
@@ -209,7 +242,7 @@ function EditProduct(props) {
                     <FormRow>
                         <FormItem>
                             <div className={"w-full flex items-center justify-between"}>
-                                <p className={classConfig.text.inputLabel}>Các biến thể</p>
+                                <p className={classConfig.fontSize.inputLabel}>Các biến thể</p>
                                 <div className={"flex items-center gap-4"}>
                                     <p className={classNames({
                                         "text-danger": productVariants.length === 10
@@ -221,55 +254,76 @@ function EditProduct(props) {
                             </div>
                             <div className={"w-full flex flex-col gap-4"}>
                                 {productVariants && productVariants.map((variant, index) => {
-
                                     return (<FormRow alignItems={"items-end"} key={index}>
                                         <FormItem width={"min-w-max"}>
-                                            <p className={classConfig.text.subLabel}>Hình ảnh</p>
-
                                             <Avatar isBordered radius={"sm"}
                                                     size={"lg"}
                                                     src={`${imageUrl}${variant.variantImage}`}/>
                                         </FormItem>
                                         <FormItem>
-                                            <p className={classConfig.text.subLabel}>Mã
-                                                biến thể</p>
-                                            <Input size={"lg"} radius={"sm"} variant={"bordered"}
-                                                   value={variant.variantKey}
-                                                   onValueChange={
-                                                       (event) => handleVariantInputChange(index, "variantKey", event)}
-                                            />
-                                        </FormItem>
-                                        <FormItem>
-                                            <p className={classConfig.text.subLabel}>Tên
-                                                biến thể</p>
-                                            <Input size={"lg"} radius={"sm"} variant={"bordered"}
-                                                   value={variant.variantLabel}
-                                                   onValueChange={
-                                                       (event) => handleVariantInputChange(index, "variantLabel", event)}
-                                            />
-                                        </FormItem>
-                                        <FormItem>
-                                            <p className={classConfig.text.subLabel}>Số
-                                                lượng trong kho</p>
-                                            <Input size={"lg"} radius={"sm"} variant={"bordered"}
-                                                   value={variant.variantStock}
-                                                   onValueChange={
-                                                       (event) => handleVariantInputChange(index, "variantStock", event)}
-                                            />
-                                        </FormItem>
-                                        <FormItem>
-                                            <p className={classConfig.text.subLabel}>Giá</p>
                                             <Input size={"lg"}
                                                    radius={"sm"}
                                                    variant={"bordered"}
-                                                   value={variant.variantPrice}
-                                                   endContent={<LiaDollarSignSolid/>}
+                                                   label={"Mã biến thể"}
+                                                   labelPlacement={"outside"}
+                                                   value={variant.variantKey}
                                                    onValueChange={
-                                                       (event) => handleVariantInputChange(index, "variantPrice", event)}
+                                                       (event) => handleVariantInputChange(index, "variantKey", event)}
+                                                   isRequired
                                             />
                                         </FormItem>
                                         <FormItem>
-                                            <p className={classConfig.text.subLabel}>Hình ảnh</p>
+
+                                            <Input size={"lg"}
+                                                   radius={"sm"}
+                                                   variant={"bordered"}
+                                                   label={"Tên biến thể"}
+                                                   labelPlacement={"outside"}
+                                                   value={variant.variantLabel}
+                                                   onValueChange={
+                                                       (event) => handleVariantInputChange(index, "variantLabel", event)}
+                                                   isRequired
+                                            />
+                                        </FormItem>
+                                        <FormItem>
+
+                                            <Input size={"lg"}
+                                                   radius={"sm"}
+                                                   variant={"bordered"}
+                                                   label={"Số lượng"}
+                                                   labelPlacement={"outside"}
+                                                   value={variant.variantStock}
+                                                   onValueChange={
+                                                       (event) => handleVariantInputChange(index, "variantStock", event)}
+                                                   isRequired
+                                            />
+                                        </FormItem>
+                                        <FormItem>
+                                            <div className={"flex items-center gap-2"}>
+                                                <Input size={"lg"}
+                                                       radius={"sm"}
+                                                       variant={"bordered"}
+                                                       label={"Giá"}
+                                                       labelPlacement={"outside"}
+                                                       value={variant.variantPrice.originalPrice}
+                                                       endContent={<LiaDollarSignSolid/>}
+                                                       onValueChange={
+                                                           (event) => handleVariantPriceChange(index, event)}
+                                                />
+                                                <Input size={"lg"}
+                                                       radius={"sm"}
+                                                       label={" "}
+                                                       labelPlacement={"outside"}
+                                                       value={variant.variantPrice.discountPrice}
+                                                       endContent={<LiaDollarSignSolid/>}
+                                                    // isReadOnly/
+                                                       isDisabled
+                                                />
+                                            </div>
+                                        </FormItem>
+                                        <FormItem>
+                                            <p className={classConfig.fontSize.subLabel}>Hình ảnh <span
+                                                className={"text-danger"}>*</span></p>
                                             <Input
                                                 type="file"
                                                 variant={"bordered"}

@@ -18,6 +18,7 @@ import {toast} from "react-toastify";
 import toastConfig from "../../../utils/config/toast.config.js";
 import {isNumber} from "../../../utils/checkNumber.js";
 import {isEmpty, isIncludeSpace} from "../../../utils/checkSpaces.js";
+import {LiaDollarSignSolid} from "react-icons/lia";
 
 function NewProduct(props) {
 
@@ -39,7 +40,10 @@ function NewProduct(props) {
         variantLabel: "",
         variantImage: "",
         variantStock: "0",
-        variantPrice: "0"
+        variantPrice: {
+            originalPrice: 0,
+            discountPrice: 0
+        }
     }]);
     const [isActive, setIsActive] = useState(true);
 
@@ -57,12 +61,28 @@ function NewProduct(props) {
 
     const handleVariantInputChange = (index, key, value) => {
         const newVariants = [...productVariants];
+
         newVariants[index][key] = value;
         setProductVariants(newVariants);
 
-        if (key === "variantPrice") {
-            handleUpdateRangePrice();
+    };
+
+    const handleVariantPriceChange = (index, value) => {
+        const newVariants = [...productVariants];
+        console.log(index, value);
+        if (value.charAt(value.length - 1) === ".") {
+            newVariants[index]["variantPrice"] = {
+                originalPrice: value,
+                discountPrice: value
+            };
+        } else {
+            newVariants[index]["variantPrice"] = {
+                originalPrice: +value,
+                discountPrice: isDiscount && discountPercents ? +value * (100 - +discountPercents) / 100 : +value
+            };
         }
+        setProductVariants(newVariants);
+        handleUpdateRangePrice();
     };
 
     const handleAddNewVariantRow = () => {
@@ -72,7 +92,10 @@ function NewProduct(props) {
                 variantLabel: "",
                 variantImage: "",
                 variantStock: "0",
-                variantPrice: "0"
+                variantPrice: {
+                    originalPrice: 0,
+                    discountPrice: 0
+                }
             }]);
         }
     };
@@ -99,10 +122,12 @@ function NewProduct(props) {
     };
 
     const handleUpdateRangePrice = () => {
-        const tempSort = productVariants.sort((a, b) => a.variantPrice - b.variantPrice);
+        let [...tempProductVariants] = productVariants;
 
-        const minPrice = tempSort[0].variantPrice;
-        const maxPrice = tempSort[tempSort.length - 1].variantPrice;
+        const tempSort = tempProductVariants.sort((a, b) => a.variantPrice.discountPrice - b.variantPrice.discountPrice);
+
+        const minPrice = tempSort[0].variantPrice.discountPrice;
+        const maxPrice = tempSort[tempSort.length - 1].variantPrice.discountPrice;
 
         setProductPrice(minPrice !== maxPrice ? `${minPrice}$ - ${maxPrice}$` : `${minPrice}$`);
     };
@@ -162,7 +187,7 @@ function NewProduct(props) {
                     </FormItem>
                     <FormRow alignItems={"items-center"}>
                         <FormItem>
-                            <p className={classConfig.text.inputLabel}>Giá sản phẩm</p>
+                            <p className={classConfig.fontSize.inputLabel}>Giá sản phẩm</p>
                             <Input type="text"
                                    size={"lg"}
                                    radius={"sm"}
@@ -171,15 +196,17 @@ function NewProduct(props) {
                             />
                         </FormItem>
                         <FormItem>
-                            <Checkbox isSelected={isDiscount} onValueChange={setIsDiscount} size={"lg"}
+                            <Checkbox isSelected={isDiscount}
+                                      size={"lg"}
+                                      onValueChange={setIsDiscount}
                                       color={"secondary"}
                             >
                                 Giảm giá
                             </Checkbox>
                             <Input type="text"
                                    size={"lg"}
-                                   variant={"bordered"}
                                    radius={"sm"}
+                                   variant={"bordered"}
                                    value={discountPercents}
                                    onValueChange={setDiscountPercents}
                                    isInvalid={!isNumber(discountPercents)}
@@ -187,7 +214,7 @@ function NewProduct(props) {
                             />
                         </FormItem>
                         <FormItem>
-                            <p className={classConfig.text.inputLabel}>Danh mục sản phẩm</p>
+                            <p className={classConfig.fontSize.inputLabel}>Danh mục sản phẩm</p>
                             <Select items={listCategories}
                                     selectedKeys={[productCategory]}
                                     onSelectionChange={([event]) => {
@@ -211,7 +238,7 @@ function NewProduct(props) {
                     <FormRow>
                         <FormItem>
                             <div className={"w-full flex items-center justify-between"}>
-                                <p className={classConfig.text.inputLabel}>Các biến thể</p>
+                                <p className={classConfig.fontSize.inputLabel}>Các biến thể</p>
                                 <div className={"flex items-center gap-4"}>
                                     <p className={classNames({
                                         "text-danger": productVariants.length === 10
@@ -272,20 +299,33 @@ function NewProduct(props) {
                                             />
                                         </FormItem>
                                         <FormItem>
-                                            <Input size={"lg"}
-                                                   radius={"sm"}
-                                                   variant={"bordered"}
-                                                   label={"Giá"}
-                                                   labelPlacement={"outside"}
-                                                   value={variant.variantPrice}
-                                                   isInvalid={!isNumber(variant.variantPrice)}
-                                                   onValueChange={
-                                                       (event) => handleVariantInputChange(index, "variantPrice", event)}
-                                                   isRequired
-                                            />
+                                            <div className={"flex items-center gap-2"}>
+                                                <Input size={"lg"}
+                                                       radius={"sm"}
+                                                       variant={"bordered"}
+                                                       label={"Giá"}
+                                                       labelPlacement={"outside"}
+                                                       value={variant.variantPrice.originalPrice}
+                                                       isInvalid={!isNumber(variant.variantPrice.originalPrice)}
+                                                       onValueChange={
+                                                           (event) => handleVariantPriceChange(index, event)}
+                                                       endContent={<LiaDollarSignSolid/>}
+                                                       isRequired
+                                                />
+                                                <Input size={"lg"}
+                                                       radius={"sm"}
+                                                       label={" "}
+                                                       labelPlacement={"outside"}
+                                                       value={variant.variantPrice.discountPrice}
+                                                       onValueChange={
+                                                           (event) => handleVariantPriceChange(index, event)}
+                                                       endContent={<LiaDollarSignSolid/>}
+                                                       isDisabled
+                                                />
+                                            </div>
                                         </FormItem>
                                         <FormItem>
-                                            <p className={classConfig.text.subLabel}>Hình ảnh <span
+                                            <p className={classConfig.fontSize.subLabel}>Hình ảnh <span
                                                 className={"text-danger"}>*</span></p>
                                             <Input
                                                 type="file"
