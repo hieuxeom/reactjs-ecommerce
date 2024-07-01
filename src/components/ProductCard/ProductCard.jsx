@@ -60,17 +60,17 @@ function ProductCard({productData}) {
             <div className={classNames("w-full flex flex-col items-center gap-2 p-4", {
                 "bg-blue": isHoverState
             })}>
-                <p className={classNames(classConfig.text.h6, "font-semibold", {
+                <p className={classNames(classConfig.fontSize.h6, "font-semibold", {
                     "text-primary": !isHoverState,
                     "text-white": isHoverState
                 })}>
                     {productData.productName}
                 </p>
-                <p className={classNames(classConfig.text.sub, "italic font-semibold", {
+                <p className={classNames(classConfig.fontSize.sub, "italic font-semibold", {
                     "text-blue": !isHoverState,
                     "text-white": isHoverState
                 })}>{productData.views} views - {productData.soldCount} sold</p>
-                <p className={classNames(classConfig.text.h6, "font-semibold", {
+                <p className={classNames(classConfig.fontSize.h6, "font-semibold", {
                     "text-primary": !isHoverState,
                     "text-white": isHoverState
                 })}>

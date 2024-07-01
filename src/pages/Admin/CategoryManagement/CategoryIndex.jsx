@@ -130,7 +130,7 @@ function CategoryIndex(props) {
                         {(col) => {
 
                             return <TableColumn key={col.value}
-                                                className={classNames(classConfig.text.base)}>{col.label}</TableColumn>;
+                                                className={classNames(classConfig.fontSize.base)}>{col.label}</TableColumn>;
                         }
                         }
                     </TableHeader>

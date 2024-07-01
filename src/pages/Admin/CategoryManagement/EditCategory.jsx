@@ -70,7 +70,7 @@ function EditCategory(props) {
                 <FormHeader formTitle={"Sửa danh mục"} urlBack={adminUrl.category.index}/>
                 <FormBody>
                     <FormItem>
-                        <p className={classConfig.text.inputLabel}>Tên danh mục</p>
+                        <p className={classConfig.fontSize.inputLabel}>Tên danh mục</p>
                         <Input
                             size={"lg"}
                             type="text"
@@ -81,7 +81,7 @@ function EditCategory(props) {
                         />
                     </FormItem>
                     <FormItem>
-                        <p className={classConfig.text.inputLabel}>Query params</p>
+                        <p className={classConfig.fontSize.inputLabel}>Query params</p>
                         <Input
                             size={"lg"}
                             type="text"

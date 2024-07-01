@@ -17,12 +17,12 @@ function FormHeader({formTitle, urlBack}) {
 
     const handleNavigateToIndex = () => {
         return navigate(urlBack);
-    }
+    };
 
     return (
         <header className={"flex justify-between items-center"}>
-            <h3 className={classNames(classConfig.text.h3, classConfig.textVariant.formTitle, classConfig.textColor.navyBlue)}>{formTitle}</h3>
-            <Button className={classNames(classConfig.text.base, "flex items-center")}
+            <h3 className={classNames(classConfig.fontSize.h3, classConfig.textVariant.formTitle, classConfig.textColor.navyBlue)}>{formTitle}</h3>
+            <Button className={classNames(classConfig.fontSize.base, "flex items-center")}
                     color={"secondary"}
                     onClick={handleNavigateToIndex}
                     startContent={<IoArrowBack size={classConfig.icon.large}/>}>

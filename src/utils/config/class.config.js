@@ -7,7 +7,7 @@ const classConfig = {
         active: "text-primary underline",
         inactive: "text-navy-blue"
     },
-    text: {
+    fontSize: {
         h1: "font-semibold text-7xl",
         h2: "font-semibold text-5xl",
         h3: "font-semibold text-4xl",

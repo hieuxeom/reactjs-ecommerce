@@ -37,15 +37,15 @@ function AdminHeader(props) {
             value: "users",
             href: adminUrl.user.index
         }
-    ]
+    ];
 
     const handleNavigateTo = (href) => {
-        return navigate(href)
-    }
+        return navigate(href);
+    };
 
     const handleNavigateToHome = () => {
         return navigate("/");
-    }
+    };
 
     return (
         <div className={"w-full flex flex-col items-center gap-8"}>
@@ -53,12 +53,12 @@ function AdminHeader(props) {
                 <div className={"w-full max-w-7xl flex items-center justify-between py-2 gap-8"}>
                     <div className={"flex items-center gap-12"} onClick={handleNavigateToHome}>
                         <div className={"cursor-pointer"}>
-                            <h1 className={classNames(classConfig.text.h3, classConfig.textColor.offBlue, "font-extrabold")}>hieutn.dev</h1>
+                            <h1 className={classNames(classConfig.fontSize.h3, classConfig.textColor.offBlue, "font-extrabold")}>hieutn.dev</h1>
                         </div>
                     </div>
                     <div className={"flex items-center gap-12"}>
                         <div className={"cursor-pointer "}>
-                            <h1 className={classNames(classConfig.text.h3, classConfig.textColor.primary, "font-extrabold")}>Admin
+                            <h1 className={classNames(classConfig.fontSize.h3, classConfig.textColor.primary, "font-extrabold")}>Admin
                                 Navigation</h1>
                         </div>
                     </div>

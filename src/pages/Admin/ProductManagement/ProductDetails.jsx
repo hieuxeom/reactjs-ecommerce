@@ -28,7 +28,7 @@ function ProductDetails(props) {
     const getProductDetails = () => {
         toastFetch.current = toast.info("Fetching...", toastConfig.loading);
         return axiosClient.get(apiUrl.product.details(productId)).then((response) => {
-            
+
             if (response.data.status === "success") {
                 setProductDetails(response.data.data);
                 toast.update(toastFetch.current, toastConfig.success(response.data.message));
@@ -48,7 +48,7 @@ function ProductDetails(props) {
                 <FormHeader formTitle={"Chi tiết sản phẩm"} urlBack={adminUrl.product.index}/>
                 <FormBody>
                     <FormItem>
-                        <p className={classConfig.text.inputLabel}>Tên sản phẩm</p>
+                        <p className={classConfig.fontSize.inputLabel}>Tên sản phẩm</p>
                         <Input type="text"
                                size={"lg"}
                                variant={"flat"}
@@ -58,7 +58,7 @@ function ProductDetails(props) {
                     </FormItem>
                     <FormRow alignItems={"items-center"}>
                         <FormItem>
-                            <p className={classConfig.text.inputLabel}>Giá sản phẩm</p>
+                            <p className={classConfig.fontSize.inputLabel}>Giá sản phẩm</p>
                             <Input type="text"
                                    size={"lg"}
                                    radius={"sm"}
@@ -82,7 +82,7 @@ function ProductDetails(props) {
                             />
                         </FormItem>
                         <FormItem>
-                            <p className={classConfig.text.inputLabel}>Danh mục sản phẩm</p>
+                            <p className={classConfig.fontSize.inputLabel}>Danh mục sản phẩm</p>
                             <Chip color={"secondary"} variant={"flat"}>{productDetails?.productCategory}</Chip>
                         </FormItem>
                         <Checkbox isSelected={productDetails?.isActive}
@@ -96,7 +96,7 @@ function ProductDetails(props) {
                     <FormRow>
                         <FormItem>
                             <div className={"w-full flex items-center justify-between"}>
-                                <p className={classConfig.text.inputLabel}>Các biến thể</p>
+                                <p className={classConfig.fontSize.inputLabel}>Các biến thể</p>
                                 <div className={"flex items-center gap-4"}>
                                     <p className={classNames({
                                         "text-danger": productDetails?.productVariants.length === 10
@@ -108,14 +108,14 @@ function ProductDetails(props) {
 
                                     return (<FormRow alignItems={"items-end"} key={index}>
                                         <FormItem width={"min-w-max"}>
-                                            <p className={classConfig.text.subLabel}>Hình ảnh</p>
+                                            <p className={classConfig.fontSize.subLabel}>Hình ảnh</p>
                                             <Avatar isBordered radius={"sm"}
                                                     size={"lg"}
                                                     color={"secondary"}
                                                     src={`${imageUrl}${variant.variantImage}`}/>
                                         </FormItem>
                                         <FormItem>
-                                            <p className={classConfig.text.subLabel}>
+                                            <p className={classConfig.fontSize.subLabel}>
                                                 Mã biến thể
                                             </p>
                                             <Input size={"lg"}
@@ -125,7 +125,7 @@ function ProductDetails(props) {
                                             />
                                         </FormItem>
                                         <FormItem>
-                                            <p className={classConfig.text.subLabel}>
+                                            <p className={classConfig.fontSize.subLabel}>
                                                 Tên biến thể
                                             </p>
                                             <Input size={"lg"}
@@ -135,7 +135,7 @@ function ProductDetails(props) {
                                             />
                                         </FormItem>
                                         <FormItem>
-                                            <p className={classConfig.text.subLabel}>
+                                            <p className={classConfig.fontSize.subLabel}>
                                                 Số lượng trong kho
                                             </p>
                                             <Input size={"lg"}
@@ -145,7 +145,7 @@ function ProductDetails(props) {
                                             />
                                         </FormItem>
                                         <FormItem>
-                                            <p className={classConfig.text.subLabel}>Giá</p>
+                                            <p className={classConfig.fontSize.subLabel}>Giá</p>
                                             <Input size={"lg"}
                                                    radius={"sm"}
                                                    value={variant.variantPrice}

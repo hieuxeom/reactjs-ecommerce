@@ -27,7 +27,7 @@ function StarRating({rating, showText = true}) {
     return (
         <div className="flex items-start gap-2">
             {showText && <span
-                className={classNames(classConfig.text.sub, classConfig.textColor.navyBlue, "underline font-semibold")}>{rating.toFixed(1)}
+                className={classNames(classConfig.fontSize.sub, classConfig.textColor.navyBlue, "underline font-semibold")}>{rating.toFixed(1)}
             </span>}
             <div className={"flex items-center"}>{generateStars()}</div>
         </div>

@@ -22,7 +22,7 @@ function DetailsSection({productDetails}) {
     const toastAdd = useRef(null);
 
     const [currentImage, setCurrentImage] = useState("");
-    const [discountPrice, setDiscountPrice] = useState(0);
+    // const [discountPrice, setDiscountPrice] = useState(0);
     const [currentVariantPrice, setCurrentVariantPrice] = useState(0);
     const [currentVariantStock, setCurrentVariantStock] = useState(0);
     const [currentVariantKey, setCurrentVariantKey] = useState("");
@@ -65,9 +65,6 @@ function DetailsSection({productDetails}) {
         setCurrentImage(productDetails.productVariants[selectedVariant].variantImage);
         setCurrentVariantPrice(productDetails.productVariants[selectedVariant].variantPrice);
         setCurrentVariantStock(productDetails.productVariants[selectedVariant].variantStock);
-        if (productDetails.isDiscount) {
-            setDiscountPrice(productDetails.productVariants[selectedVariant].variantPrice * (100 - productDetails.discountPercents) / 100);
-        }
     }, [selectedVariant]);
 
     useEffect(() => {
@@ -93,28 +90,28 @@ function DetailsSection({productDetails}) {
                 </div>
             </div>
             <div className={"w-1/2 flex flex-col gap-4 p-4"}>
-                <h3 className={classNames(classConfig.text.h3, classConfig.textColor.navyBlue, "font-semibold")}>{productDetails.productName}</h3>
+                <h3 className={classNames(classConfig.fontSize.h3, classConfig.textColor.navyBlue, "font-semibold")}>{productDetails.productName}</h3>
                 <div className={"flex items-center gap-2"}>
                     <StarRating rating={productDetails.productRating}/>
                     <div className={"flex items-center gap-2 border-l-1 border-black/10 px-2"}>
                         <span
-                            className={classNames(classConfig.text.sub, classConfig.textColor.navyBlue, "underline font-semibold")}>{productDetails.soldCount}
+                            className={classNames(classConfig.fontSize.sub, classConfig.textColor.navyBlue, "underline font-semibold")}>{productDetails.soldCount}
                         </span>
                         <p>Đã bán</p>
                     </div>
                     <div className={"flex items-center gap-2 border-l-1 border-black/10 px-2"}>
                         <span
-                            className={classNames(classConfig.text.sub, classConfig.textColor.navyBlue, "underline font-semibold")}>{productDetails.productReviews.length}
+                            className={classNames(classConfig.fontSize.sub, classConfig.textColor.navyBlue, "underline font-semibold")}>{productDetails.productReviews.length}
                         </span>
                         <p>Đánh giá</p>
                     </div>
                 </div>
                 <div className={"flex gap-8 items-start"}>
-                    <h2 className={classNames(classConfig.text.h2, classConfig.textColor.primary)}>{discountPrice}$</h2>
-                    <h2 className={classNames(classConfig.text.h2, classConfig.textColor.offPurple, "line-through")}>{currentVariantPrice}$</h2>
+                    <h2 className={classNames(classConfig.fontSize.h2, classConfig.textColor.primary)}>{currentVariantPrice.discountPrice}$</h2>
+                    <h2 className={classNames(classConfig.fontSize.h2, classConfig.textColor.offPurple, "line-through")}>{currentVariantPrice.originalPrice}$</h2>
                 </div>
                 <div className={"flex flex-col gap-2"}>
-                    <p className={classNames(classConfig.text.sub, classConfig.textColor.navyBlueOff)}>Loại</p>
+                    <p className={classNames(classConfig.fontSize.sub, classConfig.textColor.navyBlueOff)}>Loại</p>
                     <div className={"flex items-center gap-4"}>
                         {productDetails.productVariants.map((variant, index) => (
                             <div key={index}
@@ -133,7 +130,7 @@ function DetailsSection({productDetails}) {
                     </div>
                 </div>
                 <div className={"flex flex-col gap-2"}>
-                    <p className={classNames(classConfig.text.sub, classConfig.textColor.navyBlueOff)}>
+                    <p className={classNames(classConfig.fontSize.sub, classConfig.textColor.navyBlueOff)}>
                         Số lượng
                     </p>
                     <div className={"flex items-center gap-4"}>

@@ -25,7 +25,7 @@ function NewArrivalsSection(props) {
         <section className="w-full flex justify-center">
             <div className="max-w-7xl w-full flex flex-col items-center">
                 <header className="py-8">
-                    <h2 className={classNames(classConfig.text.h2, classConfig.textVariant.title)}>New Arrivals</h2>
+                    <h2 className={classNames(classConfig.fontSize.h2, classConfig.textVariant.title)}>New Arrivals</h2>
                 </header>
                 <main className="py-8">
                     <div className="grid grid-cols-4 gap-8">

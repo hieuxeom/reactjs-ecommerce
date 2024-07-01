@@ -50,7 +50,7 @@ function NewCategory(props) {
                 <FormHeader formTitle={"Tạo danh mục mới"} urlBack={adminUrl.category.index}/>
                 <FormBody>
                     <FormItem>
-                        <p className={classConfig.text.inputLabel}>Tên danh mục</p>
+                        <p className={classConfig.fontSize.inputLabel}>Tên danh mục</p>
                         <Input
                             size={"lg"}
                             type="text"
@@ -61,7 +61,7 @@ function NewCategory(props) {
                         />
                     </FormItem>
                     <FormItem>
-                        <p className={classConfig.text.inputLabel}>Query params</p>
+                        <p className={classConfig.fontSize.inputLabel}>Query params</p>
                         <Input
                             size={"lg"}
                             type="text"
@@ -77,7 +77,7 @@ function NewCategory(props) {
                             <Checkbox isSelected={isActive} onValueChange={setIsActive} size={"lg"}>Hoạt
                                 động?</Checkbox>
                         </FormItem>
-                        <Button onClick={handleSubmit} color={"primary"} className={classConfig.text.base}>
+                        <Button onClick={handleSubmit} color={"primary"} className={classConfig.fontSize.base}>
                             Tạo
                         </Button>
                     </div>
