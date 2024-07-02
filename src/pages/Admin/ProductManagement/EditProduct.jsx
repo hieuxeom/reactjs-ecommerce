@@ -35,7 +35,7 @@ function EditProduct(props) {
     const [isDiscount, setIsDiscount] = useState(false);
     const [discountPercents, setDiscountPercents] = useState("0");
     const [productCategory, setProductCategory] = useState("");
-    const [productVariants, setProductVariants] = useState([]);
+    const [productVariants, setProductVariants] = useState(null);
     const [isActive, setIsActive] = useState(true);
 
     const getListCategories = () => {
@@ -91,7 +91,7 @@ function EditProduct(props) {
             };
         } else {
             newVariants[index]["variantPrice"] = {
-                originalPrice: +value,
+                originalPrice: value,
                 discountPrice: isDiscount && discountPercents ? +value * (100 - +discountPercents) / 100 : +value
             };
         }
@@ -105,8 +105,8 @@ function EditProduct(props) {
                 variantKey: "",
                 variantLabel: "",
                 variantImage: "",
-                variantStock: "0",
-                variantPrice: "0"
+                variantStock: 0,
+                variantPrice: 0
             }];
             setProductVariants(newListVariants);
         }
