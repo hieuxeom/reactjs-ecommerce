@@ -9,6 +9,7 @@ const apiUrl = {
     },
     user: {
         me: `${apiBaseUrl}/users/me`,
+        listAddresses: `${apiBaseUrl}/users/me/address`,
         cart: `${apiBaseUrl}/carts`
 
     },
@@ -39,11 +40,15 @@ const apiUrl = {
         add: `${apiBaseUrl}/carts`,
         reset: `${apiBaseUrl}/carts`
     },
+    order: {
+        new: `${apiBaseUrl}/orders`
+    },
     address: {
         provinces: "https://vapi.vnappmob.com/api/province",
         districts: (provinceId) => `https://vapi.vnappmob.com/api/province/district/${provinceId}`,
         wards: (districtId) => `https://vapi.vnappmob.com/api/province/ward/${districtId}`
     }
+
 };
 
 export {apiBaseUrl, apiUrl, imageUrl};
