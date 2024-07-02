@@ -8,21 +8,15 @@ import PropTypes from "prop-types";
 
 CartSummary.propTypes = {
     summaryData: PropTypes.shape({
-        subTotal: PropTypes.number,
+        subTotalPrice: PropTypes.number,
         voucherCode: PropTypes.string,
         shippingFee: PropTypes.number,
-        reducedFee: PropTypes.number
+        reducedFee: PropTypes.number,
+        totalPrice: PropTypes.number
     })
 };
 
 function CartSummary({summaryData}) {
-
-    const [total, setTotal] = useState(0);
-
-    useEffect(() => {
-        const {subTotal, voucherCode, shippingFee, reducedFee} = summaryData;
-        setTotal(subTotal + shippingFee - reducedFee);
-    }, [summaryData]);
 
     return (
         <div className={"shadow-custom p-4 flex flex-col gap-4"}>
@@ -32,15 +26,15 @@ function CartSummary({summaryData}) {
             <main className={"flex flex-col gap-4"}>
                 <div className={"flex justify-between"}>
                     <p>Tạm tính</p>
-                    <p>{summaryData.subTotal.toFixed(2)}$</p>
+                    <p>{summaryData?.subTotalPrice.toFixed(2) ?? 0}$</p>
                 </div>
                 <div className={"flex justify-between"}>
                     <p>Phí ship</p>
-                    <p>{summaryData.shippingFee}$</p>
+                    <p>{summaryData?.shippingFee ?? 0}$</p>
                 </div>
                 <div className={"flex justify-between"}>
                     <p>Giảm giá</p>
-                    <p>{summaryData.reducedFee}$</p>
+                    <p>{summaryData?.reducedFee ?? 0}$</p>
                 </div>
                 <Form>
                     <FormRow>
@@ -54,7 +48,7 @@ function CartSummary({summaryData}) {
                 <Divider/>
                 <div className={"flex justify-between"}>
                     <p className={classNames(classConfig.fontSize.h5, "!font-bold  text-secondary")}>Tổng thanh toán</p>
-                    <p className={classNames(classConfig.fontSize.h5, "!font-bold text-secondary")}>{total.toFixed(2)}$</p>
+                    <p className={classNames(classConfig.fontSize.h5, "!font-bold text-secondary")}>{summaryData?.totalPrice?.toFixed(2) ?? 0}$</p>
                 </div>
             </main>
         </div>

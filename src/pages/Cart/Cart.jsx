@@ -11,6 +11,7 @@ import {toast} from "react-toastify";
 import useAxios from "../../hooks/useAxios.js";
 import {useNavigate} from "react-router-dom";
 import {userUrl} from "../../utils/config/route.config.js";
+import classConfig from "../../utils/config/class.config.js";
 
 Cart.propTypes = {};
 
@@ -27,8 +28,8 @@ function Cart({children}) {
     const [listProductDetails, setListProductDetails] = useState(null);
 
     const [summaryData, setSummaryData] = useState({
-        subTotal: 0,
-        voucherCode: "ABC",
+        subTotalPrice: 0,
+        voucherCode: "",
         shippingFee: 2,
         reducedFee: 0
     });
@@ -88,8 +89,8 @@ function Cart({children}) {
             const subTotal = response.reduce((sum, current) => sum + current, 0);
             setSummaryData({
                 ...summaryData,
-                subTotal: subTotal,
-                total: subTotal + summaryData.shippingFee - summaryData.reducedFee
+                subTotalPrice: subTotal,
+                totalPrice: subTotal + summaryData.shippingFee - summaryData.reducedFee
             });
         });
     };
@@ -98,9 +99,7 @@ function Cart({children}) {
         console.log(userCart);
         const checkoutData = {
             cartItems: userCart.cartItems,
-            subTotal: summaryData.subTotal,
-            total: summaryData.total,
-            voucherCode: summaryData.voucherCode
+            ...summaryData
         };
 
         localStorage.setItem("tempCart", JSON.stringify(checkoutData));
