@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import Form from "../Form/Form.jsx";
 import FormRow from "../Form/FormRow.jsx";
 import {apiUrl} from "../../utils/config/api.config.js";
 import axios from "axios";
-import {Input, Select, SelectItem} from "@nextui-org/react";
+import {Input, Select, SelectItem, Spinner} from "@nextui-org/react";
 import PropTypes from "prop-types";
 
 AddressBlock.propTypes = {
@@ -11,7 +11,6 @@ AddressBlock.propTypes = {
 };
 
 function AddressBlock({onChange}) {
-
     const [listProvinces, setListProvinces] = useState(null);
     const [listDistricts, setListDistricts] = useState(null);
     const [listWards, setListWards] = useState(null);
@@ -19,22 +18,26 @@ function AddressBlock({onChange}) {
     const [selectedProvince, setSelectedProvince] = useState(null);
     const [selectedDistrict, setSelectedDistrict] = useState(null);
     const [selectedWard, setSelectedWard] = useState(null);
-    const [fullAddress, setFullAddress] = useState(" ");
+    const [fullAddress, setFullAddress] = useState("");
 
     const getProvincesData = () => {
         axios.get(apiUrl.address.provinces).then((response) => {
             console.log(response);
             setListProvinces(response.data.results);
             setSelectedProvince(response.data.results[0].province_id);
-
+        }).catch((error) => {
+            console.log(error);
         });
     };
 
     const getDistrictsData = () => {
+
         axios.get(apiUrl.address.districts(selectedProvince)).then((response) => {
             console.log(response);
             setListDistricts(response.data.results);
             setSelectedDistrict(response.data.results[0].district_id);
+        }).catch((error) => {
+            console.log(error);
         });
     };
 
@@ -43,6 +46,8 @@ function AddressBlock({onChange}) {
             console.log(response);
             setListWards(response.data.results);
             setSelectedWard(response.data.results[0].ward_id);
+        }).catch((error) => {
+            console.log(error);
         });
     };
 
@@ -50,7 +55,7 @@ function AddressBlock({onChange}) {
         const provinceName = listProvinces?.find((_p) => _p.province_id === selectedProvince)?.province_name ?? "_";
         const districtName = listDistricts?.find((_p) => _p.district_id === selectedDistrict)?.district_name ?? "_";
         const wardName = listWards?.find((_p) => _p.ward_id === selectedWard)?.ward_name ?? "_";
-        onChange(`${fullAddress}, ${wardName}, ${districtName}, ${provinceName}`);
+        onChange(`${fullAddress || "_"}, ${wardName}, ${districtName}, ${provinceName}`);
     };
 
     useEffect(() => {
@@ -75,37 +80,47 @@ function AddressBlock({onChange}) {
         <div className={"w-full"}>
             <Form>
                 <FormRow>
-                    <Select items={listProvinces ?? []}
-                            onSelectionChange={(event) => setSelectedProvince(event.currentKey)}
-                            selectedKeys={[selectedProvince]}
-                            size={"lg"}
-                            aria-label={"test"}
+                    <Select
+                        items={listProvinces ?? []}
+                        onSelectionChange={(event) => setSelectedProvince(event.currentKey)}
+                        selectedKeys={[selectedProvince]}
+                        size={"lg"}
+                        aria-label={"test"}
+                        disallowEmptySelection
                     >
                         {(item) => <SelectItem key={item.province_id}>{item.province_name}</SelectItem>}
+
                     </Select>
-                    <Select items={listDistricts ?? []}
-                            onSelectionChange={(event) => setSelectedDistrict(event.currentKey)}
-                            selectedKeys={[selectedDistrict]}
-                            size={"lg"}
-                            aria-label={"test"}>
+                    <Select
+                        items={listDistricts ?? []}
+                        onSelectionChange={(event) => setSelectedDistrict(event.currentKey)}
+                        selectedKeys={[selectedDistrict]}
+                        size={"lg"}
+                        aria-label={"test"}
+                        disallowEmptySelection
+                    >
                         {(item) => <SelectItem key={item.district_id}>{item.district_name}</SelectItem>}
                     </Select>
-                    <Select items={listWards ?? []}
-                            onSelectionChange={(event) => setSelectedWard(event.currentKey)}
-                            selectedKeys={[selectedWard]}
-                            size={"lg"}
-                            aria-label={"test"}>
+                    <Select
+                        items={listWards ?? []}
+                        onSelectionChange={(event) => setSelectedWard(event.currentKey)}
+                        selectedKeys={[selectedWard]}
+                        size={"lg"}
+                        aria-label={"test"}
+                        disallowEmptySelection
+                    >
                         {(item) => <SelectItem key={item.ward_id}>{item.ward_name}</SelectItem>}
                     </Select>
                 </FormRow>
                 <FormRow>
-                    <Input label={"Địa chỉ cụ thể"}
-                           labelPlacement={"outside"}
-                           size={"lg"}
-                           variant={"bordered"}
-                           value={fullAddress}
-                           onValueChange={setFullAddress}
-                           isRequired
+                    <Input
+                        label={"Địa chỉ cụ thể"}
+                        labelPlacement={"outside"}
+                        size={"lg"}
+                        variant={"bordered"}
+                        value={fullAddress}
+                        onValueChange={setFullAddress}
+                        isRequired
                     />
                 </FormRow>
             </Form>
