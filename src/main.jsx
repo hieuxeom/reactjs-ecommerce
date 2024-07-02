@@ -33,6 +33,7 @@ import RootProductDetails from "./pages/Product/ProductDetails/RootProductDetail
 import Shop from "./pages/Product/Shop/Shop.jsx";
 import Cart from "./pages/Cart/Cart.jsx";
 import CartCheckout from "./pages/Cart/CartCheckout.jsx";
+import VoucherManagement from "./pages/Admin/VoucherManagement/VoucherManagement.jsx";
 
 const router = createBrowserRouter([
     {
@@ -97,6 +98,10 @@ const router = createBrowserRouter([
             {
                 path: "users",
                 element: <UserManagement/>
+            },
+            {
+                path: "vouchers",
+                element: <VoucherManagement/>
             },
             {
                 path: "",

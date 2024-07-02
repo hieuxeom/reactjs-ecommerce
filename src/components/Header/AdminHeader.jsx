@@ -16,6 +16,10 @@ function AdminHeader(props) {
             label: "Tổng quan",
             value: "dashboard",
             href: adminUrl.dashboard.index
+        }, {
+            label: "Người dùng",
+            value: "users",
+            href: adminUrl.user.index
         },
         {
             label: "Danh mục",
@@ -31,12 +35,12 @@ function AdminHeader(props) {
             label: "Đơn hàng",
             value: "orders",
             href: adminUrl.order.index
-        },
-        {
-            label: "Người dùng",
-            value: "users",
-            href: adminUrl.user.index
+        }, {
+            label: "Mã giảm giá",
+            value: "vouchers",
+            href: adminUrl.voucher.index
         }
+
     ];
 
     const handleNavigateTo = (href) => {

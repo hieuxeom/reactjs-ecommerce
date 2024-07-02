@@ -17,14 +17,17 @@ const adminUrl = {
     },
     order: {
         index: `${baseAdminUrl}/orders`,
-        new: `${baseAdminUrl}/orders/new`,
         details: (orderId) => `${baseAdminUrl}/orders/${orderId}/details/`
     },
     user: {
         index: `${baseAdminUrl}/users`,
         new: `${baseAdminUrl}/users/new`,
-        edit: (userId) => `${baseAdminUrl}/users/edit/${userId}`,
-        delete: (userId) => `${baseAdminUrl}/users/delete/${userId}`
+        edit: (userId) => `${baseAdminUrl}/users/${userId}/edit`
+    },
+    voucher: {
+        index: `${baseAdminUrl}/vouchers`,
+        new: `${baseAdminUrl}/vouchers/new`,
+        edit: (voucherId) => `${baseAdminUrl}/vouchers/${voucherId}`
     }
 };
 
