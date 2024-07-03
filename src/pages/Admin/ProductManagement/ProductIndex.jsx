@@ -5,7 +5,7 @@ import {
     Chip,
     CircularProgress,
     Select,
-    SelectItem,
+    SelectItem, Switch,
     Table,
     TableBody,
     TableCell,
@@ -74,10 +74,10 @@ function ProductIndex(props) {
         }
     ];
 
-    const onChangeStatus = (productId, {target}) => {
+    const onChangeStatus = (productId, isActive) => {
         toastUpdateStatus.current = toast.info("Updating", toastConfig.loading);
         return axiosServer.put(apiUrl.product.activation(productId), {
-            isActive: target.value
+            isActive
         }).then((response) => {
             if (response.data.status === "success") {
                 getListProducts();
@@ -155,23 +155,27 @@ function ProductIndex(props) {
                                 <TableCell>{item.productPrice}</TableCell>
                                 <TableCell>{item.views}</TableCell>
                                 <TableCell>
-                                    <Select items={activeStatus} selectedKeys={[`${item.isActive}`]}
-                                            renderValue={([item]) => {
-                                                return <Chip color={item.data.color}
-                                                             variant={"flat"}>{item.data.label}</Chip>;
-                                            }}
-                                            onChange={(event) => {
-                                                onChangeStatus(item._id, event);
-                                            }}
-                                            disallowEmptySelection
-                                            aria-label="Select activation status"
-                                    >
-                                        {(status) => {
-                                            return <SelectItem key={status.value}>
-                                                <Chip color={status.color} variant={"flat"}>{status.label}</Chip>
-                                            </SelectItem>;
-                                        }}
-                                    </Select>
+                                    <Switch isSelected={item.isActive}
+                                            onValueChange={(event) => onChangeStatus(item._id, event)}>
+                                        Hiện
+                                    </Switch>
+                                    {/*<Select items={activeStatus} selectedKeys={[`${item.isActive}`]}*/}
+                                    {/*        renderValue={([item]) => {*/}
+                                    {/*            return <Chip color={item.data.color}*/}
+                                    {/*                         variant={"flat"}>{item.data.label}</Chip>;*/}
+                                    {/*        }}*/}
+                                    {/*        onChange={(event) => {*/}
+                                    {/*            onChangeStatus(item._id, event);*/}
+                                    {/*        }}*/}
+                                    {/*        disallowEmptySelection*/}
+                                    {/*        aria-label="Select activation status"*/}
+                                    {/*>*/}
+                                    {/*    {(status) => {*/}
+                                    {/*        return <SelectItem key={status.value}>*/}
+                                    {/*            <Chip color={status.color} variant={"flat"}>{status.label}</Chip>*/}
+                                    {/*        </SelectItem>;*/}
+                                    {/*    }}*/}
+                                    {/*</Select>*/}
                                 </TableCell>
                                 <TableCell>
                                     <div className={"flex items-center gap-2"}>
