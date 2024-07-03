@@ -5,7 +5,7 @@ import {
     Chip,
     CircularProgress,
     Select,
-    SelectItem,
+    SelectItem, Switch,
     Table,
     TableBody,
     TableCell,
@@ -71,10 +71,11 @@ function CategoryIndex(props) {
         }
     ];
 
-    const onChangeStatus = (categoryId, {target}) => {
+    const onChangeStatus = (categoryId, isActive) => {
+        
         toastUpdateStatus.current = toast.info("Updating...", toastConfig.loading);
         return axiosServer.put(apiUrl.category.activation(categoryId), {
-            isActive: target.value
+            isActive
         }).then((response) => {
 
             if (response.data.status === "success") {
@@ -146,28 +147,10 @@ function CategoryIndex(props) {
                                 <TableCell>{item.categoryName}</TableCell>
                                 <TableCell>{item.queryParams}</TableCell>
                                 <TableCell>
-                                    <Select items={activeStatus}
-                                            selectedKeys={[`${item.isActive}`]}
-                                            renderValue={([item]) => (
-                                                <Chip color={item.data.color}
-                                                      variant={"flat"}
-                                                      radius={"sm"}
-                                                >
-                                                    {item.data.label}
-                                                </Chip>
-                                            )}
-                                            onChange={(event) => {
-                                                onChangeStatus(item._id, event);
-                                            }}
-                                            disallowEmptySelection
-                                            aria-label="Select activation status"
-                                    >
-                                        {(status) => {
-                                            return <SelectItem key={status.value}>
-                                                <Chip color={status.color} variant={"flat"}>{status.label}</Chip>
-                                            </SelectItem>;
-                                        }}
-                                    </Select>
+                                    <Switch isSelected={item.isActive}
+                                            onValueChange={(event) => onChangeStatus(item._id, event)}>
+                                        Kích hoạt
+                                    </Switch>
                                 </TableCell>
                                 <TableCell>
                                     <div className={"flex items-center gap-2"}>
