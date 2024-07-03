@@ -28,7 +28,7 @@ function SignIn(props) {
             } = response.data.data;
             console.log(60 * 60 * 24 * 30);
             setCookie("refreshToken", refreshToken, {path: "/", maxAge: 60 * 60 * 24 * 30});
-            setCookie("accessToken", accessToken, {path: "/", maxAge: 5});
+            setCookie("accessToken", accessToken, {path: "/", maxAge: 10});
         }).finally(() => {
             navigate("/");
         });
