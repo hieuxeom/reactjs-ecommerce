@@ -162,9 +162,9 @@ function EditProduct(props) {
 
         axiosServer.put(apiUrl.product.edit(productId), submitData).then((response) => {
 
-            if (response.status === "success") {
+            if (response.data.status === "success") {
                 getProductDetails();
-                toast.update(toastEdit.current, toastConfig.success(response.message));
+                toast.update(toastEdit.current, toastConfig.success(response.data.message));
             }
         }).catch((error) => {
             const {response} = error;

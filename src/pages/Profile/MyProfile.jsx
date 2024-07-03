@@ -8,7 +8,7 @@ function MyProfile(props) {
     const [userData, setUserData] = useState();
     useEffect(() => {
         axiosServer.get(apiUrl.user.me).then((response) => {
-            setUserData(response.data);
+            setUserData(response.data.data);
         });
     }, []);
 

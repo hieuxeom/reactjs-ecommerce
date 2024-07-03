@@ -5,7 +5,7 @@ import {useCookies} from "react-cookie";
 import {apiBaseUrl} from "../utils/config/api.config.js";
 
 const useAxiosServer = () => {
-    const [cookies] = useCookies(['refreshToken', 'accessToken']);
+    const [cookies] = useCookies(["refreshToken", "accessToken"]);
 
     const {accessToken} = cookies;
 
@@ -14,9 +14,9 @@ const useAxiosServer = () => {
     const axiosServer = axios.create({
         baseURL: apiBaseUrl,
         headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "application/json"
         },
-        withCredentials: true,
+        withCredentials: true
     });
 
     useEffect(() => {
@@ -36,7 +36,7 @@ const useAxiosServer = () => {
         );
 
         const responseIntercept = axiosServer.interceptors.response.use(
-            (response) => response.data,
+            (response) => response,
             async (error) => {
                 const prevRequest = error?.config;
                 if (error?.response?.status === 401 && !prevRequest?.sent) {

@@ -61,7 +61,7 @@ function BillingStep({onNextStep}) {
         };
 
         axiosServer.post(apiUrl.order.new, orderData).then((response) => {
-            if (response.status === "success")
+            if (response.data.status === "success")
                 localStorage.removeItem("tempCart");
             localStorage.removeItem("userAddress");
             onNextStep({

@@ -50,7 +50,7 @@ function AddressStep({onNextStep}) {
 
     const handleGetListUserAddress = () => {
         axiosServer.get(apiUrl.user.listAddresses).then((response) => {
-            let listUserAddresses = response.data;
+            let listUserAddresses = response.data.data;
             setListUserAddresses(listUserAddresses);
         });
     };

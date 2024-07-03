@@ -55,8 +55,8 @@ function EditCategory(props) {
             queryParams,
             isActive
         }).then((response) => {
-            if (response.status === "success") {
-                toast.update(toastEdit.current, toastConfig.success(response.message, () => navigate(adminUrl.category.index)));
+            if (response.data.status === "success") {
+                toast.update(toastEdit.current, toastConfig.success(response.data.message, () => navigate(adminUrl.category.index)));
             }
         }).catch((error) => {
             const {response} = error;

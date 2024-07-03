@@ -49,7 +49,7 @@ function CartItem({itemData, onChangeEvent}) {
             newQuantity: quantity,
             variantKey: variantData.variantKey
         }).then((response) => {
-            if (response.status === "success") {
+            if (response.data.status === "success") {
                 onChangeEvent(true);
             }
         });

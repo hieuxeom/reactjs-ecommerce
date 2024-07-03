@@ -36,7 +36,7 @@ function Cart({children}) {
 
     const getUserCart = () => {
         axiosServer.get(apiUrl.user.cart).then((response) => {
-            setUserCart(response.data);
+            setUserCart(response.data.data);
         });
     };
 
@@ -62,7 +62,7 @@ function Cart({children}) {
     const handleResetCart = () => {
         toastReset.current = toast.info("Reset...", toastConfig.loading);
         axiosServer.delete(apiUrl.cart.reset).then((response) => {
-            if (response.status === "success") {
+            if (response.data.status === "success") {
                 toast.update(toastReset.current, toastConfig.success("successfully reset cart"));
             }
         });

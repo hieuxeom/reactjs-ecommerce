@@ -79,9 +79,9 @@ function ProductIndex(props) {
         return axiosServer.put(apiUrl.product.activation(productId), {
             isActive: target.value
         }).then((response) => {
-            if (response.status === "success") {
+            if (response.data.status === "success") {
                 getListProducts();
-                toast.update(toastUpdateStatus.current, toastConfig.success(response.message));
+                toast.update(toastUpdateStatus.current, toastConfig.success(response.data.message));
             }
         }).catch((error) => {
             const {response} = error;
@@ -93,9 +93,9 @@ function ProductIndex(props) {
         toastDelete.current = toast.info("Deleting", toastConfig.loading);
         return axiosServer.delete(apiUrl.product.delete(categoryId)).then((response) => {
             console.log(response);
-            if (response.status === "success") {
+            if (response.data.status === "success") {
                 getListProducts();
-                toast.update(toastDelete.current, toastConfig.success(response.message));
+                toast.update(toastDelete.current, toastConfig.success(response.data.message));
             }
         }).catch((error) => {
             const {response} = error;

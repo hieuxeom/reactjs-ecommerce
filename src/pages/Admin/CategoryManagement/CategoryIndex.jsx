@@ -77,7 +77,7 @@ function CategoryIndex(props) {
             isActive: target.value
         }).then((response) => {
 
-            if (response.status === "success") {
+            if (response.data.status === "success") {
                 getListCategories();
                 toast.update(toastUpdateStatus.current, toastConfig.success("Successfully updated category status"));
             }
@@ -90,7 +90,7 @@ function CategoryIndex(props) {
         toastDelete.current = toast.info("Deleting...", toastConfig.loading);
         return axiosServer.delete(apiUrl.category.delete(categoryId)).then((response) => {
             console.log(response);
-            if (response.status === "success") {
+            if (response.data.status === "success") {
                 getListCategories();
                 toast.update(toastDelete.current, toastConfig.success("Successfully deleted category"));
             }

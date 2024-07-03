@@ -159,8 +159,8 @@ function NewProduct(props) {
             isActive
         };
         axiosServer.post(apiUrl.product.base, submitData).then((response) => {
-            if (response.status === "success") {
-                toast.update(toastSubmit.current, toastConfig.success(response.message, () => navigate(adminUrl.product.index)));
+            if (response.data.status === "success") {
+                toast.update(toastSubmit.current, toastConfig.success(response.data.message, () => navigate(adminUrl.product.index)));
             }
         }).catch((error) => {
             const {response} = error;

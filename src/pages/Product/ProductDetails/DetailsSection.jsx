@@ -49,9 +49,9 @@ function DetailsSection({productDetails}) {
             quantity: countQuantity
         };
         axiosServer.post(apiUrl.cart.add, postData).then(response => {
-            console.log(response);
-            if (response.status === "success") {
-                toast.update(toastAdd.current, toastConfig.success(response.message));
+
+            if (response.data.status === "success") {
+                toast.update(toastAdd.current, toastConfig.success(response.data.message));
             }
         }).catch((error) => {
             const {response} = error;
