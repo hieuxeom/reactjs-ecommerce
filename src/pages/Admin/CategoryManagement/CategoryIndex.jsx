@@ -25,6 +25,7 @@ import useAxios from "../../../hooks/useAxios.js";
 import classNames from "classnames";
 import {toast} from "react-toastify";
 import toastConfig from "../../../utils/config/toast.config.js";
+import iconConfig from "../../../utils/config/icon.config.jsx";
 
 function CategoryIndex(props) {
     const [listCategories, setListCategories] = useState([]);
@@ -120,7 +121,7 @@ function CategoryIndex(props) {
                 {
                     color: "primary",
                     label: "Tạo danh mục",
-                    icon: <IoMdAdd size={classConfig.icon.large}/>,
+                    icon: iconConfig.add.large,
                     urlBack: adminUrl.category.new
                 }
             }/>
@@ -175,14 +176,14 @@ function CategoryIndex(props) {
                                                 variant={"ghost"}
                                                 onClick={() => handleNavigateToEdit(item._id)}
                                         >
-                                            <RiEditFill size={classConfig.icon.large}/>
+                                            {iconConfig.edit.large}
                                         </Button>
                                         <Button isIconOnly={true}
                                                 color={"danger"}
                                                 variant={"ghost"}
                                                 onClick={() => onDelete(item._id)}
                                         >
-                                            <AiFillDelete size={classConfig.icon.large}/>
+                                            {iconConfig.delete.large}
                                         </Button>
                                     </div>
                                 </TableCell>

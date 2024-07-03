@@ -5,6 +5,7 @@ import {Button} from "@nextui-org/react";
 import {IoArrowBack} from "react-icons/io5";
 import {useNavigate} from "react-router-dom";
 import PropTypes from "prop-types";
+import iconConfig from "../../utils/config/icon.config.jsx";
 
 FormHeader.propTypes = {
     formTitle: PropTypes.string,
@@ -15,7 +16,7 @@ function FormHeader({formTitle, urlBack}) {
 
     const navigate = useNavigate();
 
-    const handleNavigateToIndex = () => {
+    const handleNavigateTo = () => {
         return navigate(urlBack);
     };
 
@@ -24,8 +25,8 @@ function FormHeader({formTitle, urlBack}) {
             <h3 className={classNames(classConfig.fontSize.h3, classConfig.textVariant.formTitle, classConfig.textColor.secondary)}>{formTitle}</h3>
             <Button className={classNames(classConfig.fontSize.base, "flex items-center")}
                     color={"secondary"}
-                    onClick={handleNavigateToIndex}
-                    startContent={<IoArrowBack size={classConfig.icon.large}/>}>
+                    onClick={handleNavigateTo}
+                    startContent={iconConfig.back.large}>
                 Quay lại </Button>
         </header>
     );

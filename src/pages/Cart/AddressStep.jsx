@@ -11,6 +11,7 @@ import {toast} from "react-toastify";
 import toastConfig from "../../utils/config/toast.config.js";
 import useAxiosServer from "../../hooks/useAxiosServer.js";
 import {apiUrl} from "../../utils/config/api.config.js";
+import iconConfig from "../../utils/config/icon.config.jsx";
 
 AddressStep.propTypes = {
     onNextStep: PropTypes.func
@@ -74,7 +75,7 @@ function AddressStep({onNextStep}) {
                 tabTitle={"Thông tin thanh toán"}
                 buttonData={{
                     label: "Quay lại",
-                    icon: <IoArrowBack/>,
+                    icon: iconConfig.back.large,
                     urlBack: userUrl.cart.base,
                     color: "secondary"
                 }}

@@ -10,6 +10,7 @@ import {productDetailsType} from "../../../utils/propTypes/productType.js";
 import toastConfig from "../../../utils/config/toast.config.js";
 import {toast} from "react-toastify";
 import useAxiosServer from "../../../hooks/useAxiosServer.js";
+import iconConfig from "../../../utils/config/icon.config.jsx";
 
 DetailsSection.propTypes = {
     productDetails: productDetailsType
@@ -133,11 +134,11 @@ function DetailsSection({productDetails}) {
                     <div className={"flex items-center gap-4"}>
                         <ButtonGroup className={"w-max"}>
                             <Button isIconOnly onClick={handleDecreaseQuantity}>
-                                <IoRemove/>
+                                {iconConfig.minus.base}
                             </Button>
                             <Button variant={"flat"}>{countQuantity}</Button>
                             <Button isIconOnly onClick={handleIncreaseQuantity}>
-                                <IoAdd/>
+                                {iconConfig.add.base}
                             </Button>
                         </ButtonGroup>
                         <div className={"flex items-center gap-1"}>

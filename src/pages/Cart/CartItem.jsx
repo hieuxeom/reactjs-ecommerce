@@ -8,6 +8,7 @@ import classNames from "classnames";
 import classConfig from "../../utils/config/class.config.js";
 import {IoAdd, IoRemove} from "react-icons/io5";
 import CartItemPrice from "./CartItemPrice.jsx";
+import iconConfig from "../../utils/config/icon.config.jsx";
 
 CartItem.propTypes = {
     itemData: CartItemPropTypes.isRequired,
@@ -77,11 +78,11 @@ function CartItem({itemData, onChangeEvent}) {
                     <div className={"col-span-3 flex justify-center"}>
                         <ButtonGroup className={"w-max"}>
                             <Button isIconOnly onClick={handleDecreaseQuantity}>
-                                <IoRemove/>
+                                {iconConfig.minus.base}
                             </Button>
                             <Button variant={"flat"}>{quantity}</Button>
                             <Button isIconOnly onClick={handleIncreaseQuantity}>
-                                <IoAdd/>
+                                {iconConfig.add.base}
                             </Button>
                         </ButtonGroup>
                     </div>

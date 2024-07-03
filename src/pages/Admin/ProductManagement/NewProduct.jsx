@@ -19,6 +19,7 @@ import toastConfig from "../../../utils/config/toast.config.js";
 import {isNumber} from "../../../utils/checkNumber.js";
 import {isEmpty, isIncludeSpace} from "../../../utils/checkSpaces.js";
 import {LiaDollarSignSolid} from "react-icons/lia";
+import iconConfig from "../../../utils/config/icon.config.jsx";
 
 function NewProduct(props) {
 
@@ -250,7 +251,7 @@ function NewProduct(props) {
                                             onClick={handleAddNewVariantRow}
                                             isDisabled={productVariants.length >= 10}
                                     >
-                                        <IoMdAdd size={classConfig.icon.base}/>
+                                        {iconConfig.add.large}
                                     </Button>
                                 </div>
                             </div>

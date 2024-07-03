@@ -25,9 +25,9 @@ import {adminUrl} from "../../../utils/config/route.config.js";
 import classNames from "classnames";
 import {toast} from "react-toastify";
 import toastConfig from "../../../utils/config/toast.config.js";
+import iconConfig from "../../../utils/config/icon.config.jsx";
 
 function ProductIndex(props) {
-    const toastFetch = useRef(null);
     const toastDelete = useRef(null);
     const toastUpdateStatus = useRef(null);
 
@@ -111,14 +111,13 @@ function ProductIndex(props) {
     };
 
     const getListProducts = () => {
-        toastFetch.current = toast.info("Fetching", toastConfig.loading);
+
         axiosClient.get(apiUrl.product.all).then((response) => {
             setListProducts(response.data.data);
             setFetchState(true);
-            toast.update(toastFetch.current, toastConfig.success(response.data.message));
+
         }).catch((error) => {
             const {response} = error;
-            toast.update(toastUpdateStatus.current, toastConfig.error(response.data.message));
         });
     };
 
@@ -132,7 +131,7 @@ function ProductIndex(props) {
                 {
                     color: "primary",
                     label: "Thêm sản phẩm",
-                    icon: <IoMdAdd size={classConfig.icon.large}/>,
+                    icon: iconConfig.add.large,
                     urlBack: adminUrl.product.new
                 }
             }/>
@@ -181,21 +180,21 @@ function ProductIndex(props) {
                                                 variant={"ghost"}
                                                 onClick={() => handleNavigateToDetails(item._id)}
                                         >
-                                            <AiOutlineBars size={classConfig.icon.large}/>
+                                            {iconConfig.detail.large}
                                         </Button>
                                         <Button isIconOnly={true}
                                                 color={"warning"}
                                                 variant={"ghost"}
                                                 onClick={() => handleNavigateToEdit(item._id)}
                                         >
-                                            <RiEditFill size={classConfig.icon.large}/>
+                                            {iconConfig.edit.large}
                                         </Button>
                                         <Button isIconOnly={true}
                                                 color={"danger"}
                                                 variant={"ghost"}
                                                 onClick={() => onDelete(item._id)}
                                         >
-                                            <AiFillDelete size={classConfig.icon.large}/>
+                                            {iconConfig.delete.large}
                                         </Button>
                                     </div>
                                 </TableCell>

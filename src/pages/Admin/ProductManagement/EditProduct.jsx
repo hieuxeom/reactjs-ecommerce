@@ -18,6 +18,7 @@ import {toast} from "react-toastify";
 import toastConfig from "../../../utils/config/toast.config.js";
 import {LiaDollarSignSolid} from "react-icons/lia";
 import {isNumber} from "../../../utils/checkNumber.js";
+import iconConfig from "../../../utils/config/icon.config.jsx";
 
 function EditProduct(props) {
     const axiosClient = useAxios();
@@ -245,11 +246,11 @@ function EditProduct(props) {
                                 <p className={classConfig.fontSize.inputLabel}>Các biến thể</p>
                                 <div className={"flex items-center gap-4"}>
                                     <p className={classNames({
-                                        "text-danger": productVariants.length === 10
-                                    })}>({productVariants.length}/10)</p>
+                                        "text-danger": productVariants?.length === 10
+                                    })}>({productVariants?.length}/10)</p>
                                     <Button isIconOnly color={"primary"}
                                             onClick={handleAddNewVariantRow}
-                                    ><IoMdAdd size={classConfig.icon.base}/></Button>
+                                    >{iconConfig.add.large}</Button>
                                 </div>
                             </div>
                             <div className={"w-full flex flex-col gap-4"}>
