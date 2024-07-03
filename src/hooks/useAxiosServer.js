@@ -6,9 +6,6 @@ import {apiBaseUrl} from "../utils/config/api.config.js";
 
 const useAxiosServer = () => {
     const [cookies] = useCookies(["refreshToken", "accessToken"]);
-
-    const {accessToken} = cookies;
-
     const getRefreshToken = useRefreshToken();
 
     const axiosServer = axios.create({
@@ -22,6 +19,7 @@ const useAxiosServer = () => {
     useEffect(() => {
         const requestIntercept = axiosServer.interceptors.request.use(
             async (config) => {
+                const {accessToken} = cookies; // get the most recent accessToken
                 if (!config.headers["Authorization"]) {
                     if (!accessToken) {
                         const newAccessToken = await getRefreshToken();
@@ -53,7 +51,7 @@ const useAxiosServer = () => {
             axiosServer.interceptors.request.eject(requestIntercept);
             axiosServer.interceptors.response.eject(responseIntercept);
         };
-    }, [accessToken, getRefreshToken]);
+    }, [cookies, getRefreshToken]); // Add cookies and getRefreshToken to dependency array
 
     return axiosServer;
 };

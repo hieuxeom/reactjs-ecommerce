@@ -2,18 +2,16 @@ import useAxios from "./useAxios";
 import {useCookies} from "react-cookie";
 
 const useRefreshToken = () => {
-
-    const [cookies, setCookie] = useCookies(["refresh_token"]);
-
-    const {refreshToken} = cookies;
-
+    const [cookies, setCookie] = useCookies(["refreshToken", "accessToken"]);
     const axiosClient = useAxios();
 
     return async () => {
+        const {refreshToken} = cookies;
         if (refreshToken) {
             const token = await axiosClient.get("/users/rftk");
-            setCookie("accessToken", token.data.data, {maxAge: 5});
-            return token.data.data;
+            const newAccessToken = token.data.data;
+            setCookie("accessToken", newAccessToken, {path: "/", maxAge: 10});
+            return newAccessToken;
         } else {
             return null;
         }
