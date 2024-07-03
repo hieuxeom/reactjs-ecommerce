@@ -96,7 +96,6 @@ function Cart({children}) {
     };
 
     const handleCheckOut = () => {
-        console.log(userCart);
         const checkoutData = {
             cartItems: userCart.cartItems,
             ...summaryData
@@ -107,11 +106,60 @@ function Cart({children}) {
         return navigate(userUrl.cart.checkout);
     };
 
+    const handleVoucherCode = (voucherCode) => {
+        axiosServer.get(apiUrl.voucher.details(voucherCode)).then(response => {
+            const voucherDetails = response.data.data;
+
+            const handleShippingType = () => {
+                const newShippingFee = 2 * (100 - voucherDetails.discountPercents) / 100;
+                setSummaryData(prevState => ({
+                    ...prevState,
+                    voucherCode,
+                    reducedFee: 0,
+                    shippingFee: newShippingFee
+                }));
+            };
+
+            const handleBillingType = () => {
+                const newReducedFee = summaryData.subTotalPrice * voucherDetails.discountPercents / 100;
+                setSummaryData(prevState => ({
+                    ...prevState,
+                    voucherCode,
+                    shippingFee: 2,
+                    reducedFee: newReducedFee
+                }));
+            };
+
+            switch (voucherDetails.type) {
+                case "shipping":
+                    handleShippingType();
+                    break;
+                case "billing":
+                    handleBillingType();
+                    break;
+                default:
+                    setSummaryData(prevState => ({
+                        ...prevState,
+                        voucherCode,
+                        shippingFee: 2,
+                        reducedFee: 0
+                    }));
+                    break;
+            }
+
+            setSummaryData(prevState => ({
+                ...prevState,
+                totalPrice: prevState.subTotalPrice + prevState.shippingFee - prevState.reducedFee
+            }));
+        });
+    };
+
     useEffect(() => {
         if (userCart) {
-            const {cartItems} = userCart;
+            const {cartItems, voucherCode} = userCart;
             calculateSubTotal(cartItems);
             fetchAllProductDetails(cartItems);
+            handleVoucherCode(voucherCode);
         }
     }, [userCart]);
 
@@ -125,6 +173,10 @@ function Cart({children}) {
     useEffect(() => {
         getUserCart();
     }, []);
+
+    useEffect(() => {
+
+    }, [summaryData]);
 
     return (
         <div className="w-full max-w-7xl mt-8 flex flex-col gap-6">
@@ -143,7 +195,7 @@ function Cart({children}) {
                                    cartItems={listProductDetails ?? []}/>
                 </div>
                 <div className={"col-span-4 flex flex-col gap-4"}>
-                    <CartSummary summaryData={summaryData}/>
+                    <CartSummary summaryData={summaryData} onApplyVoucher={setIsHaveChangeEvent}/>
                     <Button fullWidth size={"lg"}
                             color={"primary"}
                             onClick={handleCheckOut}
@@ -155,3 +207,4 @@ function Cart({children}) {
 }
 
 export default Cart;
+

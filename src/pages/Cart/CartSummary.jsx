@@ -5,6 +5,8 @@ import Form from "../../components/Form/Form.jsx";
 import FormRow from "../../components/Form/FormRow.jsx";
 import {Button, Divider, Input} from "@nextui-org/react";
 import PropTypes from "prop-types";
+import useAxiosServer from "../../hooks/useAxiosServer.js";
+import {apiUrl} from "../../utils/config/api.config.js";
 
 CartSummary.propTypes = {
     summaryData: PropTypes.shape({
@@ -16,7 +18,28 @@ CartSummary.propTypes = {
     })
 };
 
-function CartSummary({summaryData}) {
+function CartSummary({summaryData, onApplyVoucher}) {
+
+    const axiosServer = useAxiosServer();
+
+    const [voucherCode, setVoucherCode] = useState("");
+
+    const handleApplyVoucher = () => {
+        axiosServer.put(apiUrl.cart.voucher, {
+            voucherCode,
+            subTotalPrice: summaryData.subTotalPrice
+        }).then((response) => {
+            onApplyVoucher(true);
+        });
+    };
+
+    useEffect(() => {
+        setVoucherCode(summaryData?.voucherCode ?? "");
+    }, [summaryData]);
+
+    useEffect(() => {
+        console.log(voucherCode);
+    }, [voucherCode]);
 
     return (
         <div className={"shadow-custom p-4 flex flex-col gap-4"}>
@@ -39,7 +62,15 @@ function CartSummary({summaryData}) {
                 <Form>
                     <FormRow>
                         <Input placeholder={"Mã giảm giá"}
-                               endContent={<Button size={"sm"} color={"secondary"}>Sử dụng</Button>}
+                               value={voucherCode}
+                               onValueChange={setVoucherCode}
+                               endContent={
+                                   <Button size={"sm"}
+                                           color={"secondary"}
+                                           onClick={handleApplyVoucher}
+                                   >
+                                       Sử dụng
+                                   </Button>}
                         />
 
                     </FormRow>
