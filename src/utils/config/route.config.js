@@ -17,7 +17,7 @@ const adminUrl = {
     },
     order: {
         index: `${baseAdminUrl}/orders`,
-        details: (orderId) => `${baseAdminUrl}/orders/${orderId}/details/`
+        details: (orderId) => `${baseAdminUrl}/orders/${orderId}`
     },
     user: {
         index: `${baseAdminUrl}/users`,
@@ -27,7 +27,7 @@ const adminUrl = {
     voucher: {
         index: `${baseAdminUrl}/vouchers`,
         new: `${baseAdminUrl}/vouchers/new`,
-        edit: (voucherId) => `${baseAdminUrl}/vouchers/${voucherId}`
+        edit: (voucherId) => `${baseAdminUrl}/vouchers/${voucherId}/edit`
     }
 };
 

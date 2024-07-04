@@ -38,17 +38,29 @@ const apiUrl = {
     cart: {
         base: `${apiBaseUrl}/carts`,
         add: `${apiBaseUrl}/carts`,
-        reset: `${apiBaseUrl}/carts`
+        reset: `${apiBaseUrl}/carts`,
+        voucher: `${apiBaseUrl}/carts/voucher`
     },
     order: {
-        new: `${apiBaseUrl}/orders`
+        getAll: `${apiBaseUrl}/orders`,
+        new: `${apiBaseUrl}/orders`,
+        changeStatus: (orderId) => `${apiBaseUrl}/orders/${orderId}/order-status`,
+        details: (orderId) => `${apiBaseUrl}/orders/${orderId}`,
+        canceled: (orderId) => `${apiBaseUrl}/orders/${orderId}/cancel-order`
     },
     address: {
         provinces: "https://vapi.vnappmob.com/api/province",
         districts: (provinceId) => `https://vapi.vnappmob.com/api/province/district/${provinceId}`,
         wards: (districtId) => `https://vapi.vnappmob.com/api/province/ward/${districtId}`
+    },
+    voucher: {
+        getAll: `${apiBaseUrl}/vouchers`,
+        details: (voucherId) => `${apiBaseUrl}/vouchers/${voucherId}`,
+        new: `${apiBaseUrl}/vouchers`,
+        edit: (voucherId) => `${apiBaseUrl}/vouchers/${voucherId}`,
+        activation: (voucherId) => `${apiBaseUrl}/vouchers/${voucherId}/activation`
     }
 
 };
 
-export {apiBaseUrl, apiUrl, imageUrl};
+export { apiBaseUrl, apiUrl, imageUrl };

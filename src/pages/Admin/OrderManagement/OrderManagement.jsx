@@ -1,8 +1,11 @@
-import React from 'react';
+import React from "react";
+import {Outlet} from "react-router-dom";
 
 function OrderManagement(props) {
     return (
-        <div>OrderManagement work!</div>
+        <div className="w-full flex justify-center">
+            <Outlet/>
+        </div>
     );
 }
 
