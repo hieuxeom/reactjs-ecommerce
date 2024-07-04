@@ -8,6 +8,7 @@ import {apiUrl, imageUrl} from "../../utils/config/api.config.js";
 import classNames from "classnames";
 import classConfig from "../../utils/config/class.config.js";
 import useAxiosServer from "../../hooks/useAxiosServer.js";
+import OrderItem from "../../components/Order/OrderItem.jsx";
 
 BillingStep.propTypes = {
     onNextStep: PropTypes.func
@@ -102,22 +103,8 @@ function BillingStep({onNextStep}) {
                                 <div
                                     className={"w-full flex flex-col gap-4 px-4 py-2 border-1 border-black/10  rounded-2xl"}>
 
-                                    {cartItems && cartItems.map(({productName, productVariant, quantity}, index) => (
-                                        <div key={index} className={"w-full flex items-center gap-8"}>
-                                            <Image src={imageUrl + productVariant.variantImage} radius={"sm"} isBordered
-                                                   className={"w-16 border-2 border-black/10 rounded-xl"}/>
-                                            <div className={"w-full flex flex-col gap-1"}>
-                                                <p className={classNames(classConfig.fontSize.h6, classConfig.textColor.default)}>{productName}</p>
-                                                <div className={"flex items-center gap-2"}>
-                                                    <p className={classNames(classConfig.textColor.gray, classConfig.fontSize.sub, "italic")}>{productVariant.variantLabel}</p>
-                                                    <p className={classNames(classConfig.textColor.gray, classConfig.fontSize.sub, "italic")}>-</p>
-                                                    <p className={classNames(classConfig.textColor.gray, classConfig.fontSize.sub, "italic")}>x{quantity}</p>
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <p className={classNames(classConfig.fontSize.h6, classConfig.textColor.red)}>{(+productVariant.variantPrice.discountPrice * quantity).toFixed(2)}$</p>
-                                            </div>
-                                        </div>
+                                    {cartItems && cartItems.map((item, index) => (
+                                        <OrderItem key={index} itemData={item}/>
                                     ))}
                                 </div>
 
