@@ -16,7 +16,10 @@ export const productVariantType = PropTypes.shape({
     variantLabel: PropTypes.string.isRequired,
     variantImage: PropTypes.string.isRequired,
     variantStock: PropTypes.number.isRequired,
-    variantPrice: PropTypes.number.isRequired
+    variantPrice: PropTypes.shape({
+        originalPrice: PropTypes.number,
+        discountPrice: PropTypes.number
+    }).isRequired
 });
 
 export const productDetailsType = PropTypes.shape({
