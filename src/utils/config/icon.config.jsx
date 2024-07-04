@@ -4,6 +4,8 @@ import classConfig from "./class.config.js";
 import {IoArrowBack} from "react-icons/io5";
 import {TfiMenuAlt} from "react-icons/tfi";
 import {BiSolidEditAlt, BiSolidTrashAlt} from "react-icons/bi";
+import {FaXmark} from "react-icons/fa6";
+import {FaCheck} from "react-icons/fa";
 
 const iconConfig = {
     add: {
@@ -29,6 +31,14 @@ const iconConfig = {
     detail: {
         base: <TfiMenuAlt size={classConfig.icon.base}/>,
         large: <TfiMenuAlt size={classConfig.icon.large}/>
+    },
+    cancel: {
+        base: <FaXmark size={classConfig.icon.base}/>,
+        large: <FaXmark size={classConfig.icon.large}/>
+    },
+    confirm: {
+        base: <FaCheck size={classConfig.icon.base}/>,
+        large: <FaCheck size={classConfig.icon.large}/>
     }
 
 };
