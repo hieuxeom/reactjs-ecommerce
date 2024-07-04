@@ -11,6 +11,7 @@ module.exports = {
                 secondary: "#fb2e86",
                 warning: "#facc15",
                 "warning-foreground": "#ffffff",
+                "success-foreground": "#ffffff",
                 danger: "#ef4444",
                 success: "#4ade80",
                 purple: "#7e33e0",
