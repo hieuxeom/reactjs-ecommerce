@@ -27,13 +27,18 @@ import NewProduct from "./pages/Admin/ProductManagement/NewProduct.jsx";
 import ProductIndex from "./pages/Admin/ProductManagement/ProductIndex.jsx";
 import EditProduct from "./pages/Admin/ProductManagement/EditProduct.jsx";
 import AdminProductDetails from "./pages/Admin/ProductManagement/ProductDetails.jsx";
-import {ToastContainer} from "react-toastify";
+import {toast, ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import RootProductDetails from "./pages/Product/ProductDetails/RootProductDetails.jsx";
 import Shop from "./pages/Product/Shop/Shop.jsx";
 import Cart from "./pages/Cart/Cart.jsx";
 import CartCheckout from "./pages/Cart/CartCheckout.jsx";
 import VoucherManagement from "./pages/Admin/VoucherManagement/VoucherManagement.jsx";
+import VoucherIndex from "./pages/Admin/VoucherManagement/VoucherIndex.jsx";
+import NewVoucher from "./pages/Admin/VoucherManagement/NewVoucher.jsx";
+import EditVoucher from "./pages/Admin/VoucherManagement/EditVoucher.jsx";
+import OrderIndex from "./pages/Admin/OrderManagement/OrderIndex.jsx";
+import OrderDetails from "./pages/Admin/OrderManagement/OrderDetails.jsx";
 
 const router = createBrowserRouter([
     {
@@ -93,7 +98,18 @@ const router = createBrowserRouter([
             },
             {
                 path: "orders",
-                element: <OrderManagement/>
+                element: <OrderManagement/>,
+                children: [
+                    {
+                        path: "",
+                        element: <OrderIndex/>
+                    },
+                    {
+                        path: ":orderId",
+                        element: <OrderDetails/>
+                    }
+
+                ]
             },
             {
                 path: "users",
@@ -101,7 +117,21 @@ const router = createBrowserRouter([
             },
             {
                 path: "vouchers",
-                element: <VoucherManagement/>
+                element: <VoucherManagement/>,
+                children: [
+                    {
+                        path: "",
+                        element: <VoucherIndex/>
+                    },
+                    {
+                        path: "new",
+                        element: <NewVoucher/>
+                    },
+                    {
+                        path: ":voucherId/edit",
+                        element: <EditVoucher/>
+                    }
+                ]
             },
             {
                 path: "",
