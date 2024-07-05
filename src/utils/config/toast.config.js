@@ -12,6 +12,12 @@ const toastConfig = {
         autoClose: 3000,
         type: "error"
     }),
+    warning: (message) => ({
+        render: message,
+        isLoading: false,
+        autoClose: 3000,
+        type: "warning"
+    }),
     loading: {
         isLoading: true,
         autoClose: false
