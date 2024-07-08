@@ -1,15 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import {createBrowserRouter, RouterProvider} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import RootLayout from "./layouts/RootLayout.jsx";
 import AdminLayout from "./layouts/AdminLayout.jsx";
-import {NextUIProvider} from "@nextui-org/react";
+import { NextUIProvider } from "@nextui-org/react";
 import HomePage from "./pages/Home/HomePage.jsx";
 import SignIn from "./pages/Auth/SignIn/SignIn.jsx";
 import SignUp from "./pages/Auth/SignUp/SignUp.jsx";
-import {CookiesProvider} from "react-cookie";
+import { CookiesProvider } from "react-cookie";
 import MyProfile from "./pages/Profile/MyProfile.jsx";
 import ProtectRoute from "./utils/route/ProtectRoute.jsx";
 import Profile from "./pages/Profile/Profile.jsx";
@@ -21,13 +21,13 @@ import UserManagement from "./pages/Admin/UserManagement/UserManagement.jsx";
 import NewCategory from "./pages/Admin/CategoryManagement/NewCategory.jsx";
 import CategoryIndex from "./pages/Admin/CategoryManagement/CategoryIndex.jsx";
 import RedirectRoute from "./utils/route/RedirectRoute.jsx";
-import {adminUrl} from "./utils/config/route.config.js";
+import { adminUrl } from "./utils/config/route.config.js";
 import EditCategory from "./pages/Admin/CategoryManagement/EditCategory.jsx";
 import NewProduct from "./pages/Admin/ProductManagement/NewProduct.jsx";
 import ProductIndex from "./pages/Admin/ProductManagement/ProductIndex.jsx";
 import EditProduct from "./pages/Admin/ProductManagement/EditProduct.jsx";
 import AdminProductDetails from "./pages/Admin/ProductManagement/ProductDetails.jsx";
-import {toast, ToastContainer} from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import RootProductDetails from "./pages/Product/ProductDetails/RootProductDetails.jsx";
 import Shop from "./pages/Product/Shop/Shop.jsx";
@@ -39,6 +39,9 @@ import NewVoucher from "./pages/Admin/VoucherManagement/NewVoucher.jsx";
 import EditVoucher from "./pages/Admin/VoucherManagement/EditVoucher.jsx";
 import OrderIndex from "./pages/Admin/OrderManagement/OrderIndex.jsx";
 import OrderDetails from "./pages/Admin/OrderManagement/OrderDetails.jsx";
+import AddressDetails from "./pages/Profile/AddressDetails.jsx";
+import NewAddress from "./pages/Profile/NewAddress.jsx";
+import UserOrderDetails from "./pages/Profile/UserOrderDetails.jsx";
 
 const router = createBrowserRouter([
     {
@@ -152,8 +155,39 @@ const router = createBrowserRouter([
                 element: <Profile/>,
                 children: [
                     {
+                        path: "address",
+                        children: [
+                            {
+                                path: "",
+                                element: <RedirectRoute redirectTo={"/profile/me"}/>
+                            },
+                            {
+                                path: "new",
+                                element: <NewAddress/>
+                            },
+                            {
+                                path: ":addressId",
+                                element: <AddressDetails/>
+                            }
+                        ]
+
+                    },
+                    {
                         path: "me",
                         element: <MyProfile/>
+                    },
+                    {
+                        path: "order",
+                        children: [
+                            {
+                                path: "",
+                                element: <RedirectRoute redirectTo={"/profile/me"}/>
+                            },
+                            {
+                                path: ":orderId",
+                                element: <UserOrderDetails/>
+                            }
+                        ]
                     }
 
                 ]
@@ -201,7 +235,7 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root")).render(
     <React.StrictMode>
         <NextUIProvider>
-            <CookiesProvider defaultSetOptions={{path: "/"}}>
+            <CookiesProvider defaultSetOptions={{ path: "/" }}>
                 <ToastContainer closeOnClick/>
                 <RouterProvider router={router}/>
             </CookiesProvider>

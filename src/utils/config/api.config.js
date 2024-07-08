@@ -10,7 +10,14 @@ const apiUrl = {
     user: {
         me: `${apiBaseUrl}/users/me`,
         listAddresses: `${apiBaseUrl}/users/me/address`,
-        cart: `${apiBaseUrl}/carts`
+        listOrders: `${apiBaseUrl}/users/me/orders`,
+        addressDetails: (addressId) => `${apiBaseUrl}/users/me/address/${addressId}`,
+        newAddress: `${apiBaseUrl}/users//me/address`,
+        editAddress: (addressId) => `${apiBaseUrl}/users/me/address/${addressId}`,
+        deleteAddress: (addressId) => `${apiBaseUrl}/users/me/address/${addressId}`,
+        cart: `${apiBaseUrl}/carts`,
+        changeUsername: `${apiBaseUrl}/users/username`,
+        changeEmail: `${apiBaseUrl}/users/email-address`
 
     },
     category: {
@@ -46,7 +53,9 @@ const apiUrl = {
         new: `${apiBaseUrl}/orders`,
         changeStatus: (orderId) => `${apiBaseUrl}/orders/${orderId}/order-status`,
         details: (orderId) => `${apiBaseUrl}/orders/${orderId}`,
-        canceled: (orderId) => `${apiBaseUrl}/orders/${orderId}/cancel-order`
+        canceled: (orderId) => `${apiBaseUrl}/orders/${orderId}/cancel-order`,
+        returned: (orderId) => `${apiBaseUrl}/orders/${orderId}/return`
+
     },
     address: {
         provinces: "https://vapi.vnappmob.com/api/province",

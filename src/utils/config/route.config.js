@@ -41,7 +41,13 @@ const userUrl = {
     cart: {
         base: "/cart",
         checkout: "/cart/checkout"
+    },
+    profile: {
+        addressDetails: (addressId) => `/profile/address/${addressId}`,
+        newAddress: `/profile/address/new`,
+        me: `/profile/me`,
+        orderDetails: (orderId) => `/profile/order/${orderId}`
     }
 };
 
-export {baseAdminUrl, adminUrl, userUrl};
+export { baseAdminUrl, adminUrl, userUrl };
