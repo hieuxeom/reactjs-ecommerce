@@ -1,16 +1,16 @@
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import Form from "../Form/Form.jsx";
 import FormRow from "../Form/FormRow.jsx";
-import {apiUrl} from "../../utils/config/api.config.js";
+import { apiUrl } from "../../utils/config/api.config.js";
 import axios from "axios";
-import {Input, Select, SelectItem, Spinner} from "@nextui-org/react";
+import { Input, Select, SelectItem, Spinner } from "@nextui-org/react";
 import PropTypes from "prop-types";
 
 AddressBlock.propTypes = {
     onChange: PropTypes.func
 };
 
-function AddressBlock({onChange}) {
+function AddressBlock({ onChange }) {
     const [listProvinces, setListProvinces] = useState(null);
     const [listDistricts, setListDistricts] = useState(null);
     const [listWards, setListWards] = useState(null);
@@ -21,34 +21,48 @@ function AddressBlock({onChange}) {
     const [fullAddress, setFullAddress] = useState("");
 
     const getProvincesData = () => {
-        axios.get(apiUrl.address.provinces).then((response) => {
-            console.log(response);
-            setListProvinces(response.data.results);
-            setSelectedProvince(response.data.results[0].province_id);
-        }).catch((error) => {
-            console.log(error);
-        });
+        // axios.get(apiUrl.address.provinces).then((response) => {
+        //     console.log(response);
+        //     setListProvinces(response.data.results);
+        //     setSelectedProvince(response.data.results[0].province_id);
+        // }).catch((error) => {
+        //     console.log(error);
+        // });
+        fetch("/province_data.json")
+            .then(response => response.json())
+            .then((response) => {
+                setListProvinces(response.results);
+                setSelectedProvince(response.results[0].province_id);
+            });
     };
 
     const getDistrictsData = () => {
 
-        axios.get(apiUrl.address.districts(selectedProvince)).then((response) => {
-            console.log(response);
-            setListDistricts(response.data.results);
-            setSelectedDistrict(response.data.results[0].district_id);
-        }).catch((error) => {
-            console.log(error);
-        });
+        // axios.get(apiUrl.address.districts(selectedProvince)).then((response) => {
+        //     console.log(response);
+        //     setListDistricts(response.data.results);
+        //     setSelectedDistrict(response.data.results[0].district_id);
+        // }).catch((error) => {
+        //     console.log(error);
+        // });
+        const listDistricts = listProvinces?.find((province) => province.province_id === selectedProvince)?.districts ?? [];
+
+        setListDistricts(listDistricts ?? []);
+        setSelectedDistrict(listDistricts[0]?.district_id);
     };
 
     const getWardsData = () => {
-        axios.get(apiUrl.address.wards(selectedDistrict)).then((response) => {
-            console.log(response);
-            setListWards(response.data.results);
-            setSelectedWard(response.data.results[0].ward_id);
-        }).catch((error) => {
-            console.log(error);
-        });
+        // axios.get(apiUrl.address.wards(selectedDistrict)).then((response) => {
+        //     console.log(response);
+        //     setListWards(response.data.results);
+        //     setSelectedWard(response.data.results[0].ward_id);
+        // }).catch((error) => {
+        //     console.log(error);
+        // });
+
+        const listWards = listDistricts?.find((district) => district.district_id === selectedDistrict)?.wards ?? [];
+        setListWards(listWards ?? []);
+        setSelectedWard(listWards[0]?.ward_id);
     };
 
     const updateFullAddress = () => {
@@ -61,17 +75,21 @@ function AddressBlock({onChange}) {
     useEffect(() => {
         getProvincesData();
     }, []);
-
+    //
     useEffect(() => {
-        getDistrictsData();
-        updateFullAddress();
+        if (selectedProvince) {
+            getDistrictsData();
+            updateFullAddress();
+        }
     }, [selectedProvince]);
-
+    //
     useEffect(() => {
-        getWardsData();
-        updateFullAddress();
+        if (selectedDistrict) {
+            getWardsData();
+            updateFullAddress();
+        }
     }, [selectedDistrict]);
-
+    //
     useEffect(() => {
         updateFullAddress();
     }, [selectedWard, fullAddress]);
