@@ -1,24 +1,24 @@
-import React, {useEffect, useRef, useState} from "react";
-import {adminUrl} from "../../../utils/config/route.config.js";
-import {Button, Checkbox, Input, Select, SelectItem} from "@nextui-org/react";
+import React, { useEffect, useRef, useState } from "react";
+import { adminUrl } from "../../../utils/config/route.config.js";
+import { Button, Checkbox, Input, Select, SelectItem } from "@nextui-org/react";
 import Form from "../../../components/Form/Form.jsx";
 import FormHeader from "../../../components/Form/FormHeader.jsx";
 import FormBody from "../../../components/Form/FormBody.jsx";
 import FormItem from "../../../components/Form/FormItem.jsx";
 import FormRow from "../../../components/Form/FormRow.jsx";
 import useAxios from "../../../hooks/useAxios.js";
-import {apiUrl} from "../../../utils/config/api.config.js";
+import { apiUrl } from "../../../utils/config/api.config.js";
 import classConfig from "../../../utils/config/class.config.js";
-import {IoMdAdd} from "react-icons/io";
-import {FaXmark} from "react-icons/fa6";
+import { IoMdAdd } from "react-icons/io";
+import { FaXmark } from "react-icons/fa6";
 import classNames from "classnames";
 import useAxiosServer from "../../../hooks/useAxiosServer.js";
-import {useNavigate} from "react-router-dom";
-import {toast} from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import toastConfig from "../../../utils/config/toast.config.js";
-import {isNumber} from "../../../utils/checkNumber.js";
-import {isEmpty, isIncludeSpace} from "../../../utils/checkSpaces.js";
-import {LiaDollarSignSolid} from "react-icons/lia";
+import { isNumber } from "../../../utils/checkNumber.js";
+import { isEmpty, isIncludeSpace } from "../../../utils/checkSpaces.js";
+import { LiaDollarSignSolid } from "react-icons/lia";
 import iconConfig from "../../../utils/config/icon.config.jsx";
 
 function NewProduct(props) {
@@ -36,16 +36,18 @@ function NewProduct(props) {
     const [isDiscount, setIsDiscount] = useState(false);
     const [discountPercents, setDiscountPercents] = useState("0");
     const [productCategory, setProductCategory] = useState("");
-    const [productVariants, setProductVariants] = useState([{
-        variantKey: "",
-        variantLabel: "",
-        variantImage: "",
-        variantStock: "0",
-        variantPrice: {
-            originalPrice: 0,
-            discountPrice: 0
+    const [productVariants, setProductVariants] = useState([
+        {
+            variantKey: "",
+            variantLabel: "",
+            variantImage: "",
+            variantStock: "0",
+            variantPrice: {
+                originalPrice: 0,
+                discountPrice: 0
+            }
         }
-    }]);
+    ]);
     const [isActive, setIsActive] = useState(true);
 
     const getListCategories = () => {
@@ -88,16 +90,18 @@ function NewProduct(props) {
 
     const handleAddNewVariantRow = () => {
         if (productVariants.length < 10) {
-            setProductVariants([...productVariants, {
-                variantKey: "",
-                variantLabel: "",
-                variantImage: "",
-                variantStock: "0",
-                variantPrice: {
-                    originalPrice: 0,
-                    discountPrice: 0
+            setProductVariants([
+                ...productVariants, {
+                    variantKey: "",
+                    variantLabel: "",
+                    variantImage: "",
+                    variantStock: "0",
+                    variantPrice: {
+                        originalPrice: 0,
+                        discountPrice: 0
+                    }
                 }
-            }]);
+            ]);
         }
     };
 
@@ -130,15 +134,16 @@ function NewProduct(props) {
         const minPrice = tempSort[0].variantPrice.discountPrice;
         const maxPrice = tempSort[tempSort.length - 1].variantPrice.discountPrice;
 
-        setProductPrice(minPrice !== maxPrice ? `${minPrice}$ - ${maxPrice}$` : `${minPrice}$`);
+        setProductPrice(minPrice !== maxPrice ? `${minPrice.toFixed(2)}$ - ${maxPrice.toFixed(2)}$` : `${minPrice.toFixed(2)}$`);
     };
 
     const checkValid = () => {
+        console.log(!isEmpty(productName), checkValidVariants());
         return !isEmpty(productName) && checkValidVariants();
     };
 
     const checkValidVariants = () => {
-        return !productVariants.map((variant) => !isEmpty(variant.variantKey) && !isEmpty(variant.variantLabel) && variant.variantStock > 0 && variant.variantPrice > 0).includes(false);
+        return !productVariants.map((variant) => !isEmpty(variant.variantKey) && !isEmpty(variant.variantLabel) && variant.variantStock > 0 && variant.variantPrice.originalPrice > 0).includes(false);
     };
 
     const handleSubmit = () => {
@@ -163,7 +168,7 @@ function NewProduct(props) {
                 toast.update(toastSubmit.current, toastConfig.success(response.data.message, () => navigate(adminUrl.product.index)));
             }
         }).catch((error) => {
-            const {response} = error;
+            const { response } = error;
             console.log(response);
             toast.update(toastSubmit.current, toastConfig.error(response.data.message));
         });
