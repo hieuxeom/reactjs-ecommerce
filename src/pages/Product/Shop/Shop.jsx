@@ -77,7 +77,7 @@ function Shop({ children }) {
             filter: selectedFilter
         };
 
-        search._s = searchParams.get("_s") ?? null;
+        search._s = searchParams.get("_s") ?? "";
 
         navigate({
             pathname: "/shop",
