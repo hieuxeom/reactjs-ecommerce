@@ -1,33 +1,18 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
-import {imageUrl} from "../../utils/config/api.config.js";
-import {Image} from "@nextui-org/react";
+import { imageUrl } from "../../utils/config/api.config.js";
+import { Image } from "@nextui-org/react";
 import classNames from "classnames";
 import classConfig from "../../utils/config/class.config.js";
-import {useNavigate} from "react-router-dom";
-import {userUrl} from "../../utils/config/route.config.js";
+import { useNavigate } from "react-router-dom";
+import { userUrl } from "../../utils/config/route.config.js";
+import { productDetailsType } from "../../utils/propTypes/productType.js";
 
 ProductCard.propTypes = {
-    productData: PropTypes.shape({
-        _id: PropTypes.string,
-        productName: PropTypes.string,
-        productPrice: PropTypes.number,
-        isDiscount: PropTypes.bool,
-        views: PropTypes.number,
-        soldCount: PropTypes.number,
-        productVariants: PropTypes.arrayOf(
-            PropTypes.shape({
-                variantKey: PropTypes.string.isRequired,
-                variantLabel: PropTypes.string.isRequired,
-                variantImage: PropTypes.string.isRequired,
-                variantStock: PropTypes.number.isRequired,
-                variantPrice: PropTypes.number.isRequired
-            })
-        )
-    })
+    productData: productDetailsType
 };
 
-function ProductCard({productData}) {
+function ProductCard({ productData }) {
 
     const navigate = useNavigate();
 

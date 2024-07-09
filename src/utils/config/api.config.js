@@ -21,7 +21,7 @@ const apiUrl = {
 
     },
     category: {
-        base: `${apiBaseUrl}/categories`,
+        base: `${apiBaseUrl}/categories?onlyActive=true`,
         all: `${apiBaseUrl}/categories`,
         onlyActive: `${apiBaseUrl}/categories?onlyActive=true`,
         details: (categoryId) => `${apiBaseUrl}/categories/${categoryId}`,
