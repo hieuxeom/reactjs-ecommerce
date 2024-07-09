@@ -96,14 +96,15 @@ function Cart({ children }) {
     };
 
     const handleCheckOut = () => {
-        const checkoutData = {
-            cartItems: userCart.cartItems,
-            ...summaryData
-        };
 
-        localStorage.setItem("tempCart", JSON.stringify(checkoutData));
-
-        return navigate(userUrl.cart.checkout);
+        // const checkoutData = {
+        //     cartItems: userCart.cartItems,
+        //     ...summaryData
+        // };
+        //
+        // localStorage.setItem("tempCart", JSON.stringify(checkoutData));
+        //
+        // return navigate(userUrl.cart.checkout);
     };
 
     const handleVoucherCode = (voucherCode) => {
@@ -199,6 +200,7 @@ function Cart({ children }) {
                     <Button fullWidth size={"lg"}
                             color={"primary"}
                             onClick={handleCheckOut}
+                            isDisabled={userCart.cartItems.length < 1}
                     >Thanh toán</Button>
                 </div>
             </section>
