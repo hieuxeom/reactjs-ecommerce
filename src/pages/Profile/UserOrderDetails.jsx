@@ -159,15 +159,15 @@ function UserOrderDetails(props) {
                                     Hủy đơn hàng
                                 </Button>
                             </>)}
-                        {summaryOrder?.orderStatus === "completed" &&
-                            (<>
-                                <Button color={"primary"}
-                                        startContent={iconConfig.cancel.base}
-                                        onClick={onOpen}
-                                >
-                                    Hoàn/Trả đơn hàng
-                                </Button>
-                            </>)}
+
+                        <Button color={"primary"}
+                                startContent={iconConfig.cancel.base}
+                                onClick={onOpen}
+                                isDisabled={summaryOrder?.orderStatus !== "completed"}
+                        >
+                            Hoàn/Trả đơn hàng
+                        </Button>
+
                         {["canceled", "returned"].includes(summaryOrder?.orderStatus) && (
                             <div className={"flex gap-1 items-center"}>
                         <span
@@ -234,7 +234,8 @@ function UserOrderDetails(props) {
                 </Modal>
             </div>
         </div>
-    );
+    )
+        ;
 }
 
 export default UserOrderDetails;

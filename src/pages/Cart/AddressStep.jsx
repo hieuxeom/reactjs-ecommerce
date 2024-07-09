@@ -12,6 +12,7 @@ import toastConfig from "../../utils/config/toast.config.js";
 import useAxiosServer from "../../hooks/useAxiosServer.js";
 import { apiUrl } from "../../utils/config/api.config.js";
 import iconConfig from "../../utils/config/icon.config.jsx";
+import { isValidEmail, isValidPhoneNumber } from "../../utils/validations.js";
 
 AddressStep.propTypes = {
     onNextStep: PropTypes.func
@@ -115,6 +116,7 @@ function AddressStep({ onNextStep }) {
                                value={phoneNumber}
                                onValueChange={setPhoneNumber}
                                size={"lg"}
+                               isInvalid={!isValidPhoneNumber(phoneNumber)}
                                isRequired
                         />
                         <Input variant={"bordered"}
@@ -123,6 +125,7 @@ function AddressStep({ onNextStep }) {
                                value={email}
                                onValueChange={setEmail}
                                size={"lg"}
+                               isInvalid={!isValidEmail(email)}
                                isRequired
                         />
                     </FormRow>
@@ -137,7 +140,11 @@ function AddressStep({ onNextStep }) {
                         </FormRow>
                     }
                     <FormRow justifyContent={"justify-end"}>
-                        <Button color={"primary"} size={"md"} onClick={handleNextStep}>
+                        <Button color={"primary"}
+                                size={"md"}
+                                onClick={handleNextStep}
+                                isDisabled={!isValidEmail(email) && !isValidPhoneNumber(phoneNumber)}
+                        >
                             Tiếp tục
                         </Button>
                     </FormRow>

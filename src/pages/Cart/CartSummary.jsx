@@ -53,11 +53,15 @@ function CartSummary({ summaryData, onApplyVoucher }) {
                 </div>
                 <div className={"flex justify-between"}>
                     <p>Phí vận chuyển</p>
-                    <p>{summaryData?.shippingFee ?? 0}$</p>
+                    <p className={classNames({
+                        "text-danger": summaryData?.shippingFee !== 2
+                    })}>{summaryData?.shippingFee ?? 2}$</p>
                 </div>
                 <div className={"flex justify-between"}>
                     <p>Giảm giá</p>
-                    <p>{summaryData?.reducedFee ?? 0}$</p>
+                    <p className={classNames({
+                        "text-danger": summaryData?.reducedFee > 0
+                    })}>{summaryData?.reducedFee > 0 && "-"}{summaryData?.reducedFee ?? 0}$</p>
                 </div>
                 <Form>
                     <FormRow>

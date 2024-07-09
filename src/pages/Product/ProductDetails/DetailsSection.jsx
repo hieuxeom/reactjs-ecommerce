@@ -1,14 +1,14 @@
-import React, {useEffect, useRef, useState} from "react";
-import {Button, ButtonGroup, Image} from "@nextui-org/react";
-import {apiUrl, imageUrl} from "../../../utils/config/api.config.js";
+import React, { useEffect, useRef, useState } from "react";
+import { Button, ButtonGroup, Image } from "@nextui-org/react";
+import { apiUrl, imageUrl } from "../../../utils/config/api.config.js";
 import classNames from "classnames";
 import classConfig from "../../../utils/config/class.config.js";
-import {IoAdd, IoRemove} from "react-icons/io5";
-import {FaCartPlus} from "react-icons/fa6";
+import { IoAdd, IoRemove } from "react-icons/io5";
+import { FaCartPlus } from "react-icons/fa6";
 import StarRating from "../../../components/StarRating/StarRating.jsx";
-import {productDetailsType} from "../../../utils/propTypes/productType.js";
+import { productDetailsType } from "../../../utils/propTypes/productType.js";
 import toastConfig from "../../../utils/config/toast.config.js";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 import useAxiosServer from "../../../hooks/useAxiosServer.js";
 import iconConfig from "../../../utils/config/icon.config.jsx";
 
@@ -16,13 +16,13 @@ DetailsSection.propTypes = {
     productDetails: productDetailsType
 };
 
-function DetailsSection({productDetails}) {
+function DetailsSection({ productDetails }) {
 
     const axiosServer = useAxiosServer();
 
     const toastAdd = useRef(null);
 
-    const [currentImage, setCurrentImage] = useState("");
+    const [currentImage, setCurrentImage] = useState(null);
     const [currentVariantPrice, setCurrentVariantPrice] = useState(0);
     const [currentVariantStock, setCurrentVariantStock] = useState(0);
     const [currentVariantKey, setCurrentVariantKey] = useState("");
@@ -49,18 +49,17 @@ function DetailsSection({productDetails}) {
             quantity: countQuantity
         };
         axiosServer.post(apiUrl.cart.add, postData).then(response => {
-
             if (response.data.status === "success") {
                 toast.update(toastAdd.current, toastConfig.success(response.data.message));
             }
         }).catch((error) => {
-            const {response} = error;
-            console.log("er", response);
+            const { response } = error;
             toast.update(toastAdd.current, toastConfig.error(response.data.message));
         });
     };
 
     useEffect(() => {
+        console.log(productDetails.productVariants[selectedVariant].variantImage);
         setCurrentVariantKey(productDetails.productVariants[selectedVariant].variantKey);
         setCurrentImage(productDetails.productVariants[selectedVariant].variantImage);
         setCurrentVariantPrice(productDetails.productVariants[selectedVariant].variantPrice);
@@ -86,7 +85,7 @@ function DetailsSection({productDetails}) {
                     ))}
                 </div>
                 <div className={"w-3/4 p-4"}>
-                    <Image src={`${imageUrl}${currentImage}`}/>
+                    {currentImage && <Image src={`${imageUrl}${currentImage}`}/>}
                 </div>
             </div>
             <div className={"w-1/2 flex flex-col gap-4 p-4"}>
@@ -107,8 +106,8 @@ function DetailsSection({productDetails}) {
                     </div>
                 </div>
                 <div className={"flex gap-8 items-center"}>
-                    <h2 className={classNames(classConfig.fontSize.h2, classConfig.textColor.secondary)}>{currentVariantPrice.discountPrice}$</h2>
-                    <h3 className={classNames(classConfig.fontSize.h3, classConfig.textColor.gray, "font-normal line-through")}>{currentVariantPrice.originalPrice}$</h3>
+                    <h2 className={classNames(classConfig.fontSize.h2, classConfig.textColor.secondary)}>{currentVariantPrice.discountPrice?.toFixed(2)}$</h2>
+                    <h3 className={classNames(classConfig.fontSize.h3, classConfig.textColor.gray, "font-normal line-through")}>{currentVariantPrice.originalPrice?.toFixed(2)}$</h3>
                 </div>
                 <div className={"flex flex-col gap-2"}>
                     <p className={classNames(classConfig.textColor.default, "font-semibold")}>Loại</p>

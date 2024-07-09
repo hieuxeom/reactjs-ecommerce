@@ -12,6 +12,7 @@ import useAxiosServer from "../../hooks/useAxiosServer.js";
 import { apiUrl } from "../../utils/config/api.config.js";
 import { toast } from "react-toastify";
 import toastConfig from "../../utils/config/toast.config.js";
+import { isValidEmail, isValidPhoneNumber } from "../../utils/validations.js";
 
 AddressDetails.propTypes = {};
 
@@ -92,6 +93,7 @@ function AddressDetails(props) {
                                value={phoneNumber}
                                onValueChange={setPhoneNumber}
                                size={"lg"}
+                               isInvalid={!isValidPhoneNumber(phoneNumber)}
                                isRequired
                         />
                         <Input variant={"bordered"}
@@ -100,6 +102,7 @@ function AddressDetails(props) {
                                value={email}
                                onValueChange={setEmail}
                                size={"lg"}
+                               isInvalid={!isValidEmail(email)}
                                isRequired
                         />
                     </FormRow>
@@ -152,6 +155,7 @@ function AddressDetails(props) {
                                         size={"md"}
                                         startContent={iconConfig.edit.base}
                                         onClick={() => setIsEditAddress(!isEditAddress)}
+                                        isDisabled={!isValidEmail(email) && !isValidPhoneNumber(phoneNumber)}
                                 >
                                     Sửa địa chỉ
                                 </Button>
