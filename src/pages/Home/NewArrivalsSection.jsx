@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import classNames from "classnames";
 import classConfig from "../../utils/config/class.config.js";
-import {Button} from "@nextui-org/react";
+import { Button } from "@nextui-org/react";
 import useAxios from "../../hooks/useAxios.js";
 import ProductCard from "../../components/ProductCard/ProductCard.jsx";
 
@@ -25,8 +25,10 @@ function NewArrivalsSection(props) {
         <section className="w-full flex justify-center">
             <div className="max-w-7xl w-full flex flex-col items-center">
                 <header className="py-8">
-                    <h2 className={classNames(classConfig.fontSize.h2, classConfig.textVariant.title, classConfig.textColor.hiddenGray)}>New
-                        Arrivals</h2>
+                    <h2 className={classNames(classConfig.fontSize.h2, classConfig.textVariant.title, classConfig.textColor.hiddenGray)}
+                    >
+                        Mẫu hàng mới
+                    </h2>
                 </header>
                 <main className="py-8">
                     <div className="grid grid-cols-4 gap-8">
@@ -37,7 +39,7 @@ function NewArrivalsSection(props) {
                 </main>
                 <footer className="py-8">
                     <Button variant={"bordered"} className={"capitalize"} size={"lg"}>
-                        View all
+                        Xem tất cả
                     </Button>
                 </footer>
             </div>

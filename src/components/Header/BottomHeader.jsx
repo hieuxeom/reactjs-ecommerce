@@ -68,7 +68,7 @@ function BottomHeader(props) {
             <div className={"flex items-center"}>
 
                 <Input type={"text"}
-                       placeholder={"Search ..."}
+                       placeholder={"Tìm kiếm sản phẩm..."}
                        startContent={<RiSearchLine size={classConfig.icon.large}/>}
                        variant={"bordered"}
                        value={searchString}

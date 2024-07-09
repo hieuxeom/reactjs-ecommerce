@@ -1,12 +1,12 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import classNames from "classnames";
 import classConfig from "../../utils/config/class.config.js";
 import Form from "../../components/Form/Form.jsx";
 import FormRow from "../../components/Form/FormRow.jsx";
-import {Button, Divider, Input} from "@nextui-org/react";
+import { Button, Divider, Input } from "@nextui-org/react";
 import PropTypes from "prop-types";
 import useAxiosServer from "../../hooks/useAxiosServer.js";
-import {apiUrl} from "../../utils/config/api.config.js";
+import { apiUrl } from "../../utils/config/api.config.js";
 
 CartSummary.propTypes = {
     summaryData: PropTypes.shape({
@@ -18,7 +18,7 @@ CartSummary.propTypes = {
     })
 };
 
-function CartSummary({summaryData, onApplyVoucher}) {
+function CartSummary({ summaryData, onApplyVoucher }) {
 
     const axiosServer = useAxiosServer();
 
@@ -52,7 +52,7 @@ function CartSummary({summaryData, onApplyVoucher}) {
                     <p>{summaryData?.subTotalPrice.toFixed(2) ?? 0}$</p>
                 </div>
                 <div className={"flex justify-between"}>
-                    <p>Phí ship</p>
+                    <p>Phí vận chuyển</p>
                     <p>{summaryData?.shippingFee ?? 0}$</p>
                 </div>
                 <div className={"flex justify-between"}>

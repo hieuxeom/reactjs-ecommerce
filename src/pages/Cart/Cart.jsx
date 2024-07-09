@@ -1,21 +1,21 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import TabHeader from "../../components/Tab/TabHeader.jsx";
 import useAxiosServer from "../../hooks/useAxiosServer.js";
-import {apiUrl} from "../../utils/config/api.config.js";
-import {Button} from "@nextui-org/react";
+import { apiUrl } from "../../utils/config/api.config.js";
+import { Button } from "@nextui-org/react";
 import CartContainer from "./CartContainer.jsx";
 import CartSummary from "./CartSummary.jsx";
-import {FaRotateLeft} from "react-icons/fa6";
+import { FaRotateLeft } from "react-icons/fa6";
 import toastConfig from "../../utils/config/toast.config.js";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 import useAxios from "../../hooks/useAxios.js";
-import {useNavigate} from "react-router-dom";
-import {userUrl} from "../../utils/config/route.config.js";
+import { useNavigate } from "react-router-dom";
+import { userUrl } from "../../utils/config/route.config.js";
 import classConfig from "../../utils/config/class.config.js";
 
 Cart.propTypes = {};
 
-function Cart({children}) {
+function Cart({ children }) {
 
     const toastReset = useRef(null);
 
@@ -76,7 +76,7 @@ function Cart({children}) {
             return new Promise((resolve) => {
                 axiosClient.get(apiUrl.product.variant(item.productId, item.variantKey))
                     .then((response) => {
-                        const {variantPrice} = response.data.data;
+                        const { variantPrice } = response.data.data;
 
                         const subTotal = variantPrice.discountPrice * item.quantity;
 
@@ -156,7 +156,7 @@ function Cart({children}) {
 
     useEffect(() => {
         if (userCart) {
-            const {cartItems, voucherCode} = userCart;
+            const { cartItems, voucherCode } = userCart;
             calculateSubTotal(cartItems);
             fetchAllProductDetails(cartItems);
             handleVoucherCode(voucherCode);
@@ -181,7 +181,7 @@ function Cart({children}) {
     return (
         <div className="w-full max-w-7xl mt-8 flex flex-col gap-6">
             <div className={"flex justify-between items-center"}>
-                <TabHeader tabTitle={"My Cart"}/>
+                <TabHeader tabTitle={"Giỏ hàng của tôi"}/>
                 <Button startContent={<FaRotateLeft/>}
                         color={"danger"}
                         onClick={handleResetCart}

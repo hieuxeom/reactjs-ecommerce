@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import TabHeader from "../../components/Tab/TabHeader.jsx";
-import {Accordion, AccordionItem, Avatar, Button, Image} from "@nextui-org/react";
+import { Accordion, AccordionItem, Avatar, Button, Image } from "@nextui-org/react";
 import useAxios from "../../hooks/useAxios.js";
-import {apiUrl, imageUrl} from "../../utils/config/api.config.js";
+import { apiUrl, imageUrl } from "../../utils/config/api.config.js";
 
 import classNames from "classnames";
 import classConfig from "../../utils/config/class.config.js";
@@ -15,7 +15,7 @@ BillingStep.propTypes = {
 
 };
 
-function BillingStep({onNextStep}) {
+function BillingStep({ onNextStep }) {
 
     const axiosClient = useAxios();
     const axiosServer = useAxiosServer();
@@ -25,7 +25,7 @@ function BillingStep({onNextStep}) {
     const [userAddress, setUserAddress] = useState(null);
 
     const fetchCartItems = () => {
-        const {cartItems} = tempCart;
+        const { cartItems } = tempCart;
 
         const mapFetch = cartItems.map((item) => {
             return new Promise((resolve, reject) => {
@@ -53,7 +53,7 @@ function BillingStep({onNextStep}) {
         });
     };
     const handleComplete = () => {
-        const {cartItems, ...summaryData} = tempCart;
+        const { cartItems, ...summaryData } = tempCart;
         const orderData = {
             ...summaryData,
             orderItems: cartItems,
@@ -96,7 +96,7 @@ function BillingStep({onNextStep}) {
                 >
                     <Accordion variant={"splitted"} selectionMode={"multiple"} defaultSelectedKeys={["2"]}>
                         <AccordionItem key="1"
-                                       title={`Order Items - ${cartItems?.length ?? 0} item(s)`}
+                                       title={`Các sản phẩm trong đơn hàng - ${cartItems?.length ?? 0} sản phẩm`}
                                        aria-label="Order Items"
                         >
                             <div className={"flex flex-col gap-4"}>
@@ -109,12 +109,12 @@ function BillingStep({onNextStep}) {
                                 </div>
 
                                 <div className={"w-full flex justify-end items-center gap-2"}>
-                                    <p className={classConfig.textColor.default}>Total:</p>
+                                    <p className={classConfig.textColor.default}>Tổng cộng:</p>
                                     <h5 className={classNames(classConfig.fontSize.h5, classConfig.textColor.primary)}>{tempCart?.totalPrice?.toFixed(2) ?? 0}$</h5>
                                 </div>
                             </div>
                         </AccordionItem>
-                        <AccordionItem key="2" aria-label={"Shipping Address"} title={"Shipping Address"}>
+                        <AccordionItem key="2" aria-label={"Shipping Address"} title={"Thông tin giao/nhận hàng"}>
                             <div className={"w-full flex flex-col gap-4"}>
                                 <div className={"w-full flex items-center justify-between"}>
                                     <p className={classNames(classConfig.fontSize.sub, classConfig.textColor.gray)}>

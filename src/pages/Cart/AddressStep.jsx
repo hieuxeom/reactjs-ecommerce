@@ -1,23 +1,23 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import TabHeader from "../../components/Tab/TabHeader.jsx";
-import {IoArrowBack} from "react-icons/io5";
-import {userUrl} from "../../utils/config/route.config.js";
+import { IoArrowBack } from "react-icons/io5";
+import { userUrl } from "../../utils/config/route.config.js";
 import Form from "../../components/Form/Form.jsx";
 import FormRow from "../../components/Form/FormRow.jsx";
-import {Button, Divider, Input, listbox, Listbox, ListboxItem} from "@nextui-org/react";
+import { Button, Divider, Input, listbox, Listbox, ListboxItem } from "@nextui-org/react";
 import AddressBlock from "../../components/Address/AddressBlock.jsx";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 import toastConfig from "../../utils/config/toast.config.js";
 import useAxiosServer from "../../hooks/useAxiosServer.js";
-import {apiUrl} from "../../utils/config/api.config.js";
+import { apiUrl } from "../../utils/config/api.config.js";
 import iconConfig from "../../utils/config/icon.config.jsx";
 
 AddressStep.propTypes = {
     onNextStep: PropTypes.func
 };
 
-function AddressStep({onNextStep}) {
+function AddressStep({ onNextStep }) {
     const toastCheck = useRef(null);
 
     const axiosServer = useAxiosServer();
@@ -45,7 +45,7 @@ function AddressStep({onNextStep}) {
             fullAddress
         };
         localStorage.setItem("userAddress", JSON.stringify(userAddress));
-        onNextStep({step: 2});
+        onNextStep({ step: 2 });
     };
 
     const handleGetListUserAddress = () => {
@@ -102,7 +102,7 @@ function AddressStep({onNextStep}) {
                     <Divider/>
                     <FormRow>
                         <Input variant={"bordered"}
-                               label={"Full Name"}
+                               label={"Tên khách hàng"}
                                labelPlacement={"outside"}
                                value={fullName}
                                onValueChange={setFullName}
@@ -110,7 +110,7 @@ function AddressStep({onNextStep}) {
                                isRequired
                         />
                         <Input variant={"bordered"}
-                               label={"Phone Number"}
+                               label={"Số điện thoại"}
                                labelPlacement={"outside"}
                                value={phoneNumber}
                                onValueChange={setPhoneNumber}
@@ -138,7 +138,7 @@ function AddressStep({onNextStep}) {
                     }
                     <FormRow justifyContent={"justify-end"}>
                         <Button color={"primary"} size={"md"} onClick={handleNextStep}>
-                            Next
+                            Tiếp tục
                         </Button>
                     </FormRow>
                 </Form>
