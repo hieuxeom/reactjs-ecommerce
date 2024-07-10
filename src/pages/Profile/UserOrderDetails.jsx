@@ -185,7 +185,9 @@ function UserOrderDetails(props) {
                         </h5>
                     </div>
                     <div className={"w-full flex flex-col gap-2"}>
-                        {orderItems && orderItems.map((item, index) => <OrderItem key={index} itemData={item}/>)}
+                        {orderItems && orderItems.map((item, index) =>
+                            <OrderItem key={index} itemData={item}
+                                       isHaveReviewButton={summaryOrder?.orderStatus === "completed"}/>)}
                     </div>
                 </div>
                 <Modal
