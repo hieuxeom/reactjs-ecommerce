@@ -40,7 +40,8 @@ const apiUrl = {
         variant: (productId, variantKey) => `${apiBaseUrl}/products/${productId}/${variantKey}`,
         delete: (categoryId) => `${apiBaseUrl}/products/${categoryId}`,
         views: (productId) => `${apiBaseUrl}/products/${productId}/views`,
-        activation: (productId) => `${apiBaseUrl}/products/${productId}/activation`
+        activation: (productId) => `${apiBaseUrl}/products/${productId}/activation`,
+        reviews: (productId) => `${apiBaseUrl}/products/${productId}/reviews`
     },
     cart: {
         base: `${apiBaseUrl}/carts`,

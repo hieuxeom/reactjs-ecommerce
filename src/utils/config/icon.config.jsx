@@ -1,11 +1,11 @@
 // icons.js
-import {IoMdAdd, IoMdRemove} from "react-icons/io";
+import { IoMdAdd, IoMdRemove } from "react-icons/io";
 import classConfig from "./class.config.js";
-import {IoArrowBack} from "react-icons/io5";
-import {TfiMenuAlt} from "react-icons/tfi";
-import {BiSolidEditAlt, BiSolidTrashAlt} from "react-icons/bi";
-import {FaXmark} from "react-icons/fa6";
-import {FaCheck} from "react-icons/fa";
+import { IoArrowBack } from "react-icons/io5";
+import { TfiMenuAlt } from "react-icons/tfi";
+import { BiSolidEditAlt, BiSolidTrashAlt } from "react-icons/bi";
+import { FaXmark } from "react-icons/fa6";
+import { FaCheck, FaStar } from "react-icons/fa";
 
 const iconConfig = {
     add: {
@@ -39,8 +39,11 @@ const iconConfig = {
     confirm: {
         base: <FaCheck size={classConfig.icon.base}/>,
         large: <FaCheck size={classConfig.icon.large}/>
+    },
+    star: {
+        base: <FaStar size={classConfig.icon.base}/>,
+        large: <FaStar size={classConfig.icon.large}/>
     }
-
 };
 
 export default iconConfig;

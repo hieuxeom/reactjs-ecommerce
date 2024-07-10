@@ -3,7 +3,9 @@ import PropTypes from "prop-types";
 export const productReviewType = PropTypes.shape({
     userName: PropTypes.string.isRequired,
     reviewContent: PropTypes.string.isRequired,
-    reviewStar: PropTypes.number.isRequired
+    reviewStar: PropTypes.number.isRequired,
+    createdAt: PropTypes.string.isRequired,
+    variantKey: PropTypes.string.isRequired
 });
 
 export const productCommentType = PropTypes.shape({
