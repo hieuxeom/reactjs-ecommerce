@@ -54,7 +54,7 @@ function ProductCard({ productData }) {
                 <p className={classNames(classConfig.fontSize.sub, "italic font-semibold", {
                     "text-blue": !isHoverState,
                     "text-white": isHoverState
-                })}>{productData.views} views - {productData.soldCount} sold</p>
+                })}>{productData.views} lượt xem - {productData.soldCount} bán</p>
                 <p className={classNames(classConfig.fontSize.h6, "font-semibold", {
                     "text-secondary": !isHoverState,
                     "text-white": isHoverState
