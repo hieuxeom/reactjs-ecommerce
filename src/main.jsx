@@ -42,6 +42,8 @@ import OrderDetails from "./pages/Admin/OrderManagement/OrderDetails.jsx";
 import AddressDetails from "./pages/Profile/AddressDetails.jsx";
 import NewAddress from "./pages/Profile/NewAddress.jsx";
 import UserOrderDetails from "./pages/Profile/UserOrderDetails.jsx";
+import PolicyIndex from "./pages/Policy/PolicyIndex.jsx";
+import WarrantyPolicy from "./pages/Policy/WarrantyPolicy.jsx";
 
 const router = createBrowserRouter([
     {
@@ -225,6 +227,10 @@ const router = createBrowserRouter([
                         element: <SignUp/>
                     }
                 ]
+            },
+            {
+                path: "policy",
+                element: <PolicyIndex/>
             }
 
         ]

@@ -62,7 +62,7 @@ function BottomHeader(props) {
                             "text-xl",
                             isActive ? classConfig.nav.active : classConfig.nav.inactive
                         ].join(" ")
-                    } to={"/contract"}>Chính sách</NavLink>
+                    } to={"/policy"}>Chính sách</NavLink>
                 </div>
             </div>
             <div className={"flex items-center"}>
