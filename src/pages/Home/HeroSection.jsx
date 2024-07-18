@@ -2,8 +2,16 @@ import React from "react";
 import classConfig from "../../utils/config/class.config.js";
 import { Button } from "@nextui-org/react";
 import classNames from "classnames";
+import { useNavigate } from "react-router-dom";
+import { userUrl } from "../../utils/config/route.config.js";
 
 function HeroSection(props) {
+    const navigate = useNavigate();
+
+    const navigateToShop = () => {
+        return navigate(userUrl.shop);
+    };
+
     return (
         <div className="bg-sub-background w-full flex justify-center max-h-[75vh]">
             <div className="w-full max-w-7xl flex overflow-hidden">
@@ -21,6 +29,7 @@ function HeroSection(props) {
                         variant={"solid"}
                         color={"primary"}
                         className={"capitalize"}
+                        onClick={navigateToShop}
                     >
                         Xem cửa hàng
                     </Button>
