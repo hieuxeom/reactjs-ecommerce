@@ -21,7 +21,6 @@ function RecentlyOrders(props) {
         axiosServer.get(apiUrl.user.listOrders)
             .then((response) => response.data)
             .then((response) => {
-                console.log(response);
                 setListOrders(response.data);
             });
     };

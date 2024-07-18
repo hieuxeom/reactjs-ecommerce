@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { trimString } from "../../../utils/string.js";
 import { Chip } from "@nextui-org/react";
@@ -32,10 +32,10 @@ function OrderRow({ orderData }) {
                 <p className={classConfig.textColor.gray}>{formatDate(orderData.orderDate)}</p>
             </div>
             <div>
-                <Chip color={getOrderStatusVariant(orderData.orderStatus).tagColor}
+                <Chip color={getOrderStatusVariant(orderData.orderStatus)?.tagColor}
                       variant={"flat"}
                 >
-                    {getOrderStatusVariant(orderData.orderStatus).label}
+                    {getOrderStatusVariant(orderData.orderStatus)?.label}
                 </Chip>
             </div>
         </div>
