@@ -1,23 +1,22 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import useAxios from "../../../hooks/useAxios.js";
 import useAxiosServer from "../../../hooks/useAxiosServer.js";
-import {apiUrl, imageUrl} from "../../../utils/config/api.config.js";
+import { apiUrl, imageUrl } from "../../../utils/config/api.config.js";
 import Form from "../../../components/Form/Form.jsx";
 import FormHeader from "../../../components/Form/FormHeader.jsx";
-import {adminUrl} from "../../../utils/config/route.config.js";
+import { adminUrl } from "../../../utils/config/route.config.js";
 import FormBody from "../../../components/Form/FormBody.jsx";
 import FormItem from "../../../components/Form/FormItem.jsx";
 import classConfig from "../../../utils/config/class.config.js";
-import {Avatar, Button, Checkbox, Input, Select, SelectItem} from "@nextui-org/react";
+import { Avatar, Button, Checkbox, Input, Select, SelectItem } from "@nextui-org/react";
 import FormRow from "../../../components/Form/FormRow.jsx";
 import classNames from "classnames";
-import {IoMdAdd} from "react-icons/io";
-import {FaXmark} from "react-icons/fa6";
-import {useParams} from "react-router-dom";
-import {toast} from "react-toastify";
+import { FaXmark } from "react-icons/fa6";
+import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import toastConfig from "../../../utils/config/toast.config.js";
-import {LiaDollarSignSolid} from "react-icons/lia";
-import {isNumber} from "../../../utils/checkNumber.js";
+import { LiaDollarSignSolid } from "react-icons/lia";
+import { isNumber } from "../../../utils/checkNumber.js";
 import iconConfig from "../../../utils/config/icon.config.jsx";
 
 function EditProduct(props) {
@@ -26,7 +25,7 @@ function EditProduct(props) {
 
     const toastEdit = useRef(null);
 
-    const {productId} = useParams();
+    const { productId } = useParams();
 
     const [listCategories, setListCategories] = useState([]);
     const [fetchState, setFetchState] = useState(false);
@@ -102,13 +101,15 @@ function EditProduct(props) {
 
     const handleAddNewVariantRow = () => {
         if (productVariants.length < 10) {
-            const newListVariants = [...productVariants, {
-                variantKey: "",
-                variantLabel: "",
-                variantImage: "",
-                variantStock: 0,
-                variantPrice: 0
-            }];
+            const newListVariants = [
+                ...productVariants, {
+                    variantKey: "",
+                    variantLabel: "",
+                    variantImage: "",
+                    variantStock: 0,
+                    variantPrice: 0
+                }
+            ];
             setProductVariants(newListVariants);
         }
     };
@@ -143,7 +144,7 @@ function EditProduct(props) {
         const minPrice = tempSort[0].variantPrice.discountPrice;
         const maxPrice = tempSort[tempSort.length - 1].variantPrice.discountPrice;
 
-        setProductPrice(minPrice !== maxPrice ? `${minPrice}$ - ${maxPrice}$` : `${minPrice}$`);
+        setProductPrice(minPrice !== maxPrice ? `${minPrice.toFixed(2)}$ - ${maxPrice.toFixed(2)}$` : `${minPrice.toFixed(2)}$`);
     };
 
     const handleSubmit = () => {
@@ -167,7 +168,7 @@ function EditProduct(props) {
                 toast.update(toastEdit.current, toastConfig.success(response.data.message));
             }
         }).catch((error) => {
-            const {response} = error;
+            const { response } = error;
             toast.update(toastEdit.current, toastConfig.error(response.data.message));
         });
     };
