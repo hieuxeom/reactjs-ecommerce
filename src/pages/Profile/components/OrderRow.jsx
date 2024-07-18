@@ -6,6 +6,8 @@ import { getOrderStatusVariant } from "../../../utils/dataDefault/orderStatus.js
 import { OrderPropTypes } from "../../../utils/propTypes/orderType.js";
 import { useNavigate } from "react-router-dom";
 import { userUrl } from "../../../utils/config/route.config.js";
+import { formatDate } from "../../../utils/time.js";
+import classConfig from "../../../utils/config/class.config.js";
 
 OrderRow.propTypes = {
     orderData: OrderPropTypes
@@ -27,7 +29,7 @@ function OrderRow({ orderData }) {
                     <p>#{trimString(orderData._id)} - </p>
                     <Chip className={"italic"}>{orderData.orderItems.length} sản phẩm </Chip>
                 </div>
-                <p>{orderData.orderDate}</p>
+                <p className={classConfig.textColor.gray}>{formatDate(orderData.orderDate)}</p>
             </div>
             <div>
                 <Chip color={getOrderStatusVariant(orderData.orderStatus).tagColor}
