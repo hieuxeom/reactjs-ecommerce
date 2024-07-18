@@ -1,8 +1,8 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import useAxiosServer from "../../../hooks/useAxiosServer.js";
-import {apiUrl} from "../../../utils/config/api.config.js";
-import {toast} from "react-toastify";
+import { apiUrl } from "../../../utils/config/api.config.js";
+import { toast } from "react-toastify";
 import toastConfig from "../../../utils/config/toast.config.js";
 import TabHeader from "../../../components/Tab/TabHeader.jsx";
 import {
@@ -17,16 +17,15 @@ import {
     TableHeader,
     TableRow
 } from "@nextui-org/react";
-import {trimString} from "../../../utils/string.js";
+import { trimString } from "../../../utils/string.js";
 import classConfig from "../../../utils/config/class.config.js";
 import classNames from "classnames";
-import {convertToInternationalizedTime} from "../../../utils/time.js";
-import {orderTableColumns} from "../../../utils/dataDefault/tableColumns.js";
-import {getOrderStatusVariant, listAdminOrderStatus} from "../../../utils/dataDefault/orderStatus.js";
-import {useCookies} from "react-cookie";
+import { formatDate } from "../../../utils/time.js";
+import { orderTableColumns } from "../../../utils/dataDefault/tableColumns.js";
+import { getOrderStatusVariant } from "../../../utils/dataDefault/orderStatus.js";
 import iconConfig from "../../../utils/config/icon.config.jsx";
-import {useNavigate} from "react-router-dom";
-import {adminUrl} from "../../../utils/config/route.config.js";
+import { useNavigate } from "react-router-dom";
+import { adminUrl } from "../../../utils/config/route.config.js";
 
 OrderIndex.propTypes = {};
 
@@ -37,7 +36,6 @@ function OrderIndex(props) {
     const navigate = useNavigate();
 
     const toastFetch = useRef(null);
-    const toastUpdateStatus = useRef(null);
 
     const [listOrders, setListOrders] = useState(null);
 
@@ -51,7 +49,7 @@ function OrderIndex(props) {
                 toast.dismiss(toastFetch.current);
             })
             .catch((error) => {
-                const {response} = error;
+                const { response } = error;
                 if (response.status !== 401) {
                     toast.update(toastFetch.current, toastConfig.error(response.data.message));
                 }
@@ -85,13 +83,13 @@ function OrderIndex(props) {
                             <Chip
                                 variant={"dot"}
                                 radius={"sm"}
-                                color={getOrderStatusVariant(item.orderStatus).tagColor}
+                                color={getOrderStatusVariant(item.orderStatus)?.tagColor}
                             >
-                                {getOrderStatusVariant(item.orderStatus).label}
+                                {getOrderStatusVariant(item.orderStatus)?.label}
                             </Chip>
                         </TableCell>
                         <TableCell
-                            className={"text-center"}>{convertToInternationalizedTime(item.orderDate).toString()}</TableCell>
+                            className={"text-center"}>{formatDate(item.orderDate)}</TableCell>
                         <TableCell className={"text-center"}>
                             <Button color={"primary"}
                                     variant={"ghost"}

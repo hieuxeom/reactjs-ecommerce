@@ -1,9 +1,9 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import TabHeader from "../../../components/Tab/TabHeader.jsx";
-import {IoMdAdd} from "react-icons/io";
+import { IoMdAdd } from "react-icons/io";
 import classConfig from "../../../utils/config/class.config.js";
-import {adminUrl} from "../../../utils/config/route.config.js";
+import { adminUrl } from "../../../utils/config/route.config.js";
 import {
     Button,
     Chip, Select,
@@ -16,13 +16,13 @@ import {
     TableRow
 } from "@nextui-org/react";
 import iconConfig from "../../../utils/config/icon.config.jsx";
-import useAxios from "../../../hooks/useAxios.js";
 import useAxiosServer from "../../../hooks/useAxiosServer.js";
-import {apiUrl} from "../../../utils/config/api.config.js";
-import {useNavigate} from "react-router-dom";
-import {toast} from "react-toastify";
+import { apiUrl } from "../../../utils/config/api.config.js";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import toastConfig from "../../../utils/config/toast.config.js";
 import classNames from "classnames";
+import { adminVoucherTableColumns } from "../../../utils/dataDefault/tableColumns.js";
 
 VoucherIndex.propTypes = {};
 
@@ -33,29 +33,6 @@ function VoucherIndex(props) {
     const axiosServer = useAxiosServer();
 
     const navigate = useNavigate();
-
-    const tableColumns = [
-        {
-            label: "Mã",
-            key: "voucher-code"
-        },
-        {
-            label: "Lượt sử dụng",
-            key: "used-count"
-        },
-        {
-            label: "Loại mã",
-            key: "status"
-        },
-        {
-            label: "Trạng thái",
-            key: "status"
-        },
-        {
-            label: "Hành động",
-            key: "action"
-        }
-    ];
 
     const activeStatus = [
         {
@@ -88,7 +65,7 @@ function VoucherIndex(props) {
                 toast.update(toastUpdateStatus.current, toastConfig.success(response.data.message));
             }
         }).catch((error) => {
-            const {response} = error;
+            const { response } = error;
             toast.update(toastUpdateStatus.current, toastConfig.error(response.data.message));
         });
     };
@@ -111,7 +88,7 @@ function VoucherIndex(props) {
             }}/>
             <div className={"w-full"}>
                 <Table aria-label={"List voucher"}>
-                    <TableHeader columns={tableColumns}>
+                    <TableHeader columns={adminVoucherTableColumns}>
                         {(column) => <TableColumn key={column.key}>{column.label}</TableColumn>}
                     </TableHeader>
                     <TableBody items={listVouchers ?? []}>

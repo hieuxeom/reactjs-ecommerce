@@ -21,6 +21,7 @@ import classNames from "classnames";
 import { toast } from "react-toastify";
 import toastConfig from "../../../utils/config/toast.config.js";
 import iconConfig from "../../../utils/config/icon.config.jsx";
+import { adminProductTableColumns } from "../../../utils/dataDefault/tableColumns.js";
 
 function ProductIndex(props) {
     const toastDelete = useRef(null);
@@ -32,46 +33,6 @@ function ProductIndex(props) {
 
     const [listProducts, setListProducts] = useState([]);
     const [fetchState, setFetchState] = useState(false);
-
-    const tableColumns = [
-        {
-            label: "Tên sản phẩm",
-            value: "product-name"
-        },
-        {
-            label: "Giá sản phẩm",
-            value: "range-price"
-        },
-        {
-            label: "Lượt xem",
-            value: "views"
-        },
-        {
-            label: "Đã bán",
-            value: "sold-count"
-        },
-        {
-            label: "Trạng thái Hoạt động",
-            value: "active-status"
-        },
-        {
-            label: "Hành động",
-            value: "action"
-        }
-    ];
-
-    const activeStatus = [
-        {
-            label: "Hoạt động",
-            value: "true",
-            color: "success"
-        },
-        {
-            label: "Ẩn",
-            value: "false",
-            color: "danger"
-        }
-    ];
 
     const onChangeStatus = (productId, isActive) => {
         toastUpdateStatus.current = toast.info("Updating", toastConfig.loading);
@@ -139,7 +100,7 @@ function ProductIndex(props) {
             }/>
             <main>
                 <Table aria-label="Example table with dynamic content">
-                    <TableHeader columns={tableColumns}>
+                    <TableHeader columns={adminProductTableColumns}>
                         {(col) => {
 
                             return <TableColumn key={col.value}

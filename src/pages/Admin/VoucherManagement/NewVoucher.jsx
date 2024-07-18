@@ -1,20 +1,15 @@
-import React, {useRef, useState} from "react";
-import PropTypes from "prop-types";
-import {IoMdAdd} from "react-icons/io";
-import classConfig from "../../../utils/config/class.config.js";
-import {adminUrl} from "../../../utils/config/route.config.js";
-import TabHeader from "../../../components/Tab/TabHeader.jsx";
-import {IoArrowBack} from "react-icons/io5";
+import React, { useRef, useState } from "react";
+import { adminUrl } from "../../../utils/config/route.config.js";
 import Form from "../../../components/Form/Form.jsx";
 import FormRow from "../../../components/Form/FormRow.jsx";
-import FormItem from "../../../components/Form/FormItem.jsx";
+
 import FormHeader from "../../../components/Form/FormHeader.jsx";
 import FormBody from "../../../components/Form/FormBody.jsx";
-import {Button, Checkbox, Input, RangeCalendar, Select, SelectItem, Textarea} from "@nextui-org/react";
-import {getLocalTimeZone, today} from "@internationalized/date";
+import { Button, Checkbox, Input, RangeCalendar, Select, SelectItem, Textarea } from "@nextui-org/react";
+import { getLocalTimeZone, today } from "@internationalized/date";
 import useAxiosServer from "../../../hooks/useAxiosServer.js";
-import {apiUrl} from "../../../utils/config/api.config.js";
-import {toast} from "react-toastify";
+import { apiUrl } from "../../../utils/config/api.config.js";
+import { toast } from "react-toastify";
 import toastConfig from "../../../utils/config/toast.config.js";
 
 NewVoucher.propTypes = {};
@@ -43,9 +38,10 @@ function NewVoucher(props) {
     const [description, setDescription] = useState("");
     const [validRangeTime, setValidRangeTime] = useState({
         start: today(getLocalTimeZone()),
-        end: today(getLocalTimeZone()).add({days: 4})
+        end: today(getLocalTimeZone()).add({ days: 4 })
     });
 
+    const [minimumOrderValue, setMinimumOrderValue] = useState(0);
     const [type, setType] = useState(typeOfVoucher[0].key);
     const [isActive, setIsActive] = useState(true);
     const [maxUsage, setMaxUsage] = useState(0);
@@ -61,6 +57,7 @@ function NewVoucher(props) {
             validFrom: validRangeTime.start.toDate(),
             validTo: validRangeTime.end.toDate(),
             type,
+            minimumOrderValue,
             maxUsage,
             isActive
         };
@@ -70,7 +67,7 @@ function NewVoucher(props) {
                 toast.update(toastSubmit.current, toastConfig.success(response.data.message));
             }
         }).catch((error) => {
-            const {response} = error;
+            const { response } = error;
             console.log(response);
             toast.update(toastSubmit.current, toastConfig.error(response.data.message));
         });
@@ -97,6 +94,14 @@ function NewVoucher(props) {
                                variant={"bordered"}
                                value={discountPercents}
                                onValueChange={setDiscountPercents}
+                               isRequired
+                        />
+                        <Input label={"Giá trị tối thiểu"}
+                               labelPlacement={"outside"}
+                               size={"lg"}
+                               variant={"bordered"}
+                               value={minimumOrderValue}
+                               onValueChange={setMinimumOrderValue}
                                isRequired
                         />
                         <Select items={typeOfVoucher}

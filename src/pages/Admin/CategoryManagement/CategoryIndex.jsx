@@ -1,11 +1,9 @@
-import React, {useEffect, useRef, useState} from "react";
-import {apiUrl} from "../../../utils/config/api.config.js";
+import React, { useEffect, useRef, useState } from "react";
+import { apiUrl } from "../../../utils/config/api.config.js";
 import {
     Button,
-    Chip,
     CircularProgress,
-    Select,
-    SelectItem, Switch,
+    Switch,
     Table,
     TableBody,
     TableCell,
@@ -14,88 +12,53 @@ import {
     TableRow
 } from "@nextui-org/react";
 import TabHeader from "../../../components/Tab/TabHeader.jsx";
-import {IoMdAdd} from "react-icons/io";
 import classConfig from "../../../utils/config/class.config.js";
-import {RiEditFill} from "react-icons/ri";
-import {AiFillDelete} from "react-icons/ai";
 import useAxiosServer from "../../../hooks/useAxiosServer.js";
-import {useNavigate} from "react-router-dom";
-import {adminUrl} from "../../../utils/config/route.config.js";
+import { useNavigate } from "react-router-dom";
+import { adminUrl } from "../../../utils/config/route.config.js";
 import useAxios from "../../../hooks/useAxios.js";
 import classNames from "classnames";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 import toastConfig from "../../../utils/config/toast.config.js";
 import iconConfig from "../../../utils/config/icon.config.jsx";
+import { adminCategoryTableColumns } from "../../../utils/dataDefault/tableColumns.js";
 
 function CategoryIndex(props) {
     const [listCategories, setListCategories] = useState([]);
     const [fetchState, setFetchState] = useState(false);
 
-    const toastFetch = useRef(null);
     const toastDelete = useRef(null);
     const toastUpdateStatus = useRef(null);
 
-    const axiosClient = useAxios();
     const axiosServer = useAxiosServer();
     const navigate = useNavigate();
 
-    const tableColumns = [
-        {
-            label: "Tên danh mục",
-            value: "category-name"
-        },
-        {
-            label: "Query params",
-            value: "query-params"
-        },
-        {
-            label: "Trạng thái Hoạt động",
-            value: "active-status"
-        },
-        {
-            label: "Hành động",
-            value: "action"
-        }
-    ];
-
-    const activeStatus = [
-        {
-            label: "Hoạt động",
-            value: "true",
-            color: "success"
-        },
-        {
-            label: "Ẩn",
-            value: "false",
-            color: "danger"
-        }
-    ];
-
     const onChangeStatus = (categoryId, isActive) => {
-        
-        toastUpdateStatus.current = toast.info("Updating...", toastConfig.loading);
-        return axiosServer.put(apiUrl.category.activation(categoryId), {
-            isActive
-        }).then((response) => {
 
-            if (response.data.status === "success") {
+        toastUpdateStatus.current = toast.info("Updating...", toastConfig.loading);
+        axiosServer.put(apiUrl.category.activation(categoryId), {
+            isActive
+        })
+            .then((response) => response.data)
+            .then((response) => {
                 getListCategories();
                 toast.update(toastUpdateStatus.current, toastConfig.success("Successfully updated category status"));
-            }
-        }).catch(({response}) => {
+            }).catch((error) => {
+            const { response } = error;
             toast.update(toastUpdateStatus.current, toastConfig.error(response.data.message));
         });
     };
 
     const onDelete = (categoryId) => {
         toastDelete.current = toast.info("Deleting...", toastConfig.loading);
-        return axiosServer.delete(apiUrl.category.delete(categoryId)).then((response) => {
-            console.log(response);
-            if (response.data.status === "success") {
-                getListCategories();
-                toast.update(toastDelete.current, toastConfig.success("Successfully deleted category"));
-            }
-        });
+        return axiosServer.delete(apiUrl.category.delete(categoryId))
+            .then((response) => response.data)
+            .then((response) => {
+                if (response.status === "success") {
+                    getListCategories();
+                    toast.update(toastDelete.current, toastConfig.success("Successfully deleted category"));
+                }
+            });
     };
 
     const handleNavigateToEdit = (categoryId) => {
@@ -103,13 +66,12 @@ function CategoryIndex(props) {
     };
 
     const getListCategories = () => {
-        toastFetch.current = toast.info("Fetching...", toastConfig.loading);
-
-        axiosClient.get(apiUrl.category.all).then((response) => {
-            setListCategories(response.data.data);
-            setFetchState(true);
-            toast.update(toastFetch.current, toastConfig.success("Successfully fetched categories data"));
-        });
+        axiosServer.get(apiUrl.category.all)
+            .then((response) => response.data)
+            .then((response) => {
+                setListCategories(response.data);
+                setFetchState(true);
+            });
     };
 
     useEffect(() => {
@@ -128,14 +90,17 @@ function CategoryIndex(props) {
             }/>
             <main>
                 <Table aria-label="Example table with dynamic content">
-                    <TableHeader columns={tableColumns}>
-                        {(col) => {
-
-                            return <TableColumn key={col.value}
-                                                className={classNames(classConfig.fontSize.base)}>{col.label}</TableColumn>;
-                        }
+                    <TableHeader columns={adminCategoryTableColumns}>
+                        {
+                            (col) =>
+                                <TableColumn key={col.value}
+                                             className={classNames(classConfig.fontSize.base)}
+                                >
+                                    {col.label}
+                                </TableColumn>
                         }
                     </TableHeader>
+
                     <TableBody items={listCategories}
                                aria-label="List categories table"
                                emptyContent={!fetchState ?
