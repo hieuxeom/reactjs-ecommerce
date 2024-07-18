@@ -47,7 +47,8 @@ const apiUrl = {
         base: `${apiBaseUrl}/carts`,
         add: `${apiBaseUrl}/carts`,
         reset: `${apiBaseUrl}/carts`,
-        voucher: `${apiBaseUrl}/carts/voucher`
+        voucher: `${apiBaseUrl}/carts/voucher`,
+        delete: `${apiBaseUrl}/carts/delete`
     },
     order: {
         getAll: `${apiBaseUrl}/orders`,

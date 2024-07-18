@@ -13,8 +13,7 @@ CartSummary.propTypes = {
         subTotalPrice: PropTypes.number,
         voucherCode: PropTypes.string,
         shippingFee: PropTypes.number,
-        reducedFee: PropTypes.number,
-        totalPrice: PropTypes.number
+        reducedFee: PropTypes.number
     })
 };
 
@@ -61,7 +60,7 @@ function CartSummary({ summaryData, onApplyVoucher }) {
                     <p>Giảm giá</p>
                     <p className={classNames({
                         "text-danger": summaryData?.reducedFee > 0
-                    })}>{summaryData?.reducedFee > 0 && "-"}{summaryData?.reducedFee ?? 0}$</p>
+                    })}>{summaryData?.reducedFee > 0 && "-"}{summaryData?.reducedFee.toFixed(2) ?? 0}$</p>
                 </div>
                 <Form>
                     <FormRow>

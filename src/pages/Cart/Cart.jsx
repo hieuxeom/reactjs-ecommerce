@@ -35,28 +35,18 @@ function Cart({ children }) {
     });
 
     const getUserCart = () => {
-        axiosServer.get(apiUrl.user.cart).then((response) => {
-            setUserCart(response.data.data);
-        });
-    };
+        axiosServer.get(apiUrl.user.cart)
+            .then((response) => response.data)
+            .then((response) => {
 
-    const fetchAllProductDetails = (cartItems) => {
-        if (cartItems) {
-            const mapFetch = cartItems.map(item => {
-                return new Promise((resolve, reject) => {
-                    resolve(axiosClient.get(apiUrl.product.details(item.productId)).then((response) => {
-                        return {
-                            ...item,
-                            productDetails: response.data.data
-                        };
-                    }));
-                });
-            });
-            Promise.all(mapFetch).then((response) => {
-                setListProductDetails(response);
-            });
-        }
-
+                setUserCart(response.data);
+                setListProductDetails(response.data.cartItems);
+                setSummaryData(prevState => ({
+                    ...summaryData,
+                    subTotalPrice: response.data.subTotalPrice
+                }));
+            })
+        ;
     };
 
     const handleResetCart = () => {
@@ -64,34 +54,8 @@ function Cart({ children }) {
         axiosServer.delete(apiUrl.cart.reset).then((response) => {
             if (response.data.status === "success") {
                 toast.update(toastReset.current, toastConfig.success("successfully reset cart"));
+                navigate(userUrl.cart.base);
             }
-        });
-    };
-
-    const calculateSubTotal = (cartItems) => {
-        if (!cartItems) {
-            return;
-        }
-        const mapFetch = cartItems.map((item) => {
-            return new Promise((resolve) => {
-                axiosClient.get(apiUrl.product.variant(item.productId, item.variantKey))
-                    .then((response) => {
-                        const { variantPrice } = response.data.data;
-
-                        const subTotal = variantPrice.discountPrice * item.quantity;
-
-                        resolve(subTotal);
-                    });
-            });
-        });
-
-        Promise.all(mapFetch).then((response) => {
-            const subTotal = response.reduce((sum, current) => sum + current, 0);
-            setSummaryData({
-                ...summaryData,
-                subTotalPrice: subTotal,
-                totalPrice: subTotal + summaryData.shippingFee - summaryData.reducedFee
-            });
         });
     };
 
@@ -157,9 +121,7 @@ function Cart({ children }) {
 
     useEffect(() => {
         if (userCart) {
-            const { cartItems, voucherCode } = userCart;
-            calculateSubTotal(cartItems);
-            fetchAllProductDetails(cartItems);
+            const { voucherCode } = userCart;
             handleVoucherCode(voucherCode);
         }
     }, [userCart]);
