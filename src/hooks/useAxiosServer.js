@@ -1,8 +1,8 @@
 import axios from "axios";
-import {useEffect} from "react";
+import { useEffect } from "react";
 import useRefreshToken from "./useRefreshToken";
-import {useCookies} from "react-cookie";
-import {apiBaseUrl} from "../utils/config/api.config.js";
+import { useCookies } from "react-cookie";
+import { apiBaseUrl } from "../utils/config/api.config.js";
 
 const useAxiosServer = () => {
     const [cookies] = useCookies(["refreshToken", "accessToken"]);
@@ -19,14 +19,10 @@ const useAxiosServer = () => {
     useEffect(() => {
         const requestIntercept = axiosServer.interceptors.request.use(
             async (config) => {
-                const {accessToken} = cookies; // get the most recent accessToken
+                // const { accessToken } = cookies; // get the most recent accessToken
+                const accessToken = await getRefreshToken();
                 if (!config.headers["Authorization"]) {
-                    if (!accessToken) {
-                        const newAccessToken = await getRefreshToken();
-                        config.headers["Authorization"] = `Bearer ${newAccessToken}`;
-                    } else {
-                        config.headers["Authorization"] = `Bearer ${accessToken}`;
-                    }
+                    config.headers["Authorization"] = `Bearer ${accessToken}`;
                 }
                 return config;
             },
