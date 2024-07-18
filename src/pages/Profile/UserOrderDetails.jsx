@@ -37,46 +37,6 @@ function UserOrderDetails(props) {
     const [summaryOrder, setSummaryOrder] = useState(null);
     const [explainReason, setExplainReason] = useState("");
 
-    const fetchOrderItems = (orderItems) => {
-
-        const mapFetch = orderItems.map((item) => {
-            return new Promise((resolve) => {
-                axiosServer.get(apiUrl.product.details(item.productId)).then((response) => {
-
-                    if (response.data.status === "success") {
-                        const productDetails = response.data.data;
-                        const productVariant = productDetails.productVariants.find((variant) => variant.variantKey === item.variantKey);
-
-                        resolve({
-                            ...item,
-                            productName: productDetails.productName,
-                            productVariant
-                        });
-                    }
-
-                });
-            });
-        });
-
-        Promise.all(mapFetch).then((response) => {
-
-            setOrderItems(response);
-
-        });
-    };
-
-    const handleChangeOrderStatus = () => {
-        axiosServer.put(apiUrl.order.changeStatus(orderId), {
-            orderStatus: getOrderStatusVariant(summaryOrder.orderStatus)?.nextStep
-        }).then((response) => {
-            console.log(response);
-            setSummaryOrder(prevState => ({
-                ...prevState,
-                orderStatus: getOrderStatusVariant(summaryOrder.orderStatus)?.nextStep
-            }));
-        });
-    };
-
     const handleCancelOrder = () => {
         axiosServer.put(apiUrl.order.canceled(orderId), {
             explainReason
@@ -119,7 +79,7 @@ function UserOrderDetails(props) {
                         voucherCode,
                         explainReason
                     } = response.data;
-                    fetchOrderItems(orderItems);
+                    setOrderItems(orderItems);
                     setCustomerInfo(customerInfo);
                     setSummaryOrder({
                         totalPrice, subTotalPrice, reducedFee, shippingFee, orderStatus, voucherCode
