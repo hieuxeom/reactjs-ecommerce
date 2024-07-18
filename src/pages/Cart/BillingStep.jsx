@@ -24,34 +24,6 @@ function BillingStep({ onNextStep }) {
     const [cartItems, setCartItems] = useState(null);
     const [userAddress, setUserAddress] = useState(null);
 
-    const fetchCartItems = () => {
-        const { cartItems } = tempCart;
-
-        const mapFetch = cartItems.map((item) => {
-            return new Promise((resolve, reject) => {
-                axiosClient.get(apiUrl.product.details(item.productId)).then((response) => {
-
-                    if (response.data.status === "success") {
-                        const productDetails = response.data.data;
-                        const productVariant = productDetails.productVariants.find((variant) => variant.variantKey === item.variantKey);
-
-                        resolve({
-                            ...item,
-                            productName: productDetails.productName,
-                            productVariant
-                        });
-                    }
-
-                });
-            });
-        });
-
-        Promise.all(mapFetch).then((response) => {
-
-            setCartItems(response);
-
-        });
-    };
     const handleComplete = () => {
         const { cartItems, ...summaryData } = tempCart;
         const orderData = {
@@ -76,14 +48,16 @@ function BillingStep({ onNextStep }) {
         const userAddress = localStorage.getItem("userAddress");
 
         if (tempCart) {
-            setTempCart(JSON.parse(tempCart));
+            const orderData = JSON.parse(tempCart);
+            setTempCart(orderData);
+            setCartItems(orderData.cartItems);
             setUserAddress(JSON.parse(userAddress));
         }
     }, []);
 
     useEffect(() => {
         if (tempCart) {
-            fetchCartItems();
+            // fetchCartItems();
         }
     }, [tempCart]);
 

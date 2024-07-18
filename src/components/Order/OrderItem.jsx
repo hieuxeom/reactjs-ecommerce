@@ -28,6 +28,7 @@ OrderItem.propTypes = {
             _id: PropTypes.string,
             productName: PropTypes.string,
             productVariant: productVariantType,
+            priceAtBuy: PropTypes.number,
             isReview: PropTypes.bool
         }
     ),
@@ -41,10 +42,10 @@ function OrderItem({ itemData, isHaveReviewButton }) {
     const { orderId } = useParams();
 
     const axiosServer = useAxiosServer();
-
+    const [productName, setProductName] = useState("");
+    const [quantity, setQuantity] = useState(0);
     const [productVariant, setProductVariant] = useState(null);
-    const [productName, setProductName] = useState(null);
-    const [quantity, setQuantity] = useState(null);
+    const [price, setPrice] = useState(0);
 
     const [reviewContent, setReviewContent] = useState("");
     const [reviewStar, setReviewStar] = useState(5);
@@ -61,7 +62,6 @@ function OrderItem({ itemData, isHaveReviewButton }) {
 
         console.log(reviewData);
         axiosServer.post(apiUrl.product.reviews(itemData.productId), reviewData).then((response) => {
-            
             setIsReview(true);
         });
     };
@@ -71,6 +71,8 @@ function OrderItem({ itemData, isHaveReviewButton }) {
             setProductVariant(itemData.productVariant);
             setProductName(itemData.productName);
             setQuantity(itemData.quantity);
+            setPrice(itemData.priceAtBuy);
+            console.log(itemData);
         }
     }, [itemData]);
     return (
@@ -89,7 +91,7 @@ function OrderItem({ itemData, isHaveReviewButton }) {
                             </div>
                         </div>
                         <div>
-                            <p className={classNames(classConfig.fontSize.h6, classConfig.textColor.red)}>{((+productVariant?.variantPrice?.discountPrice ?? 0) * quantity).toFixed(2)}$</p>
+                            <p className={classNames(classConfig.fontSize.h6, classConfig.textColor.red)}>{(price * quantity).toFixed(2)}$</p>
                         </div>
                         {
                             isHaveReviewButton &&

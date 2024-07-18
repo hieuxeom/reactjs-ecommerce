@@ -62,7 +62,13 @@ function Cart({ children }) {
     const handleCheckOut = () => {
 
         const checkoutData = {
-            cartItems: userCart.cartItems,
+            cartItems: userCart.cartItems.map((item) => ({
+                ...item,
+                productId: item.productId,
+                variantKey: item.variantKey,
+                quantity: item.quantity,
+                priceAtBuy: item.productPrice.discountPrice
+            })),
             ...summaryData
         };
 
