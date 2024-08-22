@@ -86,7 +86,7 @@ export const adminVoucherTableColumns = [
     },
     {
         label: "Loại mã",
-        key: "status"
+        key: "code-type"
     },
     {
         label: "Trạng thái",
@@ -95,5 +95,43 @@ export const adminVoucherTableColumns = [
     {
         label: "Hành động",
         key: "action"
+    }
+];
+
+export const adminUserTableColumns = [
+    {
+        label: "ID",
+        key: "user-id"
+    },
+    {
+        label: "Tên người dùng",
+        key: "username"
+    },
+    {
+        label: "Email",
+        key: "email"
+    },
+    {
+        label: "Member/Admin",
+        key: "role"
+    },
+    {
+        label: "Trạng thái tài khoản",
+        key: "account-status"
+    },
+    {
+        label: "Hành động",
+        key: "action"
+    }
+];
+
+export const adminBlockHistoryTableColumns = [
+    {
+        label: "Ngày khóa",
+        key: "block-time"
+    },
+    {
+        label: "Lí do",
+        key: "reason"
     }
 ];

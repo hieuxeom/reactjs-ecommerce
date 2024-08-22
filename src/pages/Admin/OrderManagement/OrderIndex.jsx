@@ -7,9 +7,7 @@ import toastConfig from "../../../utils/config/toast.config.js";
 import TabHeader from "../../../components/Tab/TabHeader.jsx";
 import {
     Button,
-    Chip,
-    Select,
-    SelectItem,
+    Chip, CircularProgress,
     Table,
     TableBody,
     TableCell,
@@ -35,26 +33,21 @@ function OrderIndex(props) {
 
     const navigate = useNavigate();
 
-    const toastFetch = useRef(null);
-
-    const [listOrders, setListOrders] = useState(null);
+    const [listOrders, setListOrders] = useState([]);
+    const [fetchState, setFetchState] = useState(false);
 
     const getListOrders = () => {
 
-        toastFetch.current = toast.info("Fetching...", toastConfig.loading);
-
         axiosServer.get(apiUrl.order.getAll)
+            .then((response) => response.data)
             .then((response) => {
-                setListOrders(response.data.data);
-                toast.dismiss(toastFetch.current);
+                setListOrders(response.data);
+                setFetchState(true);
             })
             .catch((error) => {
                 const { response } = error;
-                if (response.status !== 401) {
-                    toast.update(toastFetch.current, toastConfig.error(response.data.message));
-                }
-            })
-            .finally(() => toast.dismiss(toastFetch.current));
+                console.log(response);
+            });
     };
 
     const handleNavigateToDetails = (orderId) => {
@@ -70,10 +63,20 @@ function OrderIndex(props) {
             <TabHeader tabTitle={"Quản lí đơn hàng"}/>
             <Table aria-label={"Table of list orders"}>
                 <TableHeader columns={orderTableColumns} aria-label={"Table of list orders"}>
-                    {(column) => <TableColumn key={column.key}
-                                              className={classNames(classConfig.fontSize.base, "text-center")}>{column.label}</TableColumn>}
+                    {(column) =>
+                        <TableColumn key={column.key}
+                                     className={classNames(classConfig.fontSize.base, "text-center")}
+                        >
+                            {column.label}
+                        </TableColumn>}
                 </TableHeader>
-                <TableBody items={listOrders ?? []}>
+                <TableBody items={listOrders}
+                           emptyContent={!fetchState ?
+                               <div className={"w-full flex justify-center items-center"}>
+                                   <CircularProgress/>
+                               </div> : "No rows to display"
+                           }
+                >
                     {item => <TableRow key={item._id}>
                         <TableCell className={"text-center"}>#{trimString(item._id)}</TableCell>
                         <TableCell className={"text-center"}>{item.customerInfo.fullName}</TableCell>

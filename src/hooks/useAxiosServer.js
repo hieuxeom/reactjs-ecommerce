@@ -1,11 +1,9 @@
 import axios from "axios";
 import { useEffect } from "react";
 import useRefreshToken from "./useRefreshToken";
-import { useCookies } from "react-cookie";
 import { apiBaseUrl } from "../utils/config/api.config.js";
 
 const useAxiosServer = () => {
-    const [cookies] = useCookies(["refreshToken", "accessToken"]);
     const getRefreshToken = useRefreshToken();
 
     const axiosServer = axios.create({
@@ -47,7 +45,7 @@ const useAxiosServer = () => {
             axiosServer.interceptors.request.eject(requestIntercept);
             axiosServer.interceptors.response.eject(responseIntercept);
         };
-    }, [cookies, getRefreshToken]); // Add cookies and getRefreshToken to dependency array
+    }, [getRefreshToken]); // Add cookies and getRefreshToken to dependency array
 
     return axiosServer;
 };

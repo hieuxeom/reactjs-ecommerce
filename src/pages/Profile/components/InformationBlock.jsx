@@ -5,18 +5,23 @@ import classConfig from "../../../utils/config/class.config.js";
 import { Button, Input } from "@nextui-org/react";
 import useAxiosServer from "../../../hooks/useAxiosServer.js";
 import { apiUrl } from "../../../utils/config/api.config.js";
-import { Form } from "react-router-dom";
+import { Form, useNavigate } from "react-router-dom";
 import FormBody from "../../../components/Form/FormBody.jsx";
 import FormRow from "../../../components/Form/FormRow.jsx";
 import iconConfig from "../../../utils/config/icon.config.jsx";
 import { toast } from "react-toastify";
 import toastConfig from "../../../utils/config/toast.config.js";
+import { useCookies } from "react-cookie";
+import { userUrl } from "../../../utils/config/route.config.js";
 
 InformationBlock.propTypes = {};
 
 function InformationBlock(props) {
 
     const toastEdit = useRef(null);
+
+    const [cookies, setCookie, removeCookie] = useCookies();
+    const navigate = useNavigate();
 
     const axiosServer = useAxiosServer();
 
@@ -71,6 +76,12 @@ function InformationBlock(props) {
             });
     };
 
+    const handleSignOut = () => {
+        removeCookie("refreshToken");
+        removeCookie("accessToken");
+        navigate(userUrl.auth.signIn);
+    };
+
     useEffect(() => {
         getUserData();
     }, []);
@@ -81,7 +92,7 @@ function InformationBlock(props) {
                 <h6 className={classNames(classConfig.fontSize.h6, classConfig.textColor.secondary)}>Thông tin cá
                     nhân</h6>
             </header>
-            <main className={""}>
+            <main className={"flex flex-col gap-4"}>
                 <Form>
                     <FormBody>
                         <FormRow alignItems={"items-center"}>
@@ -129,10 +140,17 @@ function InformationBlock(props) {
                                 }
                             </div>
                         </FormRow>
-
-
                     </FormBody>
                 </Form>
+                <div className={"flex justify-end"}>
+                    <Button
+                        variant={"flat"}
+                        color={"danger"}
+                        onClick={handleSignOut}
+                    >
+                        Đăng xuất
+                    </Button>
+                </div>
             </main>
         </div>
     );

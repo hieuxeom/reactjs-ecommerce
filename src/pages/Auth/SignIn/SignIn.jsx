@@ -1,37 +1,48 @@
-import React, {useState} from "react";
-import {Button, Input} from "@nextui-org/react";
+import React, { useRef, useState } from "react";
+import { Button, Input } from "@nextui-org/react";
 import classNames from "classnames";
 import classConfig from "../../../utils/config/class.config.js";
 import useAxios from "../../../hooks/useAxios.js";
-import {apiUrl} from "../../../utils/config/api.config.js";
-import {useCookies} from "react-cookie";
-import {useNavigate} from "react-router-dom";
+import { apiUrl } from "../../../utils/config/api.config.js";
+import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
+import toastConfig from "../../../utils/config/toast.config.js";
+import { toast } from "react-toastify";
 
 function SignIn(props) {
 
     const navigate = useNavigate();
     const [cookies, setCookie] = useCookies(["refreshToken"]);
     const axiosClient = useAxios();
-
+    const toastLogin = useRef(null);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
     const handleSubmitLogin = () => {
+        toastLogin.current = toast.loading("Logging...");
+
         const credentialData = {
             email,
             password
         };
-        axiosClient.post(apiUrl.auth.signIn, credentialData).then((response) => {
-            const {
-                refreshToken,
-                accessToken
-            } = response.data.data;
-            console.log(60 * 60 * 24 * 30);
-            setCookie("refreshToken", refreshToken, {path: "/", maxAge: 60 * 60 * 24 * 30});
-            setCookie("accessToken", accessToken, {path: "/", maxAge: 10});
-        }).finally(() => {
-            navigate("/");
-        });
+        axiosClient.post(apiUrl.auth.signIn, credentialData)
+            .then((response) => response.data)
+            .then((response) => {
+                const {
+                    refreshToken,
+                    accessToken
+                } = response.data;
+                console.log(60 * 60 * 24 * 30);
+                setCookie("refreshToken", refreshToken, { path: "/", maxAge: 60 * 60 * 24 * 30 });
+                setCookie("accessToken", accessToken, { path: "/", maxAge: 10 });
+                toast.update(toastLogin.current, toastConfig.success(response.message, () => navigate("/")));
+
+            })
+            .catch((error) => {
+                const { response } = error;
+                toast.update(toastLogin.current, toastConfig.error(response.data.message));
+
+            });
     };
 
     return (

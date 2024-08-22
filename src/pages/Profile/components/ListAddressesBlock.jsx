@@ -17,7 +17,7 @@ function ListAddressesBlock(props) {
     const axiosServer = useAxiosServer();
     const navigate = useNavigate();
 
-    const [listAddresses, setListAddresses] = useState(null);
+    const [listAddresses, setListAddresses] = useState([]);
 
     const getListAddresses = () => {
         return axiosServer.get(apiUrl.user.listAddresses)
@@ -54,9 +54,14 @@ function ListAddressesBlock(props) {
             </header>
             <main className={"w-full flex flex-col gap-4"}>
                 {
-                    listAddresses && listAddresses.map((address, index) =>
-                        <AddressRow key={index} onDelete={handleOnDelete} addressData={address}/>
-                    )
+                    listAddresses.length > 0
+                        ? listAddresses.map((address, index) =>
+                            <AddressRow key={index} onDelete={handleOnDelete} addressData={address}/>
+                        )
+                        : <div className={"W-full flex justify-center"}>
+                            <p className={classNames(classConfig.fontSize.sub, classConfig.textColor.gray, "italic")}>Chưa
+                                có địa chỉ nào</p>
+                        </div>
                 }
             </main>
         </div>

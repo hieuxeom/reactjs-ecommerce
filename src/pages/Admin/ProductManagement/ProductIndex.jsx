@@ -113,7 +113,7 @@ function ProductIndex(props) {
                     <TableBody items={listProducts} aria-label="List products table"
                                emptyContent={!fetchState ?
                                    <div className={"w-full flex justify-center items-center"}>
-                                       <CircularProgress></CircularProgress>
+                                       <CircularProgress/>
                                    </div> : "No rows to display"}>
                         {(item) => {
                             return <TableRow key={item._id}>

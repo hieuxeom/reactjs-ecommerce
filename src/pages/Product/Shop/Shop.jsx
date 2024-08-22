@@ -47,7 +47,6 @@ function Shop({ children }) {
         axiosServer.get(apiUrl.product.base + "?" + queryParams)
             .then(response => response.data)
             .then(response => {
-                console.log(response.data);
                 setListProducts(response.data);
             });
     };
@@ -60,6 +59,10 @@ function Shop({ children }) {
                 setListCategories(response.data);
             });
     };
+
+    useEffect(() => {
+        console.log(listProducts);
+    }, [listProducts]);
 
     useEffect(() => {
         getListProducts();

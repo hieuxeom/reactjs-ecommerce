@@ -22,7 +22,9 @@ const adminUrl = {
     user: {
         index: `${baseAdminUrl}/users`,
         new: `${baseAdminUrl}/users/new`,
-        edit: (userId) => `${baseAdminUrl}/users/${userId}/edit`
+        profile: (userId) => `${baseAdminUrl}/users/${userId}/`,
+        block: (userId) => `${baseAdminUrl}/users/${userId}/block`,
+        unBlock: (userId) => `${baseAdminUrl}/users/${userId}/unblock`
     },
     voucher: {
         index: `${baseAdminUrl}/vouchers`,
@@ -47,6 +49,10 @@ const userUrl = {
         newAddress: `/profile/address/new`,
         me: `/profile/me`,
         orderDetails: (orderId) => `/profile/order/${orderId}`
+    },
+    auth: {
+        signIn: `/sign-in`,
+        signUp: `/sign-up`
     }
 };
 

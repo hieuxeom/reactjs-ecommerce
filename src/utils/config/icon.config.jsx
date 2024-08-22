@@ -1,11 +1,12 @@
 // icons.js
-import { IoMdAdd, IoMdRemove } from "react-icons/io";
+import { IoIosPaper, IoMdAdd, IoMdRemove } from "react-icons/io";
 import classConfig from "./class.config.js";
-import { IoArrowBack } from "react-icons/io5";
+import { IoArrowBack, IoLockClosed, IoLockOpen } from "react-icons/io5";
 import { TfiMenuAlt } from "react-icons/tfi";
 import { BiSolidEditAlt, BiSolidTrashAlt } from "react-icons/bi";
 import { FaXmark } from "react-icons/fa6";
 import { FaCheck, FaStar } from "react-icons/fa";
+import { MdBlock } from "react-icons/md";
 
 const iconConfig = {
     add: {
@@ -43,6 +44,18 @@ const iconConfig = {
     star: {
         base: <FaStar size={classConfig.icon.base}/>,
         large: <FaStar size={classConfig.icon.large}/>
+    },
+    block: {
+        base: <MdBlock size={classConfig.icon.base}/>,
+        large: <MdBlock size={classConfig.icon.large}/>
+    },
+    unBlock: {
+        base: <IoLockOpen size={classConfig.icon.base}/>,
+        large: <IoLockOpen size={classConfig.icon.large}/>
+    },
+    reason: {
+        base: <IoIosPaper size={classConfig.icon.base}/>,
+        large: <IoIosPaper size={classConfig.icon.large}/>
     }
 };
 

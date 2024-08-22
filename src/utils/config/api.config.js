@@ -8,16 +8,20 @@ const apiUrl = {
         refreshToken: `${apiBaseUrl}/users/rftk`
     },
     user: {
+        all: `${apiBaseUrl}/users`,
         me: `${apiBaseUrl}/users/me`,
+        details: (userId) => `${apiBaseUrl}/users/${userId}`,
         listAddresses: `${apiBaseUrl}/users/me/address`,
         listOrders: `${apiBaseUrl}/users/me/orders`,
+        listOrdersByUserId: (userId) => `${apiBaseUrl}/users/${userId}/orders`,
         addressDetails: (addressId) => `${apiBaseUrl}/users/me/address/${addressId}`,
         newAddress: `${apiBaseUrl}/users//me/address`,
         editAddress: (addressId) => `${apiBaseUrl}/users/me/address/${addressId}`,
         deleteAddress: (addressId) => `${apiBaseUrl}/users/me/address/${addressId}`,
         cart: `${apiBaseUrl}/carts`,
         changeUsername: `${apiBaseUrl}/users/username`,
-        changeEmail: `${apiBaseUrl}/users/email-address`
+        changeEmail: `${apiBaseUrl}/users/email-address`,
+        activation: (userId) => `${apiBaseUrl}/users/${userId}/activation`
 
     },
     category: {
@@ -70,8 +74,10 @@ const apiUrl = {
         new: `${apiBaseUrl}/vouchers`,
         edit: (voucherId) => `${apiBaseUrl}/vouchers/${voucherId}`,
         activation: (voucherId) => `${apiBaseUrl}/vouchers/${voucherId}/activation`
+    },
+    analytics: {
+        all: `${apiBaseUrl}/analytics`
     }
-
 };
 
 export { apiBaseUrl, apiUrl, imageUrl };

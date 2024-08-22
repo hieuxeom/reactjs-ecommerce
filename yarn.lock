@@ -3085,6 +3085,11 @@ esutils@^2.0.2:
   resolved "https://registry.npmjs.org/esutils/-/esutils-2.0.3.tgz"
   integrity sha512-kVscqXk4OCp68SZ0dkgEKVi6/8ij300KBWTJq32P/dYeWTSwK41WyTxalN1eRmA5Z9UU/LX9D7FWSmV9SAYx6g==
 
+fancy-canvas@2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/fancy-canvas/-/fancy-canvas-2.1.0.tgz#44b40e40419ad8ef8304df365e4276767e918552"
+  integrity sha512-nifxXJ95JNLFR2NgRV4/MxVP45G9909wJTEKz5fg/TZS20JJZA6hfgRVh/bC9bwl2zBtBNcYPjiBE4njQHVBwQ==
+
 fast-deep-equal@^3.1.1, fast-deep-equal@^3.1.3:
   version "3.1.3"
   resolved "https://registry.npmjs.org/fast-deep-equal/-/fast-deep-equal-3.1.3.tgz"
@@ -3698,6 +3703,13 @@ levn@^0.4.1:
   dependencies:
     prelude-ls "^1.2.1"
     type-check "~0.4.0"
+
+lightweight-charts@^4.1.7:
+  version "4.1.7"
+  resolved "https://registry.yarnpkg.com/lightweight-charts/-/lightweight-charts-4.1.7.tgz#07e544b8d9d164493a442f466549d0508f91307e"
+  integrity sha512-/np9mQ8GXThrvJvxx4iSTZl/PvIhqG0bVQe7V+N0SO9E7e25VLglHf5M6eQFGDmwcOWNTLztH2fF0PmZ/sVq9g==
+  dependencies:
+    fancy-canvas "2.1.0"
 
 lilconfig@^2.1.0:
   version "2.1.0"

@@ -6,7 +6,7 @@ import classConfig from "../../../utils/config/class.config.js";
 import { adminUrl } from "../../../utils/config/route.config.js";
 import {
     Button,
-    Chip, Select,
+    Chip, CircularProgress, Select,
     SelectItem,
     Table,
     TableBody,
@@ -47,12 +47,16 @@ function VoucherIndex(props) {
         }
     ];
 
-    const [listVouchers, setListVouchers] = useState(null);
+    const [listVouchers, setListVouchers] = useState([]);
+    const [fetchState, setFetchState] = useState(false);
 
     const getListVouchers = () => {
-        axiosServer.get(apiUrl.voucher.getAll).then((response) => {
-            setListVouchers(response.data.data);
-        });
+        axiosServer.get(apiUrl.voucher.getAll)
+            .then((response) => response.data)
+            .then((response) => {
+                setListVouchers(response.data);
+                setFetchState(true);
+            });
     };
 
     const onChangeStatus = (voucherId, status) => {
@@ -91,7 +95,12 @@ function VoucherIndex(props) {
                     <TableHeader columns={adminVoucherTableColumns}>
                         {(column) => <TableColumn key={column.key}>{column.label}</TableColumn>}
                     </TableHeader>
-                    <TableBody items={listVouchers ?? []}>
+                    <TableBody items={listVouchers}
+                               emptyContent={!fetchState ?
+                                   <div className={"w-full flex justify-center items-center"}>
+                                       <CircularProgress/>
+                                   </div> : "No rows to display"}
+                    >
                         {(item) => <TableRow key={item._id}>
                             <TableCell>
                                 {item.voucherCode}
@@ -137,7 +146,7 @@ function VoucherIndex(props) {
                                     <Button color={"primary"}
                                             variant={"ghost"}
                                             isIconOnly
-
+                                            onClick={() => handleNavigateToEdit(item._id)}
                                     >
                                         {iconConfig.detail.large}
                                     </Button>

@@ -27,7 +27,7 @@ import NewProduct from "./pages/Admin/ProductManagement/NewProduct.jsx";
 import ProductIndex from "./pages/Admin/ProductManagement/ProductIndex.jsx";
 import EditProduct from "./pages/Admin/ProductManagement/EditProduct.jsx";
 import AdminProductDetails from "./pages/Admin/ProductManagement/ProductDetails.jsx";
-import { toast, ToastContainer } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import RootProductDetails from "./pages/Product/ProductDetails/RootProductDetails.jsx";
 import Shop from "./pages/Product/Shop/Shop.jsx";
@@ -43,7 +43,13 @@ import AddressDetails from "./pages/Profile/AddressDetails.jsx";
 import NewAddress from "./pages/Profile/NewAddress.jsx";
 import UserOrderDetails from "./pages/Profile/UserOrderDetails.jsx";
 import PolicyIndex from "./pages/Policy/PolicyIndex.jsx";
-import WarrantyPolicy from "./pages/Policy/WarrantyPolicy.jsx";
+import UserIndex from "./pages/Admin/UserManagement/UserIndex.jsx";
+import BlockUser from "./pages/Admin/UserManagement/BlockUser.jsx";
+import UnBlockUser from "./pages/Admin/UserManagement/UnBlockUser.jsx";
+import AdminViewProfile from "./pages/Admin/UserManagement/AdminViewProfile.jsx";
+import FinalTest from "./pages/FinalTest/FinalTest.jsx";
+import ListContact from "./pages/ListContact/ListContact.jsx";
+import EditContact from "./pages/EditContact/EditContact.jsx";
 
 const router = createBrowserRouter([
     {
@@ -118,7 +124,31 @@ const router = createBrowserRouter([
             },
             {
                 path: "users",
-                element: <UserManagement/>
+                element: <UserManagement/>,
+                children: [
+                    {
+                        path: "",
+                        element: <UserIndex/>
+                    },
+                    {
+                        path: ":userId",
+                        children: [
+                            {
+                                path: "",
+                                element: <AdminViewProfile/>
+                            },
+                            {
+                                path: "block",
+                                element: <BlockUser/>
+                            },
+                            {
+                                path: "unblock",
+                                element: <UnBlockUser/>
+                            }
+                        ]
+                    }
+
+                ]
             },
             {
                 path: "vouchers",
@@ -231,6 +261,18 @@ const router = createBrowserRouter([
             {
                 path: "policy",
                 element: <PolicyIndex/>
+            },
+            {
+                path: "contact",
+                element: <FinalTest/>
+            },
+            {
+                path: "list-contact",
+                element: <ListContact/>
+            },
+            {
+                path: "edit-contact/:id",
+                element: <EditContact/>
             }
 
         ]

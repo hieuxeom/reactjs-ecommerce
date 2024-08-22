@@ -1,8 +1,4 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
-import { Outlet } from "react-router-dom";
-import SideDirect from "./SideDirect.jsx";
-import { Card, CardBody, Tab, Tabs } from "@nextui-org/react";
 import TabHeader from "../../components/Tab/TabHeader.jsx";
 import classNames from "classnames";
 import WarrantyPolicy from "./WarrantyPolicy.jsx";

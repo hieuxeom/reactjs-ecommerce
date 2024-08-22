@@ -52,7 +52,6 @@ function OrderItem({ itemData, isHaveReviewButton }) {
     const [isReview, setIsReview] = useState(itemData?.isReview ?? false);
 
     const handleReview = () => {
-        console.log(orderId);
         const reviewData = {
             orderId,
             reviewContent,

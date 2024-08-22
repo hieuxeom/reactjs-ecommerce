@@ -15,7 +15,7 @@ function RecentlyOrders(props) {
 
     const axiosServer = useAxiosServer();
 
-    const [listOrders, setListOrders] = useState(null);
+    const [listOrders, setListOrders] = useState([]);
 
     const getListOrders = () => {
         axiosServer.get(apiUrl.user.listOrders)
@@ -37,8 +37,15 @@ function RecentlyOrders(props) {
                 </h6>
             </header>
             <main className={"flex flex-col gap-4"}>
-                {listOrders && listOrders.map((order, index) =>
-                    <OrderRow key={index} orderData={order}/>)}
+                {listOrders.length > 0
+                    ? listOrders.map((order, index) =>
+                        <OrderRow key={index} orderData={order}/>)
+                    : <div className={"W-full flex justify-center"}>
+                        <p className={classNames(classConfig.fontSize.sub, classConfig.textColor.gray, "italic")}>
+                            Chưa có đơn hàng nào
+                        </p>
+                    </div>
+                }
             </main>
         </section>
     );
